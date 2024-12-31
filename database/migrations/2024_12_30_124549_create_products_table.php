@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('product_type', ['simple', 'variable'])->default('simple');
             $table->enum('status', ['draft', 'publish'])->default('draft');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

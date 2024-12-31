@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\Apps\PermissionManagementController;
-use App\Http\Controllers\Apps\RoleManagementController;
-use App\Http\Controllers\Apps\UserManagementController;
-use App\Http\Controllers\Auth\SocialiteController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WebControllers\Auth\SocialiteController;
+use App\Http\Controllers\WebControllers\{ 
+    CategoryController,
+    DashboardController,
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,17 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
-
-    Route::get('/', [DashboardController::class, 'index']);
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    Route::name('user-management.')->group(function () {
-        Route::resource('/user-management/users', UserManagementController::class);
-        Route::resource('/user-management/roles', RoleManagementController::class);
-        Route::resource('/user-management/permissions', PermissionManagementController::class);
-    });
-
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    // Categories
+    Route::get('categories', [CategoryController::class, 'index'])->name('category.index');
+    Route::post('store-category', [CategoryController::class, 'storeCategory'])->name('store.category');
+    Route::post('delete-category', [CategoryController::class, 'deleteCategory'])->name('delete.category');
+    Route::get('edit-category/{id}', [CategoryController::class, 'editCategory'])->name('edit.category');
 });
 
 Route::get('/error', function () {

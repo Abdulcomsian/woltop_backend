@@ -26,7 +26,7 @@
                         <!--end::Content-->
                     </div>
                     <!--end::Content wrapper-->
-                    @include(config('settings.KT_THEME_LAYOUT_DIR').'/partials/sidebar-layout/_footer')
+                    {{-- @include(config('settings.KT_THEME_LAYOUT_DIR').'/partials/sidebar-layout/_footer') --}}
                 </div>
                 <!--end:::Main-->
             </div>
@@ -36,9 +36,9 @@
     </div>
     <!--end::App-->
 
-    @include('partials/_drawers')
+    {{-- @include('partials/_drawers')
 
-    @include('partials/_modals')
+    @include('partials/_modals') --}}
 
     @include('partials/_scrolltop')
 

@@ -21,9 +21,9 @@
 			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('dashboard') ? 'here show' : '' }}">
 				<div class="menu-item">
 					<!--begin:Menu link-->
-					<a class="menu-link {{ request()->routeIs('users') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-						<span class="menu-icon"><i class="fa-solid fa-user"></i></span>
-						<span class="menu-title">Products</span>
+					<a class="menu-link {{ request()->routeIs('category.index') ? 'active' : '' }}" href="{{ route('category.index') }}">
+						<span class="menu-icon"><i class="fa-solid fa-list"></i></span>
+						<span class="menu-title">Categories</span>
 					</a>
 					<!--end:Menu link-->
 				</div>
@@ -35,8 +35,8 @@
 				<div class="menu-item">
 					<!--begin:Menu link-->
 					<a class="menu-link {{ request()->routeIs('users') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-						<span class="menu-icon"><i class="fa-solid fa-list"></i></span>
-						<span class="menu-title">Categories</span>
+						<span class="menu-icon"><i class="fa-solid fa-user"></i></span>
+						<span class="menu-title">Products</span>
 					</a>
 					<!--end:Menu link-->
 				</div>

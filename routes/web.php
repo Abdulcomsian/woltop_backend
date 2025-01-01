@@ -25,6 +25,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::post('store-category', [CategoryController::class, 'storeCategory'])->name('store.category');
     Route::post('delete-category', [CategoryController::class, 'deleteCategory'])->name('delete.category');
     Route::get('edit-category/{id}', [CategoryController::class, 'editCategory'])->name('edit.category');
+    Route::post('update-category', [CategoryController::class, 'updateCategory'])->name('update.category');
 });
 
 Route::get('/error', function () {

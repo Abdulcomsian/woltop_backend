@@ -22,6 +22,7 @@ class CategoriesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addIndexColumn()
             ->editColumn("created_at", function($query){
                 return date("Y-m-d", strtotime($query->created_at));
             })
@@ -64,7 +65,13 @@ class CategoriesDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::computed('DT_RowIndex') // Serial Number Column
+              ->title('#') // Column Title
+              ->searchable(false)
+              ->orderable(false)
+              ->width(30)
+              ->addClass('text-center'),
+            // Column::make('id'),
             Column::make('name'),
             Column::make('image'),
             Column::make('created_at'),

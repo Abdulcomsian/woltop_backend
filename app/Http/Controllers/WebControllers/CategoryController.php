@@ -78,4 +78,31 @@ class CategoryController extends Controller
             return response()->json(['status' => false, "data" => "Something went wrong"], 400);
         }
     }
+
+    public function updateCategory(Request $request){
+        $request->validate([
+            'category_name' => "required",
+        ]);
+        try{
+            if($request->file('category_image')){
+                $file = $request->file('category_image');
+                $fileDestination = public_path('assets/wolpin_media/categories');
+                $fileName = uniqid() . '_' . time() . '.' . $file->extension();
+                $file->move($fileDestination, $fileName);
+            }
+
+            $category = Category::find($request->category_id);
+            $category->name = $request->category_name;
+            if($request->file('category_image')){
+                $category->image = $fileName;
+            }
+            if($category->update()){
+                toastr()->success('Category Updated Successfully!');
+                return redirect()->back();
+            }
+        }catch(\Exception $e){
+            toastr()->error('Something went wrong!');
+            return redirect()->back();
+        }
+    }
 }

@@ -41,8 +41,9 @@
     {{ $dataTable->scripts() }}
     <script>
         function deleteCategory(id){
-            $("#category_id").val(id);
-            $("#delete_category_modal").modal("show");
+            document.querySelector("#category_id").value = id;
+            var deleteModal = new bootstrap.Modal(document.getElementById('delete_category_modal'));
+            deleteModal.show();
         }
 
         function editCategory(id){
@@ -56,16 +57,68 @@
                     return response.json();
                 })
                 .then((data) => {
-                    $("#category_name").val(data.data.name);
-                    let imageUrl = data.data.image;
-                    let url = `{{asset('assets/wolpin_media/categories')}}/${imageUrl}`;
-                    document.querySelector("#category_image_style").style.backgroundImage = `url('${url}')`;
-                    $("#edit_category_modal").modal("show");
+                    document.querySelector("#category_name_edit").value = data.data.name;
+                    document.querySelector("#category_id").value = data.data.id;
+                    if(data.data.image != ""){
+                        let imageUrl = data.data.image;
+                        let url = `{{asset('assets/wolpin_media/categories')}}/${imageUrl}`;
+                        document.querySelector("#category_image_style").style.backgroundImage = `url('${url}')`;
+                    }
+                    var editModal = new bootstrap.Modal(document.getElementById('edit_category_modal'));
+                    editModal.show();
                 })
                 .catch((error) => {
                     console.error('Error fetching category:', error);
                 });
         }
+
+        // add modal validation
+        let add_categoy_form = document.querySelector("#add_categoy_form");
+        add_categoy_form.addEventListener("submit", function(e){
+            e.preventDefault();
+            let formSubmit  = true;
+            let category_image = document.querySelector("#category_imege_add").value;
+            let category_name = document.querySelector("#category_name_add").value;
+            if(category_image == ""){
+                document.querySelector("#add_category_image_err").style.display = "block";
+                formSubmit = false;
+            }
+            
+            if(category_name == ""){
+                document.querySelector("#add_category_name_err").style.display = "block";
+                formSubmit = false;
+            }
+
+
+            if(formSubmit == true){
+                this.submit()
+            }
+        })
+
+        //edit modal validation
+        let edit_categoy_form = document.querySelector("#edit_categoy_form");
+        edit_categoy_form.addEventListener("submit", function(e){
+            e.preventDefault();
+            let formSubmit  = true;
+            let category_image = document.querySelector("#category_image_edit").value;
+            let category_name = document.querySelector("#category_name_edit").value;
+            let avatar_image = document.querySelector("#avatar_image").value;
+            if(category_image == "" && avatar_image == 1){
+                document.querySelector("#edit_category_image_err").style.display = "block";
+                formSubmit = false;
+            }
+            
+            if(category_name == ""){
+                document.querySelector("#edit_category_name_err").style.display = "block";
+                formSubmit = false;
+            }
+
+
+            if(formSubmit == true){
+                this.submit()
+            }
+        })
+
     </script>
     @endpush
 </x-default-layout>

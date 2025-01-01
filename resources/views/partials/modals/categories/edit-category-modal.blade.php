@@ -18,9 +18,10 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form action="{{route('store.category')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('update.category')}}" id="edit_categoy_form" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Scroll-->
+                    <input type="hidden" id="category_id" name="category_id" value="">
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
@@ -53,8 +54,8 @@
                                 <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                     {!! getIcon('pencil','fs-7') !!}
                                     <!--begin::Inputs-->
-                                    <input type="file" name="category_image" accept=".png, .jpg, .jpeg" required/>
-                                    <input type="hidden" name="avatar_remove"/>
+                                    <input type="file" name="category_image" id="category_image_edit" accept=".png, .jpg, .jpeg"/>
+                                    <input type="hidden" name="avatar_remove" id="avatar_image"/>
                                     <!--end::Inputs-->
                                 </label>
                                 <!--end::Label-->
@@ -72,6 +73,7 @@
                             <!--end::Image input-->
                             <!--begin::Hint-->
                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                            <span class="text-danger" id="edit_category_image_err" style="display: none;">Category image is required</span>
                             <!--end::Hint-->
                             @error('category_image')
                             <span class="text-danger">{{ $message }}</span> @enderror
@@ -83,7 +85,8 @@
                             <label class="required fw-semibold fs-6 mb-2">Category Name</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" name="category_name" id="category_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category Name" required/>
+                            <input type="text" name="category_name" id="category_name_edit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category Name"/>
+                            <span class="text-danger" id="edit_category_name_err" style="display: none;">Category name is required</span>
                             <!--end::Input-->
                             @error('category_name')
                             <span class="text-danger">{{ $message }}</span> @enderror

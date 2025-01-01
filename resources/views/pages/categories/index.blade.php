@@ -41,7 +41,7 @@
     {{ $dataTable->scripts() }}
     <script>
         function deleteCategory(id){
-            document.querySelector("#category_id").value = id;
+            document.querySelector("#category_id_delete").value = id;
             var deleteModal = new bootstrap.Modal(document.getElementById('delete_category_modal'));
             deleteModal.show();
         }
@@ -61,7 +61,7 @@
                     document.querySelector("#category_id").value = data.data.id;
                     if(data.data.image != ""){
                         let imageUrl = data.data.image;
-                        let url = `{{asset('assets/wolpin_media/categories')}}/${imageUrl}`;
+                        let url = `${imageUrl}`;
                         document.querySelector("#category_image_style").style.backgroundImage = `url('${url}')`;
                     }
                     var editModal = new bootstrap.Modal(document.getElementById('edit_category_modal'));

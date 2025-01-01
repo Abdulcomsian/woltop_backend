@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("color_id")->nullable();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
             $table->longText('description')->nullable();
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->string('featured_image')->nullable();
             $table->enum('product_type', ['simple', 'variable'])->default('simple');
             $table->enum('status', ['draft', 'publish'])->default('draft');
+            $table->foreign('color_id')->on("colors")->references("id");
             $table->timestamps();
             $table->softDeletes();
         });

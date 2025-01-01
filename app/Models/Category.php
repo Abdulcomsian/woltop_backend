@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function parentCategory(){
+        return $this->belongsTo(ParentCategory::class, 'parent_category_id');
+    }
 }

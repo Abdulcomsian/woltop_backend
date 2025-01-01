@@ -3,7 +3,7 @@
         <div class="modal-content">
             <form action="{{route('delete.category')}}" method="POST">
                 @csrf
-                <input type="hidden" name="category_id" id="category_id" value="">
+                <input type="hidden" name="category_id" id="category_id_delete" value="">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteCategoryLabel">Delete Confirmation</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

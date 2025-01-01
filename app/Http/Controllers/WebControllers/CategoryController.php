@@ -25,13 +25,14 @@ class CategoryController extends Controller
                 $file = $request->file('category_image');
                 $fileDestination = public_path('assets/wolpin_media/categories');
                 $fileName = uniqid() . '_' . time() . '.' . $file->extension();
+                $file_path = asset('assets/wolpin_media/categories') . '/' . $fileName;
                 $file->move($fileDestination, $fileName);
             }
 
             $category = new Category();
             $category->name = $request->category_name;
             if($request->file('category_image')){
-                $category->image = $fileName;
+                $category->image = $file_path;
             }
             if($category->save()){
                 toastr()->success('Category Saved Successfully!');
@@ -88,13 +89,14 @@ class CategoryController extends Controller
                 $file = $request->file('category_image');
                 $fileDestination = public_path('assets/wolpin_media/categories');
                 $fileName = uniqid() . '_' . time() . '.' . $file->extension();
+                $file_path = asset('assets/wolpin_media/categories') . '/' . $fileName;
                 $file->move($fileDestination, $fileName);
             }
 
             $category = Category::find($request->category_id);
             $category->name = $request->category_name;
             if($request->file('category_image')){
-                $category->image = $fileName;
+                $category->image = $file_path;
             }
             if($category->update()){
                 toastr()->success('Category Updated Successfully!');

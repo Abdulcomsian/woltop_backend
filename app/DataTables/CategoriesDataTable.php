@@ -27,7 +27,7 @@ class CategoriesDataTable extends DataTable
                 return date("Y-m-d", strtotime($query->created_at));
             })
             ->editColumn("image", function($query){
-                $img = '<a href="'.asset('assets/wolpin_media/categories/' . $query->image).'" target="_blank">View File</a>';
+                $img = '<a href="'.$query->image.'" target="_blank">View File</a>';
                 return $img;
             })
             ->addColumn('action', function($query){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class CategoryController extends Controller
         try{
             $categories = Category::get();
             if($categories && count($categories) > 0){
-                return response()->json(['status' => true, "data" => $categories], 200);
+                return CategoryResource::collection($categories)->additional(['status' => true]);
             }else{
                 return response()->json(['status' => false, "data" => "No category found"], 400);
             }
@@ -24,7 +25,7 @@ class CategoryController extends Controller
         try{
             $categories = Category::where('parent_category_id', config('constants.ROOM'))->get();
             if($categories && count($categories) > 0){
-                return response()->json(['status' => true, "data" => $categories], 200);
+                return CategoryResource::collection($categories)->additional(['status' => true]);
             }else{
                 return response()->json(['status' => false, "data" => "No category found"], 400);
             }

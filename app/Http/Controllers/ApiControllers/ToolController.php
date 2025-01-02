@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TagResource;
-use App\Models\Tag;
+use App\Http\Resources\ToolResource;
+use App\Models\Tool;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class ToolController extends Controller
 {
-    public function getTags(){
+    public function getTools(){
         try{
-            $tags = Tag::where('id', '!=', config('constants.POPULAR'))->get();
-            if($tags && count($tags) > 0){
-                return TagResource::collection($tags)->additional(['status' => true]);
+            $tools = Tool::get();
+            if($tools && count($tools) > 0){
+                return ToolResource::collection($tools)->additional(['status' => true]);
             }else{
                 return response()->json(['status' => false, "data" => "No Tags Found"], 400);
             }

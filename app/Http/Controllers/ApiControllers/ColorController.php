@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ColorResource;
 use App\Models\Color;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class ColorController extends Controller
         try{
             $colors = Color::get();
             if($colors && count($colors) > 0){
-                return response()->json(['status' => true, "data" => $colors], 200);
+                return ColorResource::collection($colors)->additional(["status" => true]);
             }else{
                 return response()->json(['status' => false, "data" => "No Color found"], 400);
             }

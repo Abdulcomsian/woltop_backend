@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StoryResource;
 use App\Models\Story;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class StoryController extends Controller
         try{
             $stories = Story::get();
             if($stories && count($stories) > 0){
-                return response()->json(['status' => true, "data" => $stories], 200);
+                return StoryResource::collection($stories)->additional(["status" => true]);
             }else{
                 return response()->json(['status' => false, "data" => "No Story Found!"], 400);
             }

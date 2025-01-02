@@ -12,4 +12,27 @@ class Product extends Model
     public function productTag(){
         return $this->hasMany(ProductTag::class);
     }
+
+    public function color()
+    {
+        return $this->belongsTo(Color::class);
+    }
+
+    // Define the many-to-many relationship with the Category model
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'products_categories');
+    }
+
+    // Define the many-to-many relationship with the Tag model
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'products_tags');
+    }
+
+    // Use the categories relationship to access parent category via the Category model
+    public function parentCategory()
+    {
+        return $this->hasOneThrough(ParentCategory::class, Category::class);
+    }
 }

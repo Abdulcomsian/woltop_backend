@@ -16,7 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger("parent_category_id");
             $table->string('name')->nullable();
             $table->string('image')->nullable();
-            $table->foreign("parent_category_id")->on("parent_categories")->references("id");
+            $table->foreign("parent_category_id")
+              ->references("id")
+              ->on("parent_categories")
+              ->onDelete('cascade'); // Add this line
             $table->timestamps();
             $table->softDeletes();
         });

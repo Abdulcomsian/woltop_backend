@@ -14,7 +14,6 @@ class ParentCategorySeeder extends Seeder
     public function run(): void
     {
         $parent_categories = [
-            ['name' => "None"],
             ['name' => "Rooms"],
         ];
 

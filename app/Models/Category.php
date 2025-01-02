@@ -13,4 +13,10 @@ class Category extends Model
     public function parentCategory(){
         return $this->belongsTo(ParentCategory::class, 'parent_category_id');
     }
+
+    // Define the many-to-many relationship with the Product model
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'products_categories');
+    }
 }

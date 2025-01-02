@@ -2,37 +2,41 @@
 
 namespace App\Http\Controllers\WebControllers;
 
-use App\DataTables\CategoriesDataTable;
-use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\CategoryProduct;
 use Illuminate\Http\Request;
+use App\Models\ParentCategory;
+use App\Models\CategoryProduct;
+use App\Http\Controllers\Controller;
+use App\DataTables\CategoriesDataTable;
 // use App\Helpers\Helpers;
 
 class CategoryController extends Controller
 {
-    public function index(CategoriesDataTable $category){
-        return $category->render("pages.categories.index");
+    public function index(CategoriesDataTable $category)
+    {
+        $parentCategories = ParentCategory::latest()->get();
+        return $category->render("pages.categories.index",compact('parentCategories'));
     }
 
     public function storeCategory(Request $request){
         $request->validate([
-            'category_name' => "required",
-            'category_image' => "required",
+            'category_name' => 'required|string|max:255',
+            'category_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'parent_cat_id' => 'required|exists:parent_categories,id',
         ]);
         try{
             if($request->file('category_image')){
                 $file = $request->file('category_image');
                 $fileDestination = public_path('assets/wolpin_media/categories');
                 $fileName = uniqid() . '_' . time() . '.' . $file->extension();
-                $file_path = asset('assets/wolpin_media/categories') . '/' . $fileName;
                 $file->move($fileDestination, $fileName);
             }
 
             $category = new Category();
             $category->name = $request->category_name;
+            $category->parent_category_id = $request->parent_cat_id;
             if($request->file('category_image')){
-                $category->image = $file_path;
+                $category->image = $fileName;
             }
             if($category->save()){
                 toastr()->success('Category Saved Successfully!');

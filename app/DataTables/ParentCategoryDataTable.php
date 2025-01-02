@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Category;
+use App\Models\ParentCategory;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CategoriesDataTable extends DataTable
+class ParentCategoryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -26,28 +26,19 @@ class CategoriesDataTable extends DataTable
             ->editColumn("created_at", function($query){
                 return date("Y-m-d", strtotime($query->created_at));
             })
-            ->editColumn("image", function($query){
-                $img = '<a href="'.$query->image.'" target="_blank">View File</a>';
-                return $img;
-            })
-            ->addColumn('parent_category', function ($query) {
-                return $query->parentCategory ? $query->parentCategory->name : 'N/A';
-            })
             ->addColumn('action', function($query){
-                return view('pages.categories.columns.action', compact("query"));
+                return view('pages.parent_categories.columns.action', compact("query"));
             })
-            ->rawColumns(['action', 'image'])
+            ->rawColumns(['action'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Category $model): QueryBuilder
+    public function query(ParentCategory $model): QueryBuilder
     {
-        return $model->newQuery()
-        ->with('parentCategory')
-        ->latest();
+        return $model->newQuery()->latest();
     }
 
     /**
@@ -56,7 +47,7 @@ class CategoriesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('categories-table')
+                    ->setTableId('parent-categories-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
@@ -78,9 +69,6 @@ class CategoriesDataTable extends DataTable
               ->addClass('text-center'),
             // Column::make('id'),
             Column::make('name'),
-            Column::make('parent_category') // Add this column
-            ->title('Parent Category'), // Set column title
-            Column::make('image'),
             Column::make('created_at'),
             Column::computed('action')
                   ->exportable(false)
@@ -95,6 +83,6 @@ class CategoriesDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Categories_' . date('YmdHis');
+        return 'ParentCategory_' . date('YmdHis');
     }
 }

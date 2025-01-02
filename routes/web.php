@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\WebControllers\ProductController;
 use App\Http\Controllers\WebControllers\Auth\SocialiteController;
-use App\Http\Controllers\WebControllers\{ 
+use App\Http\Controllers\WebControllers\{
     CategoryController,
     DashboardController,
+    ParentCategoryController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -20,12 +22,37 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Parent Categories
+    Route::controller(ParentCategoryController::class)
+        ->prefix('parent_category')
+        ->as('parent-category.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
     // Categories
     Route::get('categories', [CategoryController::class, 'index'])->name('category.index');
     Route::post('store-category', [CategoryController::class, 'storeCategory'])->name('store.category');
     Route::post('delete-category', [CategoryController::class, 'deleteCategory'])->name('delete.category');
     Route::get('edit-category/{id}', [CategoryController::class, 'editCategory'])->name('edit.category');
     Route::post('update-category', [CategoryController::class, 'updateCategory'])->name('update.category');
+
+    // Products
+    Route::controller(ProductController::class)
+        ->prefix('product')
+        ->as('product.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
 });
 
 Route::get('/error', function () {

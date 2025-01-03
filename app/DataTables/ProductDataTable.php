@@ -20,7 +20,8 @@ class ProductDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->addColumn('color', function ($query) {
+            ->addColumn('parent_category', function ($query) {
+                // return $query->parentCategory ? $query->parentCategory->name : 'N/A'; // Display the parent category name
                 return $query->color ? $query->color->name : 'N/A'; // Display the color name
             })
             ->addColumn('category', function ($query) {
@@ -29,14 +30,13 @@ class ProductDataTable extends DataTable
                 // })->implode(', '); // Display the category names
                 return $query->color ? $query->color->name : 'N/A'; // Display the color name
             })
+            ->addColumn('color', function ($query) {
+                return $query->color ? $query->color->name : 'N/A'; // Display the color name
+            })
             ->addColumn('tags', function ($query) {
                 return $query->tags->map(function ($tag) {
                     return $tag->name;
                 })->implode(', '); // Display the tag names
-            })
-            ->addColumn('parent_category', function ($query) {
-                // return $query->parentCategory ? $query->parentCategory->name : 'N/A'; // Display the parent category name
-                return $query->color ? $query->color->name : 'N/A'; // Display the color name
             })
             ->editColumn('created_at', function ($query) {
                 return $query->created_at->format('Y-m-d');
@@ -85,12 +85,12 @@ class ProductDataTable extends DataTable
             Column::make('title'),
             Column::make('color')
                 ->title('Color'),
+                Column::make('parent_category')
+                ->title('Parent Category'),
             Column::make('category')
                 ->title('Categories'),
             Column::make('tags')
                 ->title('Tags'),
-            Column::make('parent_category')
-                ->title('Parent Category'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)

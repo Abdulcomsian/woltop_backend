@@ -21,6 +21,11 @@ class ProductController extends Controller
         return $product->render("pages.product.index");
     }
 
+    public function create()
+    {
+        return view('pages.product.create');
+    }
+
     public function store(ProductRequest $productRequest)
     {
         try {

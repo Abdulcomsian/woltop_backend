@@ -48,6 +48,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         ->as('product.')
         ->group(function () {
             Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
             Route::post('store', 'store')->name('store');
             Route::delete('delete', 'delete')->name('delete');
             Route::get('edit/{id}', 'edit')->name('edit');

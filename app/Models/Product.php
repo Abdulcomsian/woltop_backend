@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    public function productTag(){
+    public function productTag()
+    {
         return $this->hasMany(ProductTag::class);
     }
 
@@ -21,7 +23,7 @@ class Product extends Model
     // Define the many-to-many relationship with the Category model
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'products_categories');
+        return $this->belongsToMany(Category::class, 'products_categories', 'product_id', 'category_id');
     }
 
     // Define the many-to-many relationship with the Tag model
@@ -34,5 +36,10 @@ class Product extends Model
     public function parentCategory()
     {
         return $this->hasOneThrough(ParentCategory::class, Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id');
     }
 }

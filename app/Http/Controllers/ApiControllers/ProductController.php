@@ -14,7 +14,7 @@ class ProductController extends Controller
                 $query->where('tag_id', config('constants.POPULAR'));
             })
             ->paginate(8);
-            if($popularProducts && count($popularProducts) > 0){
+            if($popularProducts && count($popularProducts) > 0){ 
                 return ProductResource::collection($popularProducts)->additional([
                     'status' => true,
                 ]);

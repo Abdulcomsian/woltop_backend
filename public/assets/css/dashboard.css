@@ -1,0 +1,110 @@
+/* General styling for the Dropzone container */
+.dropzone.custom-page-dropzone {
+    border: 2px dashed #B0BEC5; /* Light gray dashed border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #F8F9FA; /* Light gray background */
+    padding: 20px; /* Spacing inside the dropzone */
+    text-align: center; /* Center-align text and content */
+    cursor: pointer; /* Pointer cursor to indicate interaction */
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth hover effects */
+    min-height: 150px; /* Set a minimum height */
+    max-height: 200px; /* Optional: Max height */
+    overflow: hidden; /* Ensure no content overflows */
+}
+
+/* Hover effect for the Dropzone */
+.dropzone.custom-page-dropzone:hover {
+    background-color: #E9ECEF; /* Slightly darker gray on hover */
+    border-color: #D35400; /* Highlight border with primary color on hover */
+}
+
+/* Styling for the Dropzone message */
+.dropzone.custom-page-dropzone .dz-message {
+    font-size: 16px;
+    color: #6C757D; /* Muted gray text */
+}
+
+.dropzone.custom-page-dropzone .dz-message span {
+    font-weight: 600; /* Bold title */
+    color: #343A40; /* Darker gray for emphasis */
+}
+
+.dropzone.custom-page-dropzone .dz-message small {
+    font-size: 12px;
+    color: #6C757D; /* Muted gray for smaller text */
+}
+
+.custom-page-dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 150px; /* Adjusted height */
+    max-height: 200px; /* Optional max height */
+    overflow: hidden; /* Prevent overflow */
+    border: 2px dashed #ccc; /* Example border styling */
+    border-radius: 10px; /* Optional rounded corners */
+    background-color: #f9f9f9; /* Optional background color */
+}
+
+.custom-page-dropzone .dz-message {
+    font-size: 1rem; /* Adjust font size */
+    color: #666; /* Text color */
+}
+.form-label {
+    margin-bottom: 0.5rem; /* Ensure proper spacing below the label */
+}
+
+/* Thumbnail styling */
+.dropzone .dz-preview .dz-photo img {
+    width: 100%; /* Full width */
+    max-width: 100px; /* Limit size */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 4px; /* Rounded thumbnail corners */
+    margin-top: 10px; /* Spacing between thumbnails */
+}
+
+/* Styling for the remove button */
+.dropzone .dz-remove {
+    color: #D35400; /* Primary color for the remove link */
+    font-size: 12px;
+    margin-top: 5px; /* Space above the remove link */
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.dropzone .dz-remove:hover {
+    color: #E74C3C; /* Slightly different color on hover */
+    text-decoration: none;
+}
+
+/* Error styling */
+.dropzone .dz-error-message {
+    color: #E74C3C; /* Red for error messages */
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Progress bar styling */
+.dropzone .dz-progress {
+    background-color: #D35400; /* Primary color for the progress bar */
+    height: 4px; /* Thin progress bar */
+    border-radius: 2px; /* Rounded ends */
+    margin-top: 10px;
+}
+
+.dotted-line {
+    border: none;
+    border-top: 2px dotted #333; /* Dotted line with light gray color */
+    margin: 1rem 0; /* Adjust vertical spacing */
+}
+
+input[readonly].form-control {
+    background-color: #f5f5f5; /* Light gray background */
+    color: #6c757d; /* Gray text color */
+    cursor: not-allowed; /* Change cursor to indicate readonly */
+    border-color: #ccc; /* Ensure border is gray */
+}
+
+

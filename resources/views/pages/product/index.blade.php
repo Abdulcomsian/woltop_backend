@@ -13,10 +13,12 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar">
                 <!--begin::Add user-->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#category_modal_id">
-                    <span><i class="fa fa-plus"></i></span>
-                    Add Product
-                </button>
+                <a href="{{ route('product.create') }}">
+                    <button type="button" class="btn btn-primary">
+                        <span><i class="fa fa-plus"></i></span>
+                        Add Product
+                    </button>
+                </a>
                 <!--end::Add user-->
             </div>
             <!--end::Card toolbar-->

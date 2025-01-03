@@ -13,7 +13,7 @@ class ProductController extends Controller
             $popularProducts = Product::whereHas('productTag', function($query){
                 $query->where('tag_id', config('constants.POPULAR'));
             })
-            ->get();
+            ->paginate(8);
             if($popularProducts && count($popularProducts) > 0){
                 return ProductResource::collection($popularProducts)->additional([
                     'status' => true,
@@ -28,7 +28,7 @@ class ProductController extends Controller
 
     public function getProductsByColor($id){
         try{
-            $products = Product::where('color_id', $id)->get();
+            $products = Product::where('color_id', $id)->paginate(4);
             if($products && count($products) > 0){
                 return ProductResource::collection($products)->additional([
                     'status' => true,
@@ -46,7 +46,7 @@ class ProductController extends Controller
             $products = Product::whereHas('productTag', function($query) use ($id){
                 $query->where('tag_id', $id);
             })
-            ->get();
+            ->paginate(4);
 
             if($products && count($products) > 0){
                 return ProductResource::collection($products)->additional([

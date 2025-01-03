@@ -14,11 +14,11 @@ class StorySeeder extends Seeder
     public function run(): void
     {
         $stories = [
-            ["path" => env('APP_URL') . "assets/wolpin_media/stories/default.mov"],
-            ["path" => env('APP_URL') . "assets/wolpin_media/stories/default.mov"],
-            ["path" => env('APP_URL') . "assets/wolpin_media/stories/default.mov"],
-            ["path" => env('APP_URL') . "assets/wolpin_media/stories/default.mov"],
-            ["path" => env('APP_URL') . "assets/wolpin_media/stories/default.mov"],
+            ["path" => "default.mov"],
+            ["path" => "default.mov"],
+            ["path" => "default.mov"],
+            ["path" => "default.mov"],
+            ["path" => "default.mov"],
         ];
 
         foreach($stories as $story){

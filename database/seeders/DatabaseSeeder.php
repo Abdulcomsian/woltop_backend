@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             StorySeeder::class,
             ColorSeeder::class,
             ProductSeeder::class,
+            ToolsSeeder::class,
         ]);
     }
 }

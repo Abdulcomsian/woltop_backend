@@ -15,11 +15,11 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ["name" => "3D Wallpaper", "parent_category_id" => 1 , "image" => "popular.png"],
-            ["name" => "Living Room", "parent_category_id" => 2 , "image" => "popular.png"],
-            ["name" => "Bedroom", "parent_category_id" => 2 , "image" => "popular.png"],
-            ["name" => "Office", "parent_category_id" => 2, "image" => "popular.png"],
-            ["name" => "Kids Room", "parent_category_id" => 2 , "image" => "popular.png"],
+            ["name" => "3D Wallpaper", "parent_category_id" => null , "image" => "popular.png"],
+            ["name" => "Living Room", "parent_category_id" => 1 , "image" => "popular.png"],
+            ["name" => "Bedroom", "parent_category_id" => 1 , "image" => "popular.png"],
+            ["name" => "Office", "parent_category_id" => 1, "image" => "popular.png"],
+            ["name" => "Kids Room", "parent_category_id" => 1 , "image" => "popular.png"],
         ];
 
         foreach($categories as $category){

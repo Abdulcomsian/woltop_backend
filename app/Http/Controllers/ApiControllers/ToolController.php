@@ -10,7 +10,7 @@ class ToolController extends Controller
 {
     public function getTools(){
         try{
-            $tools = Tool::get();
+            $tools = Tool::limit(4)->get();
             if($tools && count($tools) > 0){
                 return ToolResource::collection($tools)->additional(['status' => true]);
             }else{

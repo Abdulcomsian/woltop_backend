@@ -12,7 +12,7 @@ class Product extends Model
 
     public function productTag()
     {
-        return $this->hasMany(ProductTag::class);
+        return $this->hasMany(ProductTag::class)->withTrashed();
     }
 
     public function color()

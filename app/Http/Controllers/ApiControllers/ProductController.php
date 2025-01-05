@@ -28,7 +28,7 @@ class ProductController extends Controller
 
     public function getProductsByColor($id){
         try{
-            $products = Product::where('color_id', $id)->paginate(4);
+            $products = Product::where('color_id', $id)->limit(4)->get();
             if($products && count($products) > 0){
                 return ProductResource::collection($products)->additional([
                     'status' => true,
@@ -46,7 +46,7 @@ class ProductController extends Controller
             $products = Product::whereHas('productTag', function($query) use ($id){
                 $query->where('tag_id', $id);
             })
-            ->paginate(4);
+            ->limit(4)->get();
 
             if($products && count($products) > 0){
                 return ProductResource::collection($products)->additional([
@@ -56,6 +56,7 @@ class ProductController extends Controller
                 return response()->json(['status' => false, "data" => "No Products Found"], 400);
             }
         }catch(\Exception $e){
+            dd($e->getMessage());
             return response()->json(['status' => false, "data" => "Something went wrong!"], 400);
         }
     }

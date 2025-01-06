@@ -27,7 +27,10 @@ class ProductSeeder extends Seeder
             ["color_id" => 5, "title" => "Eigth Product", "slug" => "eigth_product", "description" => "Free shipping above ₹339, Cash on delivery available at ₹20 COD charges", "price" => 3456, "sale_price" => 799,"sku" => "1267qwer", "featured_image" => "featured.png", "product_type" => "simple", "status" => "publish", "discount" => 45],
         ];
 
-        foreach($products as $product){
+        $totalProducts = count($products);
+        $half = floor($totalProducts / 2);
+
+        foreach($products as $index => $product){
             $p = Product::create($product);
             $catPro = new CategoryProduct();
             $catPro->product_id = $p->id;
@@ -39,9 +42,10 @@ class ProductSeeder extends Seeder
             $proImg->image_path = env('APP_URL') . "assets/wolpin_media/products/gallery_images/gallery_1.png";
             $proImg->save();
 
+
             $proTag = new ProductTag();
             $proTag->product_id = $p->id;
-            $proTag->tag_id = 1;
+            $proTag->tag_id = $index < $half ? 2 : 3;
             $proTag->save();
         }
     }

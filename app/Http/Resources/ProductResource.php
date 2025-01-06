@@ -20,6 +20,7 @@ class ProductResource extends JsonResource
             "title" => $this->title,
             "price" => $this->price,
             "sale_price" => $this->sale_price,
+            "discount" => $this->discount,
             "featured_image" => asset('assets/wolpin_media/products/featured_images/' . $this->featured_image),
         ];
     }

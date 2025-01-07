@@ -29,6 +29,11 @@ use Illuminate\Support\Facades\Route;
 
 // Authentication Apis
 Route::post('register', [AuthController::class, "registerUser"]);
+Route::post('login', [AuthController::class, 'loginUser']);
+Route::post('send-email-forgot-password', [AuthController::class, 'sendEmailForgotPassword']);
+Route::post('verify-code', [AuthController::class, 'verifyCode']);
+Route::post('update-password', [AuthController::class, 'updatePassword']);
+Route::post('resend-code', [AuthController::class, 'resendCode']);
 
 // Categories APIs
 Route::get('categories', [CategoryController::class, 'getAllCategories']);
@@ -51,3 +56,7 @@ Route::get('stories', [StoryController::class, 'getStories']);
 
 // Tools APIs
 Route::get('tools', [ToolController::class, 'getTools']);
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('logout', [AuthController::class, 'logoutUser']);
+});

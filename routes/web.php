@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\WebControllers\ProductController;
+use App\Http\Controllers\ApiControllers\AuthController;
 use App\Http\Controllers\WebControllers\Auth\SocialiteController;
 use App\Http\Controllers\WebControllers\{
     CategoryController,
     DashboardController,
     ParentCategoryController,
+    ProductController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('verify-email/{token}/{user}', [AuthController::class, "verifyEmail"])->name('verify.email.user');
 
 Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

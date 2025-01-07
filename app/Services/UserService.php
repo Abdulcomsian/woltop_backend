@@ -3,6 +3,14 @@
 namespace App\Services;
 
 use App\Models\User;
+use Notification;
+use App\Notifications\{
+    RegisterNotification,
+    NotifyUserOtp,
+};
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -16,59 +24,197 @@ class UserService
 
     public function store($data)
     {
-
         $save = new $this->model;
         $save->name = $data->name;
         $save->email = $data->email;
         $save->password = Hash::make($data->password);
-        $save->remember_token = rand(0000, 9999);
-        $save->save();
-
-        return $save;
+        $save->email_verification_token = rand(0000, 9999);
+        if($save->save()){
+            $save->assignRole("user");
+            try{
+                Notification::route('mail', $save->email)->notify(new RegisterNotification($save->id, $save->email_verification_token, $save->name));
+                return [
+                    'status' => 'success',
+                    'message' => 'Email verification token sent successfully to ' . $save->email,
+                    'data' => $save,
+                ];
+            }catch(\Exception $e){
+                return [
+                    'status' => 'error',
+                    'message' => 'Failed to send Verification email to ' . $save->email,
+                    'error' => $e->getMessage(),
+                ];
+            }
+        }else{
+            return [
+                'status' => 'error',
+                'message' => 'Failed to save user data',
+                'data' => null
+            ];
+        }
     }
 
-    // public function delete($data)
-    // {
-    //     // Find the product by ID
-    //     $product = $this->model->findOrFail($data['product_id']);
+    public function verifyEmail($data, $user){
+        $token = Crypt::decrypt($data);
+        $user = Crypt::decrypt($user);
+        $data = $this->model->findOrFail($user);
+        if($data && $data->email_verification_token == $token){
+            $data->email_verified_at = Carbon::now();
+            $data->email_verification_token = null;
+            if($data->update()){
+                return [
+                    'status' => 'success',
+                    'message' => 'Email Verified Successfully',
+                ];
+            }else{
+                return [
+                    'status' => 'error',
+                    'message' => 'Email haven`t verified',
+                ];
+            }
+        }else{
+            return [
+                'status' => 'error',
+                'message' => 'No user found',
+            ];
+        }
+    }
 
-    //     // Detach related categories from the pivot table
-    //     $product->categories()->detach();
 
-    //     // Detach related tags from the pivot table
-    //     $product->tags()->detach();
+    public function login($data){
+        $user = User::where('email', $data->email)->first();
+        if(!$user || !Auth::attempt(['email' => $data->email, 'password' => $data->password])){
+            return [
+                "status" => "error",
+                "message" => "Invalid Cradentials",
+            ];
+        }
 
-    //     // Delete related product tags if they exist
-    //     if ($product->productTag()->exists()) {
-    //         $product->productTag()->delete();
-    //     }
+        if($user->email_verified_at == null){
+            return [
+                "status" => "error",
+                "message" => "Email is not verified",
+            ];
+        }
 
-    //     // Delete related images
-    //     if ($product->images()->exists()) {
-    //         foreach ($product->images as $image) {
-    //             // Optionally delete the physical file from storage
-    //             if (file_exists(public_path($image->image_path))) {
-    //                 unlink(public_path($image->image_path));
-    //             }
-    //             $image->delete();
-    //         }
-    //     }
+        // creating a login token
+        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
 
-    //     // Now delete the product
-    //     return $product->delete();
-    // }
+        return [
+            "status" => "success",
+            "access_token" => $token,
+            "type" => "Bearer",
+            "message" => "User Login Successfully",
+        ];
+    }
 
-    // public function edit($id)
-    // {
-    //     return $this->model::findOrFail($id);
-    // }
+    public function logout(){
+        Auth::user()->tokens()->delete();
+        return [
+            "status" => "success",
+            "message" => "User Logout Successfully",
+        ];
+    }
 
-    // public function update($data)
-    // {
-    //     $update = $this->model::findOrFail($data['parent_category_id']);
-    //     $update->name = $data['name'];
-    //     $update->save();
+    public function sendEmail($email){
+        $user = User::where('email', $email)->first();
+        if($user && $user != null){
+            $code = rand(0000, 9999);
+            $user->update(['otp_code' => $code]);
+            try{
+                Notification::route('mail', $email)->notify(new NotifyUserOtp($code));
+                return [
+                    "status" => "success",
+                    "message" => "A code has been sent to your email",
+                    "user_id" => $user->id,
+                ];
+            }catch(\Exception $e){
+                return [
+                    "status" => "error",
+                    "message" => "Email couldn`t delivered",
+                ];
+            }
+        }else{
+            return [
+                "status" => "error",
+                "message" => "No record found against this email",
+            ];
+        }
+    }
 
-    //     return $update;
-    // }
+    public function verifyCode($data){
+        $user = User::findOrFail($data->user_id);
+        if($user && $user != null){
+            if($user->otp_code == $data->code){
+                $user->otp_code = null;
+                if($user->update()){
+                    return [
+                        "status" => "success",
+                        "message" => "Code has been verified",
+                        "user_id" => $user->id,
+                    ];
+                }
+            }else{
+                return [
+                    "status" => "error",
+                    "message" => "Code verification failed",
+                ];
+            }
+        }else{
+            return [
+                "status" => "error",
+                "message" => "No user found against this id",
+            ];
+        }
+    }
+
+    public function updatePassword($data){
+        $user = User::findOrFail($data->user_id);
+        if($user && $user != null){
+            $user->password = Hash::make($data->password);
+            if($user->update()){
+                return [
+                    "status" => "success",
+                    "message" => "Password has been updated Successfully",
+                ];
+            }else{
+                return [
+                    "status" => "error",
+                    "message" => "Password cannot be updated at this time. Please try again in a while",
+                ];
+            }
+        }else{
+            return [
+                "status" => "error",
+                "message" => "No user found against this id",
+            ];
+        }
+    }
+
+    public function resendCode($data){
+        $user = User::findOrFail($data->user_id);
+        if($user && $user != null){
+            $code = rand(0000, 9999);
+            $user->otp_code = $code;
+            $user->update();
+            try{
+                Notification::route('mail', $user->email)->notify(new NotifyUserOtp($code));
+                return [
+                    "status" => "success",
+                    "message" => "A code has been sent to your email",
+                    "user_id" => $user->id,
+                ];
+            }catch(\Exception $e){
+                return [
+                    "status" => "error",
+                    "message" => "Email couldn`t delivered",
+                ];
+            }
+        }else{
+            return [
+                "status" => "error",
+                "message" => "No record found against this id",
+            ];
+        }
+    }
 }

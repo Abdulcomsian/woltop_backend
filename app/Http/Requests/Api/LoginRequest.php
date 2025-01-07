@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Requests\Api;
+
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +24,8 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'email' => ['required', 'string', 'email', 'unique:users,email'],
-            'password' => ['required', 'string'],
+            "email" => ["required", "email"],
+            "password" => ["required"],
         ];
     }
 

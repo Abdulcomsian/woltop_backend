@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("attribute_id");
             $table->string("name")->nullable();
+            $table->string("price")->nullable();
+            $table->string("sale_price")->nullable();
+            $table->string("discount")->nullable();
+            $table->string("sku")->nullable()->unique();
             $table->foreign("attribute_id")->on("attributes")->references("id");
             $table->timestamps();
         });

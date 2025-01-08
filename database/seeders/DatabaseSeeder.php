@@ -22,8 +22,13 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             StorySeeder::class,
             ColorSeeder::class,
+            AttributeSeeder::class,
             ProductSeeder::class,
             ToolsSeeder::class,
+            DeliveryDetailSeeder::class,
+            DoSeeder::class,
+            ApplicationGuideSeeder::class,
+            StorageUsageSeeder::class,
         ]);
     }
 }

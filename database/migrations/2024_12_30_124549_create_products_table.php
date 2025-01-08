@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger("color_id")->nullable();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
+            $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->string('price')->nullable();
             $table->string('sale_price')->nullable();

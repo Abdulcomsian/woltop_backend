@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiControllers\{
     ProductController,
     StoryController,
     ColorController,
+    ReviewController,
     TagController,
     ToolController,
 };
@@ -45,6 +46,9 @@ Route::get('products-by-color/{id}', [ProductController::class, 'getProductsByCo
 Route::get('products-by-tag/{id}', [ProductController::class, 'getProductsByTag']);
 Route::get('get-product-by-id/{id}', [ProductController::class, 'getProductById']);
 
+// Review
+Route::get('get-review-by-product/{id}', [ReviewController::class, "getReviewByProduct"]);
+
 // Color Api
 Route::get('colors', [ColorController::class, 'getAllColors']);
 
@@ -59,4 +63,6 @@ Route::get('tools', [ToolController::class, 'getTools']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);
+    // Review
+    Route::post('store-review', [ReviewController::class, 'storeReview']);
 });

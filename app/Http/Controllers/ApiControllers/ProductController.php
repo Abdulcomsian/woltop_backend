@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductReviewResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -56,16 +57,15 @@ class ProductController extends Controller
                 return response()->json(['status' => false, "data" => "No Products Found"], 400);
             }
         }catch(\Exception $e){
-            dd($e->getMessage());
             return response()->json(['status' => false, "data" => "Something went wrong!"], 400);
         }
     }
 
     public function getProductById($id){
         try{
-            $product = Product::where('id', $id)->first();
+            $product = Product::with('reviews')->where('id', $id)->first();
             if($product){
-                return (new ProductResource($product))->additional(["status" => true]);
+                return (new ProductReviewResource($product))->additional(["status" => true]);
             }else{
                 return response()->json(['status' => false, "data" => "No Product Found"], 400);
             }

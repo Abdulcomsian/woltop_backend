@@ -11,6 +11,7 @@ use App\Http\Controllers\ApiControllers\{
     TagController,
     ToolController,
     CartController,
+    FaqController,
     TeamController,
     WishlistController,
 };
@@ -68,6 +69,9 @@ Route::get('tools', [ToolController::class, 'getTools']);
 // Blog
 Route::get('get-blogs', [BlogController::class, 'getBlogs']);
 Route::get('get-blog-by-slug/{slug}', [BlogController::class, 'getBlogDetail']);
+
+// Faq
+Route::get('get-faqs', [FaqController::class, 'getFaqs']);
 
 // Team
 Route::get('get-team-member', [TeamController::class, "getTeam"]);

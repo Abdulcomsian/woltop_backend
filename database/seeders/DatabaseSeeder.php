@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             InstallationStepSeeder::class,
             TeamSeeder::class,
             BlogSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }

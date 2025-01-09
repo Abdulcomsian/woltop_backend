@@ -23,5 +23,4 @@ class BlogService
         $blog = $this->model->where('slug', $slug)->first();
         return $blog;
     }
-
 }

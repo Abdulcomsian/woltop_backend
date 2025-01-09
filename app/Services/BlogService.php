@@ -15,7 +15,7 @@ class BlogService
     }
 
     public function getBlog(){
-        $blog = $this->model->get();
+        $blog = $this->model->paginate(12);
         return $blog;
     }
 

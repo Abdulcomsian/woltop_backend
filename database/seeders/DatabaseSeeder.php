@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             StorageUsageSeeder::class,
             InstallationStepSeeder::class,
             TeamSeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }

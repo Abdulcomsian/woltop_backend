@@ -15,7 +15,7 @@ class ReviewService
     }
 
     public function storeReview($data){
-        $review = new Review();
+        $review = new $this->model();
         $review->user_id = Auth::user()->id;
         $review->product_id = $data->product_id;
         $review->description = $data->description;
@@ -34,7 +34,7 @@ class ReviewService
     }
 
     public function getReviewByProduct($id){
-        $reviews = Review::with('user')->where('product_id', $id)->paginate(5);
+        $reviews = $this->model::with('user')->where('product_id', $id)->paginate(5);
         return $reviews;
     }
 }

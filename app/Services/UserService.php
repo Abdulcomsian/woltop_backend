@@ -82,7 +82,7 @@ class UserService
 
 
     public function login($data){
-        $user = User::where('email', $data->email)->first();
+        $user = $this->model::where('email', $data->email)->first();
         if(!$user || !Auth::attempt(['email' => $data->email, 'password' => $data->password])){
             return [
                 "status" => "error",
@@ -117,7 +117,7 @@ class UserService
     }
 
     public function sendEmail($email){
-        $user = User::where('email', $email)->first();
+        $user = $this->model::where('email', $email)->first();
         if($user && $user != null){
             $code = rand(0000, 9999);
             $user->update(['otp_code' => $code]);
@@ -143,7 +143,7 @@ class UserService
     }
 
     public function verifyCode($data){
-        $user = User::findOrFail($data->user_id);
+        $user = $this->model::findOrFail($data->user_id);
         if($user && $user != null){
             if($user->otp_code == $data->code){
                 $user->otp_code = null;
@@ -169,7 +169,7 @@ class UserService
     }
 
     public function updatePassword($data){
-        $user = User::findOrFail($data->user_id);
+        $user = $this->model::findOrFail($data->user_id);
         if($user && $user != null){
             $user->password = Hash::make($data->password);
             if($user->update()){
@@ -192,7 +192,7 @@ class UserService
     }
 
     public function resendCode($data){
-        $user = User::findOrFail($data->user_id);
+        $user = $this->model::findOrFail($data->user_id);
         if($user && $user != null){
             $code = rand(0000, 9999);
             $user->otp_code = $code;

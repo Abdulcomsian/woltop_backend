@@ -15,19 +15,19 @@ class CartService
     }
 
     public function showCartItem(){
-        $cart = Cart::with('products')->where('user_id', Auth::user()->id)->get();
+        $cart = $this->model::with('products')->where('user_id', Auth::user()->id)->get();
         return $cart;
     }
 
     public function storeCart($data)
     {
-        if (Cart::where('product_id', $data->product_id)->exists()) {
+        if ($this->model::where('product_id', $data->product_id)->exists()) {
             return [
                 "status" => "error",
                 "message" => "This product is already in the cart",
             ];
         }
-        $cart = new Cart();
+        $cart = new $this->model();
         $cart->user_id = Auth::user()->id;
         $cart->product_id = $data->product_id;
         return $cart->save()
@@ -36,6 +36,6 @@ class CartService
     }
 
     public function deleteCartItem($product_id){
-        return Cart::where('product_id', $product_id)->delete();
+        return $this->model::where('product_id', $product_id)->delete();
     }
 }

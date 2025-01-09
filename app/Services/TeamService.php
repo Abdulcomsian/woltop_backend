@@ -15,7 +15,7 @@ class TeamService
     }
 
     public function getTeam(){
-        $team = Team::get();
+        $team = $this->model::get();
         return $team;
     }
 }

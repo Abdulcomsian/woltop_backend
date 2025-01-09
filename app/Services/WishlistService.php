@@ -15,19 +15,19 @@ class WishlistService
     }
 
     public function showWishlistItem(){
-        $wishlist = Wishlist::with('products')->where('user_id', Auth::user()->id)->get();
+        $wishlist = $this->model::with('products')->where('user_id', Auth::user()->id)->get();
         return $wishlist;
     }
 
     public function storeWishlist($data)
     {
-        if (Wishlist::where('product_id', $data->product_id)->exists()) {
+        if ($this->model::where('product_id', $data->product_id)->exists()) {
             return [
                 "status" => "error",
                 "message" => "This product is already in the wishlist",
             ];
         }
-        $cart = new Wishlist();
+        $cart = new $this->model();
         $cart->user_id = Auth::user()->id;
         $cart->product_id = $data->product_id;
         return $cart->save()
@@ -36,6 +36,6 @@ class WishlistService
     }
 
     public function deleteWishlistItem($product_id){
-        return Wishlist::where('product_id', $product_id)->delete();
+        return $this->model::where('product_id', $product_id)->delete();
     }
 }

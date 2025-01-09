@@ -10,6 +10,7 @@ use App\Http\Controllers\ApiControllers\{
     TagController,
     ToolController,
     CartController,
+    TeamController,
     WishlistController,
 };
 use Illuminate\Http\Request;
@@ -62,6 +63,9 @@ Route::get('stories', [StoryController::class, 'getStories']);
 
 // Tools APIs
 Route::get('tools', [ToolController::class, 'getTools']);
+
+// Team APi 
+Route::get('get-team-member', [TeamController::class, "getTeam"]);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);

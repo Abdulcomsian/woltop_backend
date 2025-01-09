@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             ApplicationGuideSeeder::class,
             StorageUsageSeeder::class,
             InstallationStepSeeder::class,
+            TeamSeeder::class,
         ]);
     }
 }

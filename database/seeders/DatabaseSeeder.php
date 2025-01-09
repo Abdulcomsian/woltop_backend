@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             DoSeeder::class,
             ApplicationGuideSeeder::class,
             StorageUsageSeeder::class,
+            InstallationStepSeeder::class,
         ]);
     }
 }

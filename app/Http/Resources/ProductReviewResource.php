@@ -40,6 +40,7 @@ class ProductReviewResource extends JsonResource
             "design_application_details" => $this->designApplicationGuide,
             "storage_usage_details" => $this->storageUsage,
             "variables" => $this->variables()->select('variables_products.id', 'name', 'price', 'sale_price', 'discount', 'sku')->get(),
+            "installation_steps" => $this->installationSteps()->select("id", "name", "description", "image")->get(),
         ];
     }
 }

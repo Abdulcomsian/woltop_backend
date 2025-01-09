@@ -77,6 +77,10 @@ class Product extends Model
         );
     }
 
+    public function installationSteps(){
+        return $this->hasMany(InstallationStep::class, 'product_id');
+    }
+
     // Custom Helper function for Related Products 
     public function getRelatedProducts()
     {

@@ -9,6 +9,8 @@ use App\Http\Controllers\ApiControllers\{
     ReviewController,
     TagController,
     ToolController,
+    CartController,
+    WishlistController,
 };
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +65,17 @@ Route::get('tools', [ToolController::class, 'getTools']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);
+    
     // Review
     Route::post('store-review', [ReviewController::class, 'storeReview']);
+
+    // Cart
+    Route::get('show-cart-items', [CartController::class, "showCartItems"]);
+    Route::post('store-cart', [CartController::class, 'storeCart']);
+    Route::get('delete-cart-item/{id}', [CartController::class, 'deleteCartItem']);
+
+    // Wishlist
+    Route::get('show-wishlist-items', [WishlistController::class, "showWishlistItems"]);
+    Route::post('store-wishlist', [WishlistController::class, 'storeWishlist']);
+    Route::get('delete-wishlist-item/{id}', [WishlistController::class, 'deleteWishlistItem']);
 });

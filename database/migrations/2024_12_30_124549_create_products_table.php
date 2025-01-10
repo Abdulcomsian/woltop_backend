@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
+            $table->string("video")->nullable();
             $table->string('price')->nullable();
             $table->string('sale_price')->nullable();
             $table->string('sku')->unique()->nullable();

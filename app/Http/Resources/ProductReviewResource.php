@@ -23,6 +23,7 @@ class ProductReviewResource extends JsonResource
             "short_description" => $this->short_description,
             "description" => $this->description,
             "discount" => $this->discount,
+            "video" => asset("assets/wolpin_media/products/video/default.mov"),
             "featured_image" => asset('assets/wolpin_media/products/featured_images/' . $this->featured_image),
             "reviews" => [
                 "total_count" => $this->reviews->count(),

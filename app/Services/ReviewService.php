@@ -23,12 +23,12 @@ class ReviewService
         if($review->save()){
             return [
                 "status" => "success",
-                "message" => "Product Saved Successfully",
+                "message" => "Review Saved Successfully",
             ];
         }else{
             return [
                 "status" => "error",
-                "message" => "Product haven`t saved successfully",
+                "message" => "Review haven`t saved successfully",
             ];
         }
     }

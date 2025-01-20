@@ -81,6 +81,10 @@ class Product extends Model
         return $this->hasMany(InstallationStep::class, 'product_id');
     }
 
+    public function productsFeatures(){
+        return $this->hasMany(ProductFeature::class, 'product_id');
+    }
+
     // Custom Helper function for Related Products 
     public function getRelatedProducts()
     {

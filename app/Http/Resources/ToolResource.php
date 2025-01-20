@@ -19,7 +19,7 @@ class ToolResource extends JsonResource
             "name" => $this->name,
             "slug" => $this->slug,
             "description" => $this->description,
-            "image" => asset('assets/wolpin_media/tools/tool.png' .  $this->image),
+            "image" => asset('assets/wolpin_media/tools/' .  $this->image),
             "price" => $this->price,
             "sale_price" => $this->sale_price,
         ];

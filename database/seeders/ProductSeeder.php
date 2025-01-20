@@ -40,7 +40,7 @@ class ProductSeeder extends Seeder
 
             $proImg = new ProductImage();
             $proImg->product_id = $p->id;
-            $proImg->image_path = env('APP_URL') . "assets/wolpin_media/products/gallery_images/gallery_1.png";
+            $proImg->image_path = "gallery_1.png";
             $proImg->save();
 
 

@@ -34,14 +34,34 @@ class ProductReviewResource extends JsonResource
                 "two_star_count" => $this->reviews()->where('rating', 2)->count(),
                 "one_star_count" => $this->reviews()->where('rating', 1)->count(),
             ],
-            "product_images" => $this->images,
+            "product_images" => $this->images->map(function($data){
+                return [
+                    "id" => $data->id,
+                    "product_id" => $data->product_id,
+                    "image_path" => asset("assets/wolpin_media/products/gallery_images/" . $data->image_path),
+                ];
+            }),
             "delivery_detail" => $this->deliveryDetail,
             "other_related_products" => $this->getRelatedProducts(),
             "dos_dont" => $this->doDont()->select('id', "product_id", "name")->get(),
             "design_application_details" => $this->designApplicationGuide,
             "storage_usage_details" => $this->storageUsage,
             "variables" => $this->variables()->select('variables_products.id', 'name', 'price', 'sale_price', 'discount', 'sku')->get(),
-            "installation_steps" => $this->installationSteps()->select("id", "name", "description", "image")->get(),
+            "installation_steps" => $this->installationSteps->map(function($data){
+                return [
+                    "id" => $data->id,
+                    "name" => $data->name,
+                    "description" => $data->description,
+                    "image" => asset("assets/wolpin_media/installation_steps/" . $data->image),
+                ];
+            }),
+            "products_features" => $this->productsFeatures->map(function($data){
+                return [
+                    "id" => $data->id,
+                    "name" => $data->name,
+                    "image" => asset("assets/wolpin_media/products/features/" . $data->image),
+                ];
+            }),
         ];
     }
 }

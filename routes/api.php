@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiControllers\{
+    AddressController,
     AuthController,
     BlogController,
     CategoryController,
@@ -75,6 +76,9 @@ Route::get('get-faqs', [FaqController::class, 'getFaqs']);
 
 // Team
 Route::get('get-team-member', [TeamController::class, "getTeam"]);
+
+// Payment
+Route::post('store-address', [AddressController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);

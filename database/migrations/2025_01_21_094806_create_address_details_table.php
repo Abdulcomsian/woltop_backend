@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('address_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id")->nullable();
+            $table->unsignedBigInteger("user_id");
             $table->string("name")->nullable();
             $table->string("phone_number")->nullable();
             $table->string("pincode")->nullable();
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string("locality")->nullable();
             $table->string("landmark")->nullable();
             $table->enum("delivery_preference", ['home', 'work'])->nullable();
-            $table->foreign("user_id")->on("users")->references("id")->nullable();
+            $table->foreign("user_id")->on("users")->references("id");
             $table->timestamps();
         });
     }

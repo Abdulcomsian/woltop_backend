@@ -15,6 +15,7 @@ class AddressRequest extends FormRequest
     {
         return [
             "name" => "required",
+            "email" => "required",
             "phone_number" => "required|integer",
             "pincode" => "required|integer",
             "city" => "required",

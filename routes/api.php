@@ -79,6 +79,7 @@ Route::get('get-team-member', [TeamController::class, "getTeam"]);
 
 // Payment
 Route::post('store-address', [AddressController::class, 'store']);
+// Route::post('place-order', [AddressController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);

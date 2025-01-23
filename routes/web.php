@@ -7,6 +7,7 @@ use App\Http\Controllers\WebControllers\{
     DashboardController,
     ParentCategoryController,
     ProductController,
+    TeamController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,19 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::controller(ProductController::class)
         ->prefix('product')
         ->as('product.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
+    // Team
+    Route::controller(TeamController::class)
+        ->prefix('team')
+        ->as('team.')
         ->group(function () {
             Route::get('', 'index')->name('index');
             Route::get('create', 'create')->name('create');

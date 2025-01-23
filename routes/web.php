@@ -157,7 +157,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::patch('update', 'update')->name('update');
         });
     
-    // Users
+    // Profile
     Route::controller(ProfileController::class)
         ->prefix('profile')
         ->as('profile.')

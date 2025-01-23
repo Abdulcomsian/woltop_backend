@@ -57,11 +57,11 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('product.index') ? 'here show' : '' }}">
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('story.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
-            <a class="menu-link {{ request()->routeIs('product.index') ? 'active' : '' }}" href="{{ route('product.index') }}">
-                <span class="menu-icon"><i class="fa-solid fa-cube"></i></span>
+            <a class="menu-link {{ request()->routeIs('story.index') ? 'active' : '' }}" href="{{ route('story.index') }}">
+                <span class="menu-icon"><i class="fa-solid fa-film"></i></span>
                 <span class="menu-title">Manage Stories</span>
             </a>
             <!--end:Menu link-->
@@ -74,7 +74,7 @@
         <div class="menu-item">
             <!--begin:Menu link-->
             <a class="menu-link {{ request()->routeIs('product.index') ? 'active' : '' }}" href="{{ route('product.index') }}">
-                <span class="menu-icon"><i class="fa-solid fa-cube"></i></span>
+                <span class="menu-icon"><i class="fa-solid fa-comments"></i></span>
                 <span class="menu-title">Manage Reviews</span>
             </a>
             <!--end:Menu link-->
@@ -87,7 +87,7 @@
         <div class="menu-item">
             <!--begin:Menu link-->
             <a class="menu-link {{ request()->routeIs('product.index') ? 'active' : '' }}" href="{{ route('product.index') }}">
-                <span class="menu-icon"><i class="fa-solid fa-cube"></i></span>
+                <span class="menu-icon"><i class="fas fa-tools"></i></span>
                 <span class="menu-title">Manage Tools</span>
             </a>
             <!--end:Menu link-->
@@ -100,8 +100,34 @@
         <div class="menu-item">
             <!--begin:Menu link-->
             <a class="menu-link {{ request()->routeIs('team.index') ? 'active' : '' }}" href="{{ route('team.index') }}">
-                <span class="menu-icon"><i class="fa-solid fa-cube"></i></span>
+                <span class="menu-icon"><i class="fa-solid fa-people-group"></i></span>
                 <span class="menu-title">Manage Teams</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+    </div>
+    <!--end:Menu item-->
+
+    <!--begin:Menu item-->
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('team.index') ? 'here show' : '' }}">
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link {{ request()->routeIs('team.index') ? 'active' : '' }}" href="{{ route('team.index') }}">
+                <span class="menu-icon"><i class="fa-brands fa-blogger"></i></span>
+                <span class="menu-title">Manage Blogs</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+    </div>
+    <!--end:Menu item-->
+
+    <!--begin:Menu item-->
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('team.index') ? 'here show' : '' }}">
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link {{ request()->routeIs('team.index') ? 'active' : '' }}" href="{{ route('team.index') }}">
+                <span class="menu-icon"><i class="fas fa-question"></i></span>
+                <span class="menu-title">Manage FAQs</span>
             </a>
             <!--end:Menu link-->
         </div>

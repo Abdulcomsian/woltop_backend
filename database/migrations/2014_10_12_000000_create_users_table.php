@@ -19,7 +19,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('avatar')->nullable();
+            $table->string("designation")->nullable();
+            $table->longText("bio")->nullable();
+            $table->string("image")->nullable();
+            $table->string("portfolio_website")->nullable();
+            $table->string("linkedIn_profile")->nullable();
+            $table->string("facebook_profile")->nullable();
+            $table->string("x_profile")->nullable();
+            $table->string("youtube_profile")->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -75,7 +75,7 @@ Route::get('get-blog-by-slug/{slug}', [BlogController::class, 'getBlogDetail']);
 Route::get('get-faqs', [FaqController::class, 'getFaqs']);
 
 // Team
-Route::get('get-team-member', [TeamController::class, "getTeam"]);
+Route::get('get-team-member', [TeamController::class, "index"]);
 
 // Payment
 Route::post('store-address', [AddressController::class, 'store']);

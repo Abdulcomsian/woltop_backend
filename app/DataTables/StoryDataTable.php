@@ -2,17 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\Category;
+use App\Models\Story;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CategoriesDataTable extends DataTable
+class StoryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,31 +20,23 @@ class CategoriesDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->editColumn("created_at", function($query){
-                return date("Y-m-d", strtotime($query->created_at));
+            ->editColumn('story', function($query){
+                $story = '<a href="'.asset('assets/wolpin_media/stories/' . $query->path).'" target="_blank">View Story</a>';
+                return $story;
             })
-            ->editColumn("image", function($query){
-                $img = '<a href="'.asset('assets/wolpin_media/categories/' . $query->image).'" target="_blank">View File</a>';
-                return $img;
+            ->addColumn('action', function($query) {
+                return view('pages.product.columns.action', compact("query"));
             })
-            ->addColumn('parent_category', function ($query) {
-                return $query->parentCategory ? $query->parentCategory->name : 'N/A';
-            })
-            ->addColumn('action', function($query){
-                return view('pages.categories.columns.action', compact("query"));
-            })
-            ->rawColumns(['action', 'image'])
+            ->rawColumns(['story'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Category $model): QueryBuilder
+    public function query(Story $model): QueryBuilder
     {
-        return $model->newQuery()
-        ->with('parentCategory')
-        ->latest();
+        return $model->newQuery();
     }
 
     /**
@@ -56,12 +45,12 @@ class CategoriesDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('categories-table')
+                    ->setTableId('story-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([3, "desc"]);
+                    ->orderBy([0, "desc"]);
     }
 
     /**
@@ -76,25 +65,21 @@ class CategoriesDataTable extends DataTable
               ->orderable(false)
               ->width(30)
               ->addClass('text-center'),
-            // Column::make('id'),
-            Column::make('name'),
-            Column::make('parent_category') // Add this column
-            ->title('Parent Category'), // Set column title
-            Column::make('image'),
-            Column::make('created_at'),
+            Column::make('story'),
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
+
 
     /**
      * Get the filename for export.
      */
     protected function filename(): string
     {
-        return 'Categories_' . date('YmdHis');
+        return 'Story_' . date('YmdHis');
     }
 }

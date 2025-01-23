@@ -20,23 +20,14 @@ class TeamDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->addColumn('category', function ($query) {
-                return $query->color ? $query->color->name : 'N/A'; // Display the color name
-            })
-            ->addColumn('color', function ($query) {
-                return $query->color ? $query->color->name : 'N/A'; // Display the color name
-            })
-            ->addColumn('tags', function ($query) {
-                return $query->tags->map(function ($tag) {
-                    return $tag->name;
-                })->implode(', '); // Display the tag names
-            })
-            ->editColumn('created_at', function ($query) {
-                return $query->created_at->format('Y-m-d');
+            ->editColumn('image', function ($query) {
+                $img = '<img src="'.asset('assets/wolpin_media/team/' . $query->image).'" alt="Avatar" height="100">';
+                return $img; // how do I render HTML here
             })
             ->addColumn('action', function($query) {
                 return view('pages.product.columns.action', compact("query"));
             })
+            ->rawColumns(['image'])
             ->setRowId('id');
     }
 
@@ -46,7 +37,9 @@ class TeamDataTable extends DataTable
     public function query(User $model): QueryBuilder
     {
         return $model->newQuery()
-            ->with(['color', 'categories.parentCategory', 'tags']); // Eager load categories and their parentCategory
+            ->whereHas('roles', function($query){
+                $query->where('name', 'staff');
+            });
     }
 
     /**
@@ -55,7 +48,7 @@ class TeamDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('product-table')
+                    ->setTableId('team-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
@@ -75,9 +68,10 @@ class TeamDataTable extends DataTable
               ->orderable(false)
               ->width(30)
               ->addClass('text-center'),
+            Column::make('image'),
             Column::make('name'),
             Column::make('designation'),
-            Column::make('created_at'),
+            Column::make('bio'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

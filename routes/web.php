@@ -3,11 +3,18 @@
 use App\Http\Controllers\ApiControllers\AuthController;
 use App\Http\Controllers\WebControllers\Auth\SocialiteController;
 use App\Http\Controllers\WebControllers\{
+    BlogController,
     CategoryController,
     DashboardController,
+    FaqController,
     ParentCategoryController,
     ProductController,
+    ProfileController,
+    ReviewController,
+    StoriesController,
     TeamController,
+    ToolController,
+    UserController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +65,45 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
         });
+    
+    // Stories
+    Route::controller(StoriesController::class)
+        ->prefix('story')
+        ->as('story.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
+    // Reviews
+    Route::controller(ReviewController::class)
+        ->prefix('reviews')
+        ->as('review.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
+    // Tools
+    Route::controller(ToolController::class)
+        ->prefix('tools')
+        ->as('tool.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
 
     // Team
     Route::controller(TeamController::class)
@@ -67,6 +113,56 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('', 'index')->name('index');
             Route::get('create', 'create')->name('create');
             Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
+    // Blog
+    Route::controller(BlogController::class)
+        ->prefix('blogs')
+        ->as('blog.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+    
+    // FAQs
+    Route::controller(FaqController::class)
+        ->prefix('faqs')
+        ->as('faq.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+    
+    // Users
+    Route::controller(UserController::class)
+        ->prefix('users')
+        ->as('user.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+    
+    // Users
+    Route::controller(ProfileController::class)
+        ->prefix('profile')
+        ->as('profile.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
             Route::delete('delete', 'delete')->name('delete');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');

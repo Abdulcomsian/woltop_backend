@@ -14,9 +14,9 @@ class TeamController extends Controller
         $this->teamService = $teamService;
     }
 
-    public function getTeam(){
+    public function index(){
         try{
-            $team = $this->teamService->getTeam();
+            $team = $this->teamService->index();
             if($team && count($team) > 0){
                 return response()->json(['status' => true, "data" => $team], 200);
             }else{

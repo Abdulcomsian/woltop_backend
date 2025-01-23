@@ -1,4 +1,5 @@
 <x-default-layout>
+    @section('page-title', 'Manage Categories')
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">

@@ -1,5 +1,5 @@
 <x-default-layout>
-    @section('page-title', 'Manage Story')
+    @section('page-title', 'Manage Tools')
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
@@ -7,7 +7,7 @@
             <div class="card-title">
                  <!--begin::Toolbar-->
                  <div data-kt-user-table-toolbar="base">
-                    <span>Stories</span>
+                    <span>Tools</span>
                 </div>
                 <!--end::Toolbar-->
             </div>
@@ -17,7 +17,7 @@
                 <a href="#"> {{-- open model here --}}
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_story">
                         <span><i class="fa fa-plus"></i></span>
-                        Add Story
+                        Add
                     </button>
                 </a>
                 <!--end::Add user-->
@@ -37,9 +37,9 @@
         <!--end::Card body-->
     </div>
 
-    @include('partials.modals.stories.add')
+    {{-- @include('partials.modals.stories.add')
     @include('partials.modals.stories.edit')
-    @include('partials.modals.stories.delete')
+    @include('partials.modals.stories.delete') --}}
     @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
@@ -60,6 +60,7 @@
                     return response.json();
                 })
                 .then((data) => {
+                    console.log(data);
                     let modal = new bootstrap.Modal(document.getElementById('edit_story'));
                     modal.show();
                 })

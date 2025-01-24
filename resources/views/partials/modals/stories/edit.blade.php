@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit_parent_category_modal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="edit_story" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <!--begin::Modal content-->
@@ -6,7 +6,7 @@
             <!--begin::Modal header-->
             <div class="modal-header" id="kt_modal_add_user_header">
                 <!--begin::Modal title-->
-                <h2 class="fw-bold">Edit Parent Category</h2>
+                <h2 class="fw-bold">Update Story</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
@@ -18,22 +18,21 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form action="{{route('parent-category.update')}}" id="edit_parent_categoy_form" method="POST">
+                <form action="{{route('story.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PATCH')
                     <!--begin::Scroll-->
-                    <input type="hidden" id="parent_category_id" name="parent_category_id" value="">
+                    <input type="hidden" id="story_id" name="story_id" value="">
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
+                            <iframe src="" id="preview-story" frameborder="0"></iframe>
                             <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">Parent Category Name</label>
+                            <label class="required fw-semibold fs-6 mb-2">Update Story</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" name="name" id="parent_category_name_edit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Parent Category Name"/>
-                            <span class="text-danger" id="edit_parent_category_name_err" style="display: none;">Parent Category name is required</span>
+                            <input type="text" name="story" id="story" class="form-control form-control-solid mb-3 mb-lg-0"/>
                             <!--end::Input-->
-                            @error('name')
+                            @error('story')
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->

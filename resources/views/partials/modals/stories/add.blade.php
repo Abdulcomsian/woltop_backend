@@ -18,7 +18,7 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form action="{{route('product.store')}}" id="add_parent_categoy_form" method="POST">
+                <form action="{{route('story.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Scroll-->
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
@@ -26,8 +26,8 @@
                         <div class="fv-row mb-7">
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <label for="story">Please upload story</label>
-                            <input type="file" name="story" id="story" class="form-control form-control-solid mb-3 mb-lg-0" required/>
+                            <label for="story" class="required mb-2">Please upload story</label>
+                            <input type="file" name="story" id="story" class="form-control form-control-solid mb-3 mb-lg-0" accept="video/*" required/>
                             <!--end::Input-->
                             @error('story')
                                 <span class="text-danger">{{ $message }}</span> 

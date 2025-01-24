@@ -83,10 +83,10 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('product.index') ? 'here show' : '' }}">
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('tool.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
-            <a class="menu-link {{ request()->routeIs('product.index') ? 'active' : '' }}" href="{{ route('product.index') }}">
+            <a class="menu-link {{ request()->routeIs('tool.index') ? 'active' : '' }}" href="{{ route('tool.index') }}">
                 <span class="menu-icon"><i class="fas fa-tools"></i></span>
                 <span class="menu-title">Manage Tools</span>
             </a>

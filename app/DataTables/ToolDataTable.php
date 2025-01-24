@@ -21,7 +21,7 @@ class ToolDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->addColumn('action', function($query) {
-                return view('pages.stories.columns.action', compact("query"));
+                return view('pages.tools.columns.action', compact("query"));
             })
             ->editColumn('image', function ($query) {
                 $img = '<img src="'.asset('assets/wolpin_media/tools/' . $query->image).'" alt="Avatar" height="50">';

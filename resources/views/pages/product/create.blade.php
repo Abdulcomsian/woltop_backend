@@ -43,6 +43,10 @@
         }
 
         /* drags imags styles end.. */
+
+        #addSection {
+            display: block !important;
+        }
     </style>
     @section('page-title', 'Products')
     <div class="row g-4">
@@ -81,6 +85,53 @@
                         Product Type
                     </button>
                 </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="delivery_detail-tab" data-bs-toggle="tab"
+                        data-bs-target="#delivery_detail" type="button" role="tab" aria-controls="delivery_detail"
+                        aria-selected="false">
+                        Delivery Detail
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="dos_dont-tab" data-bs-toggle="tab" data-bs-target="#dos_dont"
+                        type="button" role="tab" aria-controls="dos_dont" aria-selected="false">
+                        Dos Dont
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="design_application_details-tab" data-bs-toggle="tab"
+                        data-bs-target="#design_application_details" type="button" role="tab"
+                        aria-controls="design_application_details" aria-selected="false">
+                        Design Application
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="storage_usage_details-tab" data-bs-toggle="tab"
+                        data-bs-target="#storage_usage_details" type="button" role="tab"
+                        aria-controls="storage_usage_details" aria-selected="false">
+                        Storage Usage Details
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="installation_steps-tab" data-bs-toggle="tab"
+                        data-bs-target="#installation_steps" type="button" role="tab"
+                        aria-controls="installation_steps" aria-selected="false">
+                        Installation Steps
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="products_features-tab" data-bs-toggle="tab"
+                        data-bs-target="#products_features" type="button" role="tab"
+                        aria-controls="products_features" aria-selected="false">
+                        Products Features
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="product_seo-tab" data-bs-toggle="tab" data-bs-target="#product_seo"
+                        type="button" role="tab" aria-controls="product_seo" aria-selected="false">
+                        Products Seo
+                    </button>
+                </li>
             </ul>
         </div>
 
@@ -91,7 +142,7 @@
                 aria-labelledby="description-tab">
                 <div class="col-md-4">
                     <label for="description" class="form-label fw-semibold">Description</label>
-                    <small class="text-muted d-block">
+                    <small class="text-muted d-block mb-2">
                         Edit your product description and necessary information from here.
                     </small>
                 </div>
@@ -138,12 +189,13 @@
                 </div>
                 <hr class="dotted-line my-4">
             </div>
+
             <!-- Featured Image Tab -->
             <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab"
                 style="flex-wrap: nowrap;">
                 <div class="col-md-4">
                     <label for="featured-image" class="form-label fw-semibold">Featured Image</label>
-                    <small class="text-muted d-block">
+                    <small class="text-muted d-block mb-2">
                         Upload your product featured image here.<br>
                         Image size should not be more than 2 MB.
                     </small>
@@ -161,6 +213,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <label for="featured-image" class="form-label fw-semibold">Video</label>
+                    <small class="text-muted d-block">
+                        Upload your product featured video here.<br>
+                        video size should not be more than 50 MB.
+                    </small>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <!-- Featured Image Dropzone -->
+                            <form action="/upload" method="POST" enctype="multipart/form-data"
+                                id="featured-image-upload" class="dropzone custom-page-dropzone">
+                                <div class="dz-message text-gray-600">
+                                    <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                        Video</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <hr class="dotted-line my-4">
             </div>
 
@@ -168,7 +241,7 @@
             <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
                 <div class="col-md-4">
                     <label for="gallery-upload" class="form-label fw-semibold">Gallery</label>
-                    <small class="text-muted d-block">
+                    <small class="text-muted d-block mb-2">
                         Upload your product image gallery here.<br>
                         Image size should not be more than 2 MB.
                     </small>
@@ -186,7 +259,7 @@
                             </form>
 
                             <!-- Gallery Images Section -->
-                            <div class="gallery-images mt-4">
+                            {{-- <div class="gallery-images mt-4">
                                 <div class="row">
                                     <!-- Example Image 1 -->
                                     <div class="col-md-4 mb-3 image-item" draggable="true">
@@ -239,7 +312,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -250,7 +323,7 @@
             <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
                 <div class="col-md-4">
                     <label for="categories" class="form-label fw-semibold">Categories</label>
-                    <small class="text-muted d-block">Select categories from here.</small>
+                    <small class="text-muted d-block mb-2">Select categories from here.</small>
                 </div>
                 <div class="col-md-8">
                     <div class="card">
@@ -297,7 +370,7 @@
             <div class="tab-pane fade" id="product-type" role="tabpanel" aria-labelledby="product-type-tab">
                 <div class="col-md-4">
                     <label for="productType" class="form-label fw-semibold">Product Type</label>
-                    <small class="text-muted d-block">Select product type from here.</small>
+                    <small class="text-muted d-block mb-2">Select product type from here.</small>
                 </div>
                 <div class="col-md-8 mb-5">
                     <div class="card">
@@ -342,7 +415,7 @@
                 </div>
 
                 <!-- Variable Product Form -->
-                <div id="variableProductForm" class="col-md-8" style="display: none;">
+                <div id="variableProductForm" class="col-md-8">
                     <div class="col-md-4">
                         <label for="product-variation" class="form-label fw-semibold">Product Variation
                             Information</label>
@@ -374,15 +447,244 @@
                                         </div>
                                     </div>
                                 </div>
-                                <span class="text-danger removeSection">Remove</span>
+                                <span class="text-danger removeSection cursor-pointer position-absolute p-2"
+                                    style="top: 0; right: 10px;">
+                                    Remove
+                                </span>
                             </div>
                         </div>
                     </div>
-                    <button id="addSection" class="btn btn-primary mt-3">Add New Section</button>
+                    <button id="addSection" class="btn btn-primary mt-3" style="display: block !important;">Add New
+                        Section</button>
                 </div>
 
                 <hr class="dotted-line my-4">
             </div>
+
+            <!-- delivery_detail Tab -->
+            <div class="tab-pane fade" id="delivery_detail" role="tabpanel" aria-labelledby="delivery_detail-tab"
+                style="flex-wrap: nowrap;">
+                <div class="col-md-4">
+                    <label for="featured-image" class="form-label fw-semibold">Delivery Detail</label>
+                    <small class="text-muted d-block mb-2">
+                        Add Your Delivery detail details from here.
+                    </small>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <div class="mb-3">
+                                <label for="city_details" class="form-label">City Details</label>
+                                <input type="text" id="city_details" class="form-control"
+                                    placeholder="Enter City Details">
+                            </div>
+                            <div class="mb-3">
+                                <label for="days" class="form-label">Days</label>
+                                <input type="text" id="days" class="form-control" placeholder="Enter Days">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="dotted-line my-4">
+            </div>
+
+            <!-- dos_dont Tab -->
+            <div class="tab-pane fade" id="dos_dont" role="tabpanel" aria-labelledby="dos_dont-tab"
+                style="flex-wrap: nowrap;">
+                <div class="col-md-4">
+                    <label for="featured-image" class="form-label fw-semibold">Dos Dont</label>
+                    <small class="text-muted d-block mb-2">
+                        Add Your Dos Dont details from here.
+                    </small>
+                </div>
+                <div class="col-md-8">
+                    <div id="dynamicFieldsContainer">
+                        <!-- Initial input field -->
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Enter dos or dont" />
+                            <button class="btn btn-danger remove-field" type="button">Remove</button>
+                        </div>
+                    </div>
+                    <button id="addFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
+                </div>
+                <hr class="dotted-line my-4">
+            </div>
+
+            <!-- design_application_details Tab -->
+            <div class="tab-pane fade" id="design_application_details" role="tabpanel"
+                aria-labelledby="design_application_details-tab" style="flex-wrap: nowrap;">
+                <div class="col-md-4">
+                    <label for="featured-image" class="form-label fw-semibold">Design_Application Details</label>
+                    <small class="text-muted d-block mb-2">
+                        Add Your Design_Application Details from here.
+                    </small>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <div class="mb-3">
+                                <label for="room_type" class="form-label">Room Type</label>
+                                <input type="text" id="room_type" class="form-control"
+                                    placeholder="Enter Room Type">
+                            </div>
+                            <div class="mb-3">
+                                <label for="finish_type" class="form-label">Finish Type</label>
+                                <input type="text" id="finish_type" class="form-control"
+                                    placeholder="Enter Finish Type">
+                            </div>
+                            <div class="mb-3">
+                                <label for="pattern_repeat" class="form-label">Pattern Repeat</label>
+                                <input type="text" id="pattern_repeat" class="form-control"
+                                    placeholder="Enter Pattern Repeat">
+                            </div>
+                            <div class="mb-3">
+                                <label for="pattern_match" class="form-label">Pattern Match</label>
+                                <input type="text" id="pattern_match" class="form-control"
+                                    placeholder="Enter Pattern Match">
+                            </div>
+                            <div class="mb-3">
+                                <label for="application_guide" class="form-label">Application Guide</label>
+                                <input type="text" id="application_guide" class="form-control"
+                                    placeholder="Enter product Application Guide">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="dotted-line my-4">
+            </div>
+
+            <!-- storage_usage_details Tab -->
+            <div class="tab-pane fade" id="storage_usage_details" role="tabpanel"
+                aria-labelledby="storage_usage_details-tab" style="flex-wrap: nowrap;">
+                <div class="col-md-4">
+                    <label for="featured-image" class="form-label fw-semibold">Storage Usage Details</label>
+                    <small class="text-muted d-block mb-2">
+                        Add Your Storage Usage Details from here.
+                    </small>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <div class="mb-3">
+                                <label for="storage" class="form-label">Storage</label>
+                                <input type="text" id="storage" class="form-control"
+                                    placeholder="Enter product Storage">
+                            </div>
+                            <div class="mb-3">
+                                <label for="net_weight" class="form-label">Net Weight</label>
+                                <input type="number" id="net_weight" class="form-control"
+                                    placeholder="Enter product net_weight">
+                            </div>
+                            <div class="mb-3">
+                                <label for="coverage" class="form-label">Coverage</label>
+                                <input type="text" id="coverage" class="form-control"
+                                    placeholder="Enter product coverage">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="dotted-line my-4">
+            </div>
+
+            <!-- installation_steps Tab -->
+            <div class="tab-pane fade" id="installation_steps" role="tabpanel"
+                aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
+                <div class="col-md-4">
+                    <label for="featured-image" class="form-label fw-semibold">Installation Steps Details</label>
+                    <small class="text-muted d-block mb-2">
+                        Add Your Installation Steps Details from here.
+                    </small>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" class="form-control"
+                                    placeholder="Enter product name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <input type="text" id="description" class="form-control"
+                                    placeholder="Enter product description">
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image</label>
+                                <form action="/upload" method="POST" enctype="multipart/form-data"
+                                    id="gallery-upload" class="dropzone custom-page-dropzone">
+                                    <div class="dz-message text-gray-600">
+                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                            Images</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="dotted-line my-4">
+            </div>
+
+            <!-- Products Features Tab -->
+            <div class="tab-pane fade" id="products_features" role="tabpanel"
+                aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
+                <div class="col-md-4">
+                    <label for="featured-image" class="form-label fw-semibold">Products Features</label>
+                    <small class="text-muted d-block mb-2">
+                        Add Your Products features details from here.
+                    </small>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" class="form-control"
+                                    placeholder="Enter product name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image</label>
+                                <form action="/upload" method="POST" enctype="multipart/form-data"
+                                    id="gallery-upload" class="dropzone custom-page-dropzone">
+                                    <div class="dz-message text-gray-600">
+                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                            Images</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="dotted-line my-4">
+            </div>
+
+            <!-- product_seo Tab -->
+            <div class="tab-pane fade" id="product_seo" role="tabpanel" aria-labelledby="product_seo-tab"
+                style="flex-wrap: nowrap;">
+                <div class="col-md-4">
+                    <label for="featured-image" class="form-label fw-semibold">Product Seo</label>
+                    <small class="text-muted d-block mb-2">
+                        Add Your Product Seo Details from here.
+                    </small>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <div class="mb-3">
+                                <label for="metaTitle" class="form-label">Meta Title </label>
+                                <input type="text" id="metaTitle" class="form-control"
+                                    placeholder="Enter product Meta Title">
+                            </div>
+                            <div class="mb-3">
+                                <label for="metaDesc" class="form-label">Meta Description</label>
+                                <input type="text" id="metaDesc" class="form-control"
+                                    placeholder="Enter product Meta Description">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="dotted-line my-4">
+            </div>
+
         </div>
         <div class="d-flex justify-content-end">
             {{-- <button type="button" class="btn btn-secondary me-2">Cancel</button> --}}
@@ -571,59 +873,83 @@
             });
 
             // Existing gallery drag-and-drop logic
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     const gallery = document.querySelector('.gallery-images .row');
+
+            //     gallery.addEventListener('dragstart', function(e) {
+            //         if (e.target.classList.contains('image-item')) {
+            //             e.target.classList.add('dragging');
+            //         }
+            //     });
+
+            //     gallery.addEventListener('dragend', function(e) {
+            //         if (e.target.classList.contains('image-item')) {
+            //             e.target.classList.remove('dragging');
+            //         }
+            //     });
+
+            //     gallery.addEventListener('dragover', function(e) {
+            //         e.preventDefault();
+            //         const draggingItem = document.querySelector('.dragging');
+            //         const afterElement = getDragAfterElement(gallery, e.clientY);
+
+            //         if (afterElement == null) {
+            //             gallery.appendChild(draggingItem);
+            //         } else {
+            //             gallery.insertBefore(draggingItem, afterElement);
+            //         }
+            //     });
+
+            //     function getDragAfterElement(container, y) {
+            //         const draggableElements = [...container.querySelectorAll('.image-item:not(.dragging)')];
+
+            //         return draggableElements.reduce((closest, child) => {
+            //             const box = child.getBoundingClientRect();
+            //             const offset = y - box.top - box.height / 2;
+
+            //             if (offset < 0 && offset > closest.offset) {
+            //                 return {
+            //                     offset: offset,
+            //                     element: child
+            //                 };
+            //             } else {
+            //                 return closest;
+            //             }
+            //         }, {
+            //             offset: Number.NEGATIVE_INFINITY
+            //         }).element;
+            //     }
+
+            //     document.querySelectorAll('.delete-btn').forEach(button => {
+            //         button.addEventListener('click', function() {
+            //             const imageItem = this.closest('.image-item');
+            //             imageItem.remove();
+            //         });
+            //     });
+            // });
+
+            // dos logic
             document.addEventListener('DOMContentLoaded', function() {
-                const gallery = document.querySelector('.gallery-images .row');
+                const container = document.getElementById('dynamicFieldsContainer');
+                const addButton = document.getElementById('addFieldButton');
 
-                gallery.addEventListener('dragstart', function(e) {
-                    if (e.target.classList.contains('image-item')) {
-                        e.target.classList.add('dragging');
-                    }
-                });
-
-                gallery.addEventListener('dragend', function(e) {
-                    if (e.target.classList.contains('image-item')) {
-                        e.target.classList.remove('dragging');
-                    }
-                });
-
-                gallery.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    const draggingItem = document.querySelector('.dragging');
-                    const afterElement = getDragAfterElement(gallery, e.clientY);
-
-                    if (afterElement == null) {
-                        gallery.appendChild(draggingItem);
-                    } else {
-                        gallery.insertBefore(draggingItem, afterElement);
-                    }
-                });
-
-                function getDragAfterElement(container, y) {
-                    const draggableElements = [...container.querySelectorAll('.image-item:not(.dragging)')];
-
-                    return draggableElements.reduce((closest, child) => {
-                        const box = child.getBoundingClientRect();
-                        const offset = y - box.top - box.height / 2;
-
-                        if (offset < 0 && offset > closest.offset) {
-                            return {
-                                offset: offset,
-                                element: child
-                            };
-                        } else {
-                            return closest;
-                        }
-                    }, {
-                        offset: Number.NEGATIVE_INFINITY
-                    }).element;
+                function addField() {
+                    const fieldHTML = `
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Enter dos or dont" />
+                <button class="btn btn-danger remove-field" type="button">Remove</button>
+            </div>
+        `;
+                    container.insertAdjacentHTML('beforeend', fieldHTML);
                 }
 
-                document.querySelectorAll('.delete-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const imageItem = this.closest('.image-item');
-                        imageItem.remove();
-                    });
+                container.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-field')) {
+                        e.target.closest('.input-group').remove();
+                    }
                 });
+
+                addButton.addEventListener('click', addField);
             });
 
             // Product type logic
@@ -653,20 +979,51 @@
             });
 
 
-            // variation add remove login
             document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('addSection').addEventListener('click', function() {
-                    const sectionsContainer = document.getElementById('sectionsContainer');
-                    const newSection = document.querySelector('.section').cloneNode(
-                        true);
+                const addSectionButton = document.getElementById('addSection');
+                const sectionsContainer = document.getElementById('sectionsContainer');
 
-                    newSection.querySelector('.attributeName').value = '';
-                    newSection.querySelector('.attributeValue').value = '';
+                // Force the button to be visible
+                addSectionButton.style.display = 'block';
 
+                function createNewSection() {
+                    const newSection = document.createElement('div');
+                    newSection.className = 'card mb-3 section';
+                    newSection.innerHTML = `
+            <div class="card-body d-flex gap-2 py-4">
+                <div class="row w-100 relative">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label for="attributeName" class="form-label">Attribute Name</label>
+                            <select class="form-select attributeName">
+                                <option value="">Select...</option>
+                                <option value="1">File Type</option>
+                                <option value="2">Color</option>
+                                <option value="3">Size</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="mb-3">
+                            <label for="attributeValue" class="form-label">Attribute Value</label>
+                            <input type="text" class="form-control attributeValue" placeholder="Enter Attribute Value">
+                        </div>
+                    </div>
+                </div>
+                <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
+                    Remove
+                </span>
+            </div>
+        `;
+                    return newSection;
+                }
+
+                addSectionButton.addEventListener('click', function() {
+                    const newSection = createNewSection();
                     sectionsContainer.appendChild(newSection);
                 });
 
-                document.getElementById('sectionsContainer').addEventListener('click', function(e) {
+                sectionsContainer.addEventListener('click', function(e) {
                     if (e.target.classList.contains('removeSection')) {
                         e.target.closest('.section').remove();
                     }

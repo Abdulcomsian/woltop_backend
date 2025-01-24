@@ -109,10 +109,10 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('team.index') ? 'here show' : '' }}">
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('blog.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
-            <a class="menu-link {{ request()->routeIs('team.index') ? 'active' : '' }}" href="{{ route('team.index') }}">
+            <a class="menu-link {{ request()->routeIs('blog.index') ? 'active' : '' }}" href="{{ route('blog.index') }}">
                 <span class="menu-icon"><i class="fa-brands fa-blogger"></i></span>
                 <span class="menu-title">Manage Blogs</span>
             </a>
@@ -122,10 +122,10 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('team.index') ? 'here show' : '' }}">
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('faq.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
-            <a class="menu-link {{ request()->routeIs('team.index') ? 'active' : '' }}" href="{{ route('team.index') }}">
+            <a class="menu-link {{ request()->routeIs('faq.index') ? 'active' : '' }}" href="{{ route('faq.index') }}">
                 <span class="menu-icon"><i class="fas fa-question"></i></span>
                 <span class="menu-title">Manage FAQs</span>
             </a>
@@ -135,10 +135,10 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('users') ? 'here show' : '' }}">
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
-            <a class="menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+            <a class="menu-link {{ request()->routeIs('user.index') ? 'active' : '' }}" href="{{ route('user.index') }}">
                 <span class="menu-icon"><i class="fa-solid fa-users"></i></span>
                 <span class="menu-title">Users</span>
             </a>

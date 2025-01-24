@@ -15,7 +15,7 @@
             <div class="card-toolbar">
                 <!--begin::Add user-->
                 <a href="#"> {{-- open model here --}}
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_story">
                         <span><i class="fa fa-plus"></i></span>
                         Add Story
                     </button>
@@ -37,9 +37,9 @@
         <!--end::Card body-->
     </div>
 
-    @include('partials.modals.product.add')
-    @include('partials.modals.product.edit')
-    @include('partials.modals.product.delete')
+    @include('partials.modals.stories.add')
+    @include('partials.modals.stories.edit')
+    @include('partials.modals.stories.delete')
     @push('scripts')
     {{ $dataTable->scripts() }}
     <script>

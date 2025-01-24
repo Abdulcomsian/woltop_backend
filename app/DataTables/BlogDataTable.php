@@ -2,14 +2,18 @@
 
 namespace App\DataTables;
 
-use App\Models\User;
-use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\EloquentDataTable;
-use Yajra\DataTables\Services\DataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Yajra\DataTables\EloquentDataTable;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Yajra\DataTables\Html\Button;
+use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Services\DataTable;
 
-class UsersDataTable extends DataTable
+class BlogDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,6 +27,10 @@ class UsersDataTable extends DataTable
             ->editColumn("created_at", function($query){
                 return date("Y-m-d", strtotime($query->created_at));
             })
+            ->editColumn('image', function ($query) {
+                $img = '<img src="'.asset('assets/wolpin_media/blogs/' . $query->image).'" alt="Avatar" height="50">';
+                return $img; // how do I render HTML here
+            })
             ->addColumn('action', function($query){
                 return view('pages.categories.columns.action', compact("query"));
             })
@@ -30,16 +38,12 @@ class UsersDataTable extends DataTable
             ->setRowId('id');
     }
 
-
     /**
      * Get the query source of dataTable.
      */
-    public function query(User $model): QueryBuilder
+    public function query(Blog $model): QueryBuilder
     {
-        return $model->newQuery()
-        ->whereHas('roles', function($query){
-            $query->where('name', '!=', 'admin');
-        });
+        return $model->newQuery();
     }
 
     /**
@@ -48,14 +52,13 @@ class UsersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('users-table')
-            ->columns($this->getColumns())
-            ->minifiedAjax()
-            ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>",)
-            ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
-            ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-            ->orderBy(2);
-        }
+                    ->setTableId('blog-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
+                    ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
+                    ->orderBy([3, "desc"]);
+    }
 
     /**
      * Get the dataTable columns definition.
@@ -69,8 +72,11 @@ class UsersDataTable extends DataTable
               ->orderable(false)
               ->width(30)
               ->addClass('text-center'),
-            Column::make('name'),
-            Column::make('email'),
+            // Column::make('id'),
+            Column::make('title'),
+            Column::make('slug'),
+            Column::make('short_description'),
+            Column::make('image'),
             Column::make('created_at'),
             Column::computed('action')
                   ->exportable(false)
@@ -85,6 +91,6 @@ class UsersDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Users_' . date('YmdHis');
+        return 'Categories_' . date('YmdHis');
     }
 }

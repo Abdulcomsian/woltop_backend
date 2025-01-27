@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::delete('delete', 'delete')->name('delete');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
+            Route::post('fetch-attributes-values', 'fetchAttributesValues')->name('attributes.values');
         });
     
     // Stories

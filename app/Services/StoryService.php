@@ -21,15 +21,33 @@ class StoryService
             $data['story']->move($path, $fileName);
         }
 
-        $story = new $this->model;
-        $story->path = $fileName ?? null;
-        $story->save();
+        $save = new $this->model;
+        $save->path = $fileName ?? null;
+        $save->save();
 
-        return $story;
+        return $save;
     }
 
     public function edit($id){
         return $this->model::findOrFail($id);
+    }
+
+    public function update($data){
+        if(isset($data['story'])){
+            $fileName = rand() . '.' . $data['story']->extension();
+            $path = public_path("assets/wolpin_media/stories/");
+            $data['story']->move($path, $fileName);
+        }
+
+        $update = $this->model::find($data['story_id']);
+        $update->path = $fileName ?? null;
+        $update->save();
+        return $update;
+    }
+
+    public function delete($data){
+        $destroy = $this->model::findOrFail($data['story_id']);
+        $destroy->delete();
     }
     
 }

@@ -20,17 +20,22 @@
                 <!--begin::Form-->
                 <form action="{{route('story.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method("PATCH")
                     <!--begin::Scroll-->
                     <input type="hidden" id="story_id" name="story_id" value="">
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <iframe src="" id="preview-story" frameborder="0"></iframe>
+                        <div class="row">
+                            <video id="preview-story" width="560" height="315" controls>
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="fv-row mb-7 mt-4">
                             <!--begin::Label-->
                             <label class="required fw-semibold fs-6 mb-2">Update Story</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" name="story" id="story" class="form-control form-control-solid mb-3 mb-lg-0"/>
+                            <input type="file" name="story" id="story" class="form-control form-control-solid mb-3 mb-lg-0" accept="video/*" required/>
                             <!--end::Input-->
                             @error('story')
                             <span class="text-danger">{{ $message }}</span> @enderror

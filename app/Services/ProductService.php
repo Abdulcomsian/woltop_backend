@@ -2,15 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\AttributeValue;
 use App\Models\Product;
 
 class ProductService
 {
     protected $model;
-
-    public function __construct(Product $model)
+    protected $attributeModel;
+    public function __construct(Product $model, AttributeValue $attributeModel)
     {
         $this->model = $model;
+        $this->attributeModel = $attributeModel;
     }
 
     public function store($data)
@@ -66,5 +68,9 @@ class ProductService
         $update->save();
 
         return $update;
+    }
+
+    public function fetchAttributeValues($data){
+        return $this->attributeModel::where('attribute_id', $data->attribute_id)->get();
     }
 }

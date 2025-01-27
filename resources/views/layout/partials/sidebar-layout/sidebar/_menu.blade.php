@@ -43,6 +43,19 @@
     </div>
     <!--end:Menu item-->
 
+     <!--begin:Menu item-->
+     {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('product.index') ? 'here show' : '' }}">
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link {{ request()->routeIs('product.index') ? 'active' : '' }}" href="{{ route('product.index') }}">
+                <span class="menu-icon"><i class="fa-solid fa-cube"></i></span>
+                <span class="menu-title">Manage Variables</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+    </div> --}}
+    <!--end:Menu item-->
+
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('product.index') ? 'here show' : '' }}">
         <div class="menu-item">

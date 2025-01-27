@@ -61,9 +61,18 @@
                     document.querySelector("#category_name_edit").value = data.data.name;
                     document.querySelector("#category_id").value = data.data.id;
                     if(data.data.image != ""){
-                        let imageUrl = data.data.image;
-                        let url = `${imageUrl}`;
+                        let imageName = data.data.image;
+                        let url = `{{asset("assets/wolpin_media/categories/" . ':imageurl')}}`.replace(":imageurl", imageName);
                         document.querySelector("#category_image_style").style.backgroundImage = `url('${url}')`;
+                    }
+                    const parentCategorySelect = document.querySelector('select[name="edit_parent_cat_id"]');
+                    const parentCatId = data.data.parent_category_id;
+                    if(parentCatId != null){
+                        parentCategorySelect.value = parentCatId;
+                        $(parentCategorySelect).val(parentCatId).trigger('change');
+                    }else{
+                        parentCategorySelect.value = 'none';
+                        $(parentCategorySelect).val('none').trigger('change');
                     }
                     var editModal = new bootstrap.Modal(document.getElementById('edit_category_modal'));
                     editModal.show();

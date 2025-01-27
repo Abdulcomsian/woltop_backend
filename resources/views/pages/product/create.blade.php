@@ -157,11 +157,11 @@
                             </div>
 
                             <!-- Slug Input Field -->
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="slug" class="form-label">Slug</label>
                                 <input type="text" id="slug" class="form-control"
                                     placeholder="Enter product slug" readonly>
-                            </div>
+                            </div> --}}
 
                             <!-- Description Textarea -->
                             <div class="mb-3">
@@ -333,9 +333,12 @@
                                 <label for="parent-category" class="form-label">Parent Category</label>
                                 <select id="parent-category" class="form-select">
                                     <option value="">Select Parent Category</option>
-                                    <option value="1">Category 1</option>
-                                    <option value="2">Category 2</option>
-                                    <option value="3">Category 3</option>
+                                    <option value="none" selected>None</option>
+                                    @isset($parent_categories)
+                                        @foreach($parent_categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    @endisset
                                 </select>
                             </div>
 
@@ -343,9 +346,11 @@
                             <div class="mb-3">
                                 <label for="category" class="form-label">Category</label>
                                 <select id="category" class="form-select" multiple="multiple">
-                                    <option value="a">Category A</option>
-                                    <option value="b">Category B</option>
-                                    <option value="c">Category C</option>
+                                    @isset($categories)
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    @endisset
                                 </select>
                             </div>
 
@@ -353,9 +358,11 @@
                             <div class="mb-3">
                                 <label for="tags" class="form-label">Tags</label>
                                 <select id="tags" class="form-select" multiple="multiple">
-                                    <option value="a">Tag A</option>
-                                    <option value="b">Tag B</option>
-                                    <option value="c">Tag C</option>
+                                    @isset($tags)
+                                        @foreach($tags as $tag)
+                                            <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                        @endforeach
+                                    @endisset
                                 </select>
                                 <small class="text-muted">Select multiple tags if needed.</small>
                             </div>
@@ -431,19 +438,19 @@
                                     <div class="col-3">
                                         <div class="mb-3">
                                             <label for="attributeName" class="form-label">Attribute Name</label>
-                                            <select class="form-select attributeName">
+                                            <select class="form-select attributeName attribute-change">
                                                 <option value="">Select...</option>
-                                                <option value="1">File Type</option>
-                                                <option value="2">Color</option>
-                                                <option value="3">Size</option>
+                                                @isset($attributes)
+                                                    @foreach($attributes as $attribute)
+                                                        <option value="{{$attribute->id}}">{{$attribute->name}}</option>
+                                                    @endforeach
+                                                @endisset
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-9">
-                                        <div class="mb-3">
-                                            <label for="attributeValue" class="form-label">Attribute Value</label>
-                                            <input type="text" class="form-control attributeValue"
-                                                placeholder="Enter Attribute Value">
+                                        <div class="mb-3 attribute-values">
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -977,44 +984,38 @@
 
                 $(productTypeDropdown).on('change', toggleForms);
             });
-
+            const attributes = @json($attributes);
 
             document.addEventListener('DOMContentLoaded', function() {
                 const addSectionButton = document.getElementById('addSection');
                 const sectionsContainer = document.getElementById('sectionsContainer');
-
-                // Force the button to be visible
                 addSectionButton.style.display = 'block';
-
                 function createNewSection() {
                     const newSection = document.createElement('div');
                     newSection.className = 'card mb-3 section';
                     newSection.innerHTML = `
-            <div class="card-body d-flex gap-2 py-4">
-                <div class="row w-100 relative">
-                    <div class="col-3">
-                        <div class="mb-3">
-                            <label for="attributeName" class="form-label">Attribute Name</label>
-                            <select class="form-select attributeName">
-                                <option value="">Select...</option>
-                                <option value="1">File Type</option>
-                                <option value="2">Color</option>
-                                <option value="3">Size</option>
-                            </select>
+                    <div class="card-body d-flex gap-2 py-4">
+                        <div class="row w-100 relative">
+                            <div class="col-3">
+                                <div class="mb-3">
+                                    <label for="attributeName" class="form-label">Attribute Name</label>
+                                    <select class="form-select attributeName attribute-change">
+                                        <option value="">Select...</option>
+                                        ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="mb-3 attribute-values">
+                                    
+                                </div>
+                            </div>
                         </div>
+                        <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
+                            Remove
+                        </span>
                     </div>
-                    <div class="col-9">
-                        <div class="mb-3">
-                            <label for="attributeValue" class="form-label">Attribute Value</label>
-                            <input type="text" class="form-control attributeValue" placeholder="Enter Attribute Value">
-                        </div>
-                    </div>
-                </div>
-                <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
-                    Remove
-                </span>
-            </div>
-        `;
+                `;
                     return newSection;
                 }
 
@@ -1028,7 +1029,46 @@
                         e.target.closest('.section').remove();
                     }
                 });
+
+                sectionsContainer.addEventListener('change', function (e) {
+                    if (e.target.classList.contains('attribute-change')) {
+                        const selectedVal = e.target.value;
+                        if (selectedVal) {
+                            const url = "{{ route('product.attributes.values') }}"; // Backend route
+
+                            // Make a fetch request
+                            fetch(url, {
+                                method: 'POST', // Use POST if you are sending data
+                                headers: {
+                                    'Content-Type': 'application/json', // Send JSON data
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
+                                },
+                                body: JSON.stringify({
+                                    attribute_id: selectedVal // Send the selected attribute ID
+                                })
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.json();
+                            })
+                            .then(res => {
+                                console.log(res.data);
+                                const attributeValues = document.querySelectorAll('.attribute-values');
+                                attributeValues.forEach(el => {
+                                    el.value = res.data; // Set the fetched value
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error fetching data:', error);
+                            });
+                        }
+                    }
+                });
             });
+
+            
         </script>
     @endpush
 </x-default-layout>

@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('featured_image')->nullable();
             $table->enum('product_type', ['simple', 'variable'])->default('simple');
             $table->enum('status', ['draft', 'publish'])->default('draft');
+            $table->string("meta_title")->nullable();
+            $table->longText("meta_description")->nullable();
             $table->foreign('color_id')->on("colors")->references("id");
             $table->timestamps();
             $table->softDeletes();

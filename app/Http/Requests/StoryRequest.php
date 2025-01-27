@@ -14,6 +14,7 @@ class StoryRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "story_id" => "sometimes",
             "story" => "required",
         ];
     }

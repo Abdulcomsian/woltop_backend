@@ -44,13 +44,12 @@
     {{ $dataTable->scripts() }}
     <script>
         function deleteProduct(id){
-            document.querySelector("#product_id_delete").value = id;
-            var deleteModal = new bootstrap.Modal(document.getElementById('delete_product_modal'));
+            document.querySelector("#story_id_delete").value = id;
+            var deleteModal = new bootstrap.Modal(document.getElementById('delete_story'));
             deleteModal.show();
         }
 
         function editProduct(id){
-            let id = id;
             let url = `{{ route('story.edit', ':id') }}`.replace(':id', id);
             fetch(url)
                 .then((response) => {
@@ -59,7 +58,11 @@
                     }
                     return response.json();
                 })
-                .then((data) => {
+                .then((res) => {
+                    let file_path = `{{ asset('assets/wolpin_media/stories/' . ':path') }}`.replace(":path", res.data.path);
+                    let iFrame = document.querySelector("#preview-story");
+                    iFrame.src = file_path;
+                    document.querySelector("#story_id").value = res.data.id;
                     let modal = new bootstrap.Modal(document.getElementById('edit_story'));
                     modal.show();
                 })

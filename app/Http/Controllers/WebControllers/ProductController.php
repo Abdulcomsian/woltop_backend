@@ -5,7 +5,12 @@ namespace App\Http\Controllers\WebControllers;
 use App\DataTables\ProductDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Models\Attribute as ModelsAttribute;
+use App\Models\Category;
+use App\Models\ParentCategory;
+use App\Models\Tag;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -23,7 +28,11 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('pages.product.create');
+        $parent_categories = ParentCategory::get();
+        $categories = Category::get();
+        $tags = Tag::get();
+        $attributes = ModelsAttribute::get();
+        return view('pages.product.create', compact("parent_categories", "categories", "tags", "attributes"));
     }
 
     public function store(ProductRequest $productRequest)
@@ -69,6 +78,16 @@ class ProductController extends Controller
         } catch(\Exception $e) {
             toastr()->error($e->getMessage());
             return redirect()->back();
+        }
+    }
+
+    public function fetchAttributesValues(Request $request){
+        try{
+            $data = $this->productService->fetchAttributeValues($request);
+            $html = view('partials.components.attributes-values', compact("data"))->render();
+            return response()->json(["data" => $html], 200);
+        }catch(\Exception $e){
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 }

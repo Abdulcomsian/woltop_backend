@@ -10,7 +10,7 @@
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
-                    {!! getIcon('cross','fs-1') !!}
+                    {!! getIcon('cross', 'fs-1') !!}
                 </div>
                 <!--end::Close-->
             </div>
@@ -18,11 +18,15 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form action="{{route('update.category')}}" id="edit_categoy_form" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('update.category') }}" id="edit_categoy_form" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <!--begin::Scroll-->
                     <input type="hidden" id="category_id" name="category_id" value="">
-                    <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                    <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll"
+                        data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto"
+                        data-kt-scroll-dependencies="#kt_modal_add_user_header"
+                        data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -41,42 +45,72 @@
                             <!--end::Image placeholder-->
                             <!--begin::Image input-->
                             {{-- {{ $avatar || $saved_avatar ? '' : 'image-input-empty' }} --}}
-                            <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
+                            <div class="image-input image-input-outline image-input-placeholder"
+                                data-kt-image-input="true">
                                 <!--begin::Preview existing avatar-->
-                                {{-- @if($avatar)
+                                {{-- @if ($avatar)
                                     <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $avatar ? $avatar->temporaryUrl() : '' }});"></div>
                                 @else
                                     <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $saved_avatar }});"></div>
                                 @endif --}}
-                                <div class="image-input-wrapper w-125px h-125px" id="category_image_style" style="background-image: url('{{ image('svg/files/blank-image.svg') }}');"></div>
+                                <div class="image-input-wrapper w-125px h-125px" id="category_image_style"
+                                    style="background-image: url('{{ image('svg/files/blank-image.svg') }}');"></div>
                                 <!--end::Preview existing avatar-->
                                 <!--begin::Label-->
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                    {!! getIcon('pencil','fs-7') !!}
+                                <label
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                    {!! getIcon('pencil', 'fs-7') !!}
                                     <!--begin::Inputs-->
-                                    <input type="file" name="category_image" id="category_image_edit" accept=".png, .jpg, .jpeg"/>
-                                    <input type="hidden" name="avatar_remove" id="avatar_image"/>
+                                    <input type="file" name="category_image" id="category_image_edit"
+                                        accept=".png, .jpg, .jpeg" />
+                                    <input type="hidden" name="avatar_remove" id="avatar_image" />
                                     <!--end::Inputs-->
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Cancel-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-                                    {!! getIcon('cross','fs-2') !!}
+                                <span
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                    {!! getIcon('cross', 'fs-2') !!}
                                 </span>
                                 <!--end::Cancel-->
                                 <!--begin::Remove-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                    {!! getIcon('cross','fs-2') !!}
+                                <span
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                    {!! getIcon('cross', 'fs-2') !!}
                                 </span>
                                 <!--end::Remove-->
                             </div>
                             <!--end::Image input-->
                             <!--begin::Hint-->
                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                            <span class="text-danger" id="edit_category_image_err" style="display: none;">Category image is required</span>
+                            <span class="text-danger" id="edit_category_image_err" style="display: none;">Category image
+                                is required</span>
                             <!--end::Hint-->
                             @error('category_image')
-                            <span class="text-danger">{{ $message }}</span> @enderror
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Select Parent Category</label>
+                            <!--end::Label-->
+                            <select class="form-select form-select-solid" name="edit_parent_cat_id" data-kt-select2="true"
+                                data-allow-clear="true" data-hide-search="true">
+                                <option value="none">None</option>
+                                @forelse ($parentCategories as $parentCat)
+                                    <option value="{{ $parentCat->id }}">{{ $parentCat->name }}</option>
+                                @empty
+                                    <option disabled>No Parent Categories Available</option>
+                                @endforelse
+                            </select>
+                            @error('category_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -85,18 +119,22 @@
                             <label class="required fw-semibold fs-6 mb-2">Category Name</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" name="category_name" id="category_name_edit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category Name"/>
-                            <span class="text-danger" id="edit_category_name_err" style="display: none;">Category name is required</span>
+                            <input type="text" name="category_name" id="category_name_edit"
+                                class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category Name" />
+                            <span class="text-danger" id="edit_category_name_err" style="display: none;">Category name
+                                is required</span>
                             <!--end::Input-->
                             @error('category_name')
-                            <span class="text-danger">{{ $message }}</span> @enderror
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <!--end::Input group-->
                     </div>
                     <!--end::Scroll-->
                     <!--begin::Actions-->
                     <div class="text-center pt-15">
-                        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close">Discard</button>
+                        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal"
+                            aria-label="Close">Discard</button>
                         <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
                             <span class="indicator-label">Submit</span>
                             <span class="indicator-progress">

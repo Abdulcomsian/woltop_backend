@@ -41,4 +41,26 @@ class StoriesController extends Controller
             return response()->json(['success' => false, "msg" => "Something went wrong"], 400);
         }
     }
+
+    public function update(StoryRequest $request){
+        try{
+            $data = $this->service->update($request->validated());
+            toastr()->success('Story Updated Successfully!');
+            return redirect()->back();
+        }catch(\Exception $e){
+            toastr()->error('Something went wrong!');
+            return redirect()->back();
+        }
+    }
+
+    public function delete(Request $request){
+        try{
+            $this->service->delete($request);
+            toastr()->success('Story Deleted Successfully!');
+            return redirect()->back();
+        }catch(\Exception $e){
+            toastr()->error('Something went wrong!');
+            return redirect()->back();
+        }
+    }
 }

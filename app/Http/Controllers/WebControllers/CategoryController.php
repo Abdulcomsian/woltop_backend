@@ -22,7 +22,6 @@ class CategoryController extends Controller
         $request->validate([
             'category_name' => 'required|string|max:255',
             'category_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'parent_cat_id' => 'required|exists:parent_categories,id',
         ]);
         try{
             if($request->file('category_image')){
@@ -34,7 +33,9 @@ class CategoryController extends Controller
 
             $category = new Category();
             $category->name = $request->category_name;
-            $category->parent_category_id = $request->parent_cat_id;
+            if($request->parent_cat_id != "none"){
+                $category->parent_category_id = $request->parent_cat_id;
+            }
             if($request->file('category_image')){
                 $category->image = $fileName;
             }
@@ -51,7 +52,7 @@ class CategoryController extends Controller
     public function deleteCategory(Request $request){
         try{
             $categoryId = $request->category_id;
-            $catsProducts = CategoryProduct::where('category_id', $categoryId)->get();
+            $catsProducts = CategoryProduct::where('category_id', $categoryId)->withTrashed()->get();
             if($catsProducts->count() > 0){ // means this category have products
                 toastr()->error('Category can`t be deleted because this category have products!');
                 return redirect()->back();
@@ -98,9 +99,14 @@ class CategoryController extends Controller
             }
 
             $category = Category::find($request->category_id);
+            if($request->edit_parent_cat_id != "none"){
+                $category->parent_category_id = $request->edit_parent_cat_id;
+            }else{
+                $category->parent_category_id = null;
+            }
             $category->name = $request->category_name;
             if($request->file('category_image')){
-                $category->image = $file_path;
+                $category->image = $fileName;
             }
             if($category->update()){
                 toastr()->success('Category Updated Successfully!');

@@ -368,7 +368,6 @@
                                 </select>
                                 <small class="text-muted">Select multiple tags if needed.</small>
                             </div>
-
                             <!-- Color Select -->
                             <div class="mb-3">
                                 <label for="color" class="form-label">Colors</label>
@@ -463,6 +462,7 @@
                                                 @endisset
                                             </select>
                                         </div>
+
                                     </div>
                                     <div class="col-9">
                                         <div class="mb-3">
@@ -475,6 +475,25 @@
                                                     @endforeach
                                                 @endisset --}}
                                             </select>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="price" class="form-label">Price</label>
+                                                    <input type="number" id="price" class="form-control"
+                                                        placeholder="Enter Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="salePrice" class="form-label">Sale Price</label>
+                                                    <input type="number" id="salePrice" class="form-control"
+                                                        placeholder="Enter Sale Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="SKU" class="form-label">SKU</label>
+                                                    <input type="number" id="sku" class="form-control"
+                                                        placeholder="Enter SKU">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -496,32 +515,25 @@
             <div class="tab-pane fade" id="delivery_detail" role="tabpanel" aria-labelledby="delivery_detail-tab"
                 style="flex-wrap: nowrap;">
                 <div class="col-md-4">
-                    <label for="delivery_detail" class="form-label fw-semibold">Delivery Detail</label>
+                    <label for="featured-image" class="form-label fw-semibold">Delivery Detail</label>
                     <small class="text-muted d-block mb-2">
-                        Add Your Delivery details from here.
+                        Add Your Delivery detail details from here.
                     </small>
                 </div>
                 <div class="col-md-8">
-                    <!-- Dynamic fields container -->
-                    <div id="deliveryFieldsContainer">
-                        <!-- Initial card -->
-                        <div class="card mb-3 p-4 relative">
+                    <div class="card">
+                        <div class="card-body py-4">
                             <div class="mb-3">
                                 <label for="city_details" class="form-label">City Details</label>
-                                <input type="text" class="form-control" placeholder="Enter City Details">
+                                <input type="text" id="city_details" class="form-control"
+                                    placeholder="Enter City Details">
                             </div>
                             <div class="mb-3">
                                 <label for="days" class="form-label">Days</label>
-                                <input type="text" class="form-control" placeholder="Enter Days">
+                                <input type="text" id="days" class="form-control" placeholder="Enter Days">
                             </div>
-                            <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                style="top: 0; right: 10px;">
-                                Remove
-                            </span>
                         </div>
                     </div>
-                    <!-- Add More button -->
-                    <button id="addDeliveryFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
                 </div>
                 <hr class="dotted-line my-4">
             </div>
@@ -628,45 +640,36 @@
             <div class="tab-pane fade" id="installation_steps" role="tabpanel"
                 aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
                 <div class="col-md-4">
-                    <label for="installation_steps" class="form-label fw-semibold">Installation Steps Details</label>
+                    <label for="featured-image" class="form-label fw-semibold">Installation Steps Details</label>
                     <small class="text-muted d-block mb-2">
                         Add Your Installation Steps Details from here.
                     </small>
                 </div>
                 <div class="col-md-8">
-                    <!-- Dynamic fields container -->
-                    <div id="installationFieldsContainer">
-                        <!-- Initial card -->
-                        <div class="card mb-3">
-                            <div class="card-body py-4">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" id="name" class="form-control"
-                                        placeholder="Enter product name">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <input type="text" id="description" class="form-control"
-                                        placeholder="Enter product description">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="image" class="form-label">Image</label>
-                                    <form action="/upload" method="POST" enctype="multipart/form-data"
-                                        id="gallery-upload" class="dropzone custom-page-dropzone">
-                                        <div class="dz-message text-gray-600">
-                                            <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                                Images</span>
-                                        </div>
-                                    </form>
-                                </div>
-                                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                    style="top: 0; right: 10px;">Remove</span>
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" class="form-control"
+                                    placeholder="Enter product name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <input type="text" id="description" class="form-control"
+                                    placeholder="Enter product description">
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image</label>
+                                <form action="/upload" method="POST" enctype="multipart/form-data"
+                                    id="gallery-upload" class="dropzone custom-page-dropzone">
+                                    <div class="dz-message text-gray-600">
+                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                            Images</span>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <!-- Add More button -->
-                    <button id="addInstallationFieldButton" class="btn btn-primary mt-3" type="button">Add
-                        More</button>
                 </div>
                 <hr class="dotted-line my-4">
             </div>
@@ -675,38 +678,31 @@
             <div class="tab-pane fade" id="products_features" role="tabpanel"
                 aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
                 <div class="col-md-4">
-                    <label for="products_features" class="form-label fw-semibold">Products Features</label>
+                    <label for="featured-image" class="form-label fw-semibold">Products Features</label>
                     <small class="text-muted d-block mb-2">
-                        Add your products features details from here.
+                        Add Your Products features details from here.
                     </small>
                 </div>
                 <div class="col-md-8">
-                    <!-- Dynamic fields container -->
-                    <div id="featuresFieldsContainer">
-                        <!-- Initial card -->
-                        <div class="card mb-3">
-                            <div class="card-body py-4">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter product name">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="image" class="form-label">Image</label>
-                                    <form action="/upload" method="POST" enctype="multipart/form-data"
-                                        class="dropzone custom-page-dropzone">
-                                        <div class="dz-message text-gray-600">
-                                            <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                                Images</span>
-                                        </div>
-                                    </form>
-                                </div>
-                                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                    style="top: 0; right: 10px;">Remove</span>
+                    <div class="card">
+                        <div class="card-body py-4">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" id="name" class="form-control"
+                                    placeholder="Enter product name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Image</label>
+                                <form action="/upload" method="POST" enctype="multipart/form-data"
+                                    id="gallery-upload" class="dropzone custom-page-dropzone">
+                                    <div class="dz-message text-gray-600">
+                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                            Images</span>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    <!-- Add More button -->
-                    <button id="addFeatureFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
                 </div>
                 <hr class="dotted-line my-4">
             </div>
@@ -959,63 +955,7 @@
                 updateButtons();
             });
 
-            // Existing gallery drag-and-drop logic
-            // document.addEventListener('DOMContentLoaded', function() {
-            //     const gallery = document.querySelector('.gallery-images .row');
 
-            //     gallery.addEventListener('dragstart', function(e) {
-            //         if (e.target.classList.contains('image-item')) {
-            //             e.target.classList.add('dragging');
-            //         }
-            //     });
-
-            //     gallery.addEventListener('dragend', function(e) {
-            //         if (e.target.classList.contains('image-item')) {
-            //             e.target.classList.remove('dragging');
-            //         }
-            //     });
-
-            //     gallery.addEventListener('dragover', function(e) {
-            //         e.preventDefault();
-            //         const draggingItem = document.querySelector('.dragging');
-            //         const afterElement = getDragAfterElement(gallery, e.clientY);
-
-            //         if (afterElement == null) {
-            //             gallery.appendChild(draggingItem);
-            //         } else {
-            //             gallery.insertBefore(draggingItem, afterElement);
-            //         }
-            //     });
-
-            //     function getDragAfterElement(container, y) {
-            //         const draggableElements = [...container.querySelectorAll('.image-item:not(.dragging)')];
-
-            //         return draggableElements.reduce((closest, child) => {
-            //             const box = child.getBoundingClientRect();
-            //             const offset = y - box.top - box.height / 2;
-
-            //             if (offset < 0 && offset > closest.offset) {
-            //                 return {
-            //                     offset: offset,
-            //                     element: child
-            //                 };
-            //             } else {
-            //                 return closest;
-            //             }
-            //         }, {
-            //             offset: Number.NEGATIVE_INFINITY
-            //         }).element;
-            //     }
-
-            //     document.querySelectorAll('.delete-btn').forEach(button => {
-            //         button.addEventListener('click', function() {
-            //             const imageItem = this.closest('.image-item');
-            //             imageItem.remove();
-            //         });
-            //     });
-            // });
-
-            // dos logic
             document.addEventListener('DOMContentLoaded', function() {
                 const container = document.getElementById('dynamicFieldsContainer');
                 const addButton = document.getElementById('addFieldButton');
@@ -1037,141 +977,6 @@
                 });
 
                 addButton.addEventListener('click', addField);
-            });
-
-            //delivery detail logic
-            document.addEventListener('DOMContentLoaded', function() {
-                const deliveryContainer = document.getElementById('deliveryFieldsContainer');
-                const addDeliveryButton = document.getElementById('addDeliveryFieldButton');
-
-                // Function to add a new delivery field card
-                function addDeliveryField() {
-                    const deliveryFieldHTML = `
-               <div class="card mb-3 p-4 relative">
-                <div class="mb-3">
-                    <label for="city_details" class="form-label">City Details</label>
-                    <input type="text" class="form-control" placeholder="Enter City Details">
-                </div>
-                <div class="mb-3">
-                    <label for="days" class="form-label">Days</label>
-                    <input type="text" class="form-control" placeholder="Enter Days">
-                </div>
-                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                    style="top: 0; right: 10px;">
-                    Remove
-                </span>
-                  </div>
-                    `;
-                    deliveryContainer.insertAdjacentHTML('beforeend', deliveryFieldHTML);
-                }
-
-                // Event listener for removing delivery fields
-                deliveryContainer.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('remove-field')) {
-                        const cardToRemove = e.target.closest('.card'); // Remove only the clicked card
-                        if (cardToRemove) {
-                            cardToRemove.remove();
-                        }
-                    }
-                });
-
-                // Event listener for "Add More" button
-                addDeliveryButton.addEventListener('click', addDeliveryField);
-            });
-
-            //installation logic
-            document.addEventListener('DOMContentLoaded', function() {
-                const installationContainer = document.getElementById('installationFieldsContainer');
-                const addInstallationButton = document.getElementById('addInstallationFieldButton');
-
-                // Function to add a new installation card
-                function addInstallationField() {
-                    const installationFieldHTML = `
-                  <div class="card mb-3">
-                  <div class="card-body py-4">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" placeholder="Enter product name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <input type="text" class="form-control" placeholder="Enter product description">
-                    </div>
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
-                        <form action="/upload" method="POST" enctype="multipart/form-data"
-                            class="dropzone custom-page-dropzone">
-                            <div class="dz-message text-gray-600">
-                                <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                    Images</span>
-                            </div>
-                        </form>
-                    </div>
-                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                        style="top: 0; right: 10px;">Remove</span>
-                    </div>
-                   </div>
-                    `;
-                    installationContainer.insertAdjacentHTML('beforeend', installationFieldHTML);
-                }
-
-                // Handle removing cards and prevent removing all
-                installationContainer.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('remove-field')) {
-                        const cardToRemove = e.target.closest('.card'); // Only remove the clicked card
-                        if (cardToRemove) {
-                            cardToRemove.remove();
-                        }
-                    }
-                });
-
-                // Add event listener for "Add More" button
-                addInstallationButton.addEventListener('click', addInstallationField);
-            });
-
-            //features product logic
-            document.addEventListener('DOMContentLoaded', function() {
-                const featuresContainer = document.getElementById('featuresFieldsContainer');
-                const addFeatureButton = document.getElementById('addFeatureFieldButton');
-
-                // Function to add a new feature card
-                function addFeatureField() {
-                    const featureFieldHTML = `
-               <div class="card mb-3">
-                <div class="card-body py-4">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" placeholder="Enter product name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
-                        <form action="/upload" method="POST" enctype="multipart/form-data"
-                            class="dropzone custom-page-dropzone">
-                            <div class="dz-message text-gray-600">
-                                <span class="block text-lg font-semibold">Drag & Drop or Click to Upload Images</span>
-                            </div>
-                        </form>
-                    </div>
-                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                        style="top: 0; right: 10px;">Remove</span>
-                </div>
-                 </div>
-                  `;
-                    featuresContainer.insertAdjacentHTML('beforeend', featureFieldHTML);
-                }
-
-                // Handle removing feature cards
-                featuresContainer.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('remove-field')) {
-                        const cardToRemove = e.target.closest('.card'); // Only remove the clicked card
-                        if (cardToRemove) {
-                            cardToRemove.remove();
-                        }
-                    }
-                });
-
-                // Add event listener for "Add More" button
-                addFeatureButton.addEventListener('click', addFeatureField);
             });
 
             // Product type logic
@@ -1201,6 +1006,97 @@
             });
             const attributes = @json($attributes);
 
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     const addSectionButton = document.getElementById('addSection');
+            //     const sectionsContainer = document.getElementById('sectionsContainer');
+            //     addSectionButton.style.display = 'block';
+
+            //     function createNewSection() {
+            //         const newSection = document.createElement('div');
+            //         newSection.className = 'card mb-3 section';
+            //         newSection.innerHTML = `
+    //         <div class="card-body d-flex gap-2 py-4">
+    //             <div class="row w-100 relative">
+    //                 <div class="col-3">
+    //                     <div class="mb-3">
+    //                         <label for="attributeName" class="form-label">Attribute Name</label>
+    //                         <select class="form-select attributeName attribute-change">
+    //                             <option value="">Select...</option>
+    //                             ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
+    //                         </select>
+    //                     </div>
+    //                 </div>
+    //                 <div class="col-9">
+    //                     <div class="mb-3">
+    //                                 <label for="attribute-value" class="form-label">Attribute Value</label>
+
+    //                         <select class="form-select form-control-solid attribute-values" multiple>
+    //                             <option value="">Select Attribute Value</option>
+    //                         </select>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
+    //                 Remove
+    //             </span>
+    //         </div>
+    //     `;
+            //         return newSection;
+            //     }
+
+            //     addSectionButton.addEventListener('click', function() {
+            //         const newSection = createNewSection();
+            //         sectionsContainer.appendChild(newSection);
+            //     });
+
+            //     sectionsContainer.addEventListener('click', function(e) {
+            //         if (e.target.classList.contains('removeSection')) {
+            //             e.target.closest('.section').remove();
+            //         }
+            //     });
+
+            //     sectionsContainer.addEventListener('change', function(e) {
+            //         if (e.target.classList.contains('attribute-change')) {
+            //             const selectedVal = e.target.value;
+            //             if (selectedVal) {
+            //                 const url = "{{ route('product.attributes.values') }}"; // Backend route
+
+            //                 // Make a fetch request
+            //                 fetch(url, {
+            //                         method: 'POST', // Use POST if you are sending data
+            //                         headers: {
+            //                             'Content-Type': 'application/json', // Send JSON data
+            //                             'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
+            //                         },
+            //                         body: JSON.stringify({
+            //                             attribute_id: selectedVal // Send the selected attribute ID
+            //                         })
+            //                     })
+            //                     .then(response => {
+            //                         if (!response.ok) {
+            //                             throw new Error(`HTTP error! Status: ${response.status}`);
+            //                         }
+            //                         return response.json();
+            //                     })
+            //                     .then(res => {
+            //                         $('.attribute-values').empty();
+            //                         res.data.forEach(function(item) {
+            //                             $('.attribute-values').append(
+            //                                 `<option value="${item.id}">${item.name}</option>`
+            //                             );
+            //                         });
+            //                         $('.attribute-values').select2({
+            //                             placeholder: "Select Values",
+            //                             allowClear: true,
+            //                         });
+            //                     })
+            //                     .catch(error => {
+            //                         console.error('Error fetching data:', error);
+            //                     });
+            //             }
+            //         }
+            //     });
+            // });
             document.addEventListener('DOMContentLoaded', function() {
                 const addSectionButton = document.getElementById('addSection');
                 const sectionsContainer = document.getElementById('sectionsContainer');
@@ -1210,30 +1106,50 @@
                     const newSection = document.createElement('div');
                     newSection.className = 'card mb-3 section';
                     newSection.innerHTML = `
-                    <div class="card-body d-flex gap-2 py-4">
-                        <div class="row w-100 relative">
-                            <div class="col-3">
-                                <div class="mb-3">
-                                    <label for="attributeName" class="form-label">Attribute Name</label>
-                                    <select class="form-select attributeName attribute-change">
-                                        <option value="">Select...</option>
-                                        ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div class="mb-3">
-                                    <select class="form-control form-control-solid attribute-values" multiple>
-                                        <option value="">Select Attribute Value</option>
-                                    </select>
-                                </div>
-                            </div>
+            <div class="card-body d-flex gap-2 py-4">
+                <div class="row w-100 relative">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label for="attributeName" class="form-label">Attribute Name</label>
+                            <select class="form-select attributeName attribute-change">
+                                <option value="">Select...</option>
+                                ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
+                            </select>
                         </div>
-                        <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
-                            Remove
-                        </span>
                     </div>
-                `;
+                    <div class="col-9">
+                        <div class="mb-3">
+                            <label for="attribute-value" class="form-label">Attribute Value</label>
+                            <select class="form-select form-control-solid attribute-values" multiple>
+                                <option value="">Select Attribute Value</option>
+                            </select>
+                        </div>
+                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="price" class="form-label">Price</label>
+                                                    <input type="number" id="price" class="form-control"
+                                                        placeholder="Enter Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="salePrice" class="form-label">Sale Price</label>
+                                                    <input type="number" id="salePrice" class="form-control"
+                                                        placeholder="Enter Sale Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="SKU" class="form-label">SKU</label>
+                                                    <input type="number" id="sku" class="form-control"
+                                                        placeholder="Enter SKU">
+                                                </div>
+                                            </div>
+                                        </div>
+                    </div>
+                </div>
+                <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
+                    Remove
+                </span>
+            </div>
+        `;
                     return newSection;
                 }
 
@@ -1251,6 +1167,9 @@
                 sectionsContainer.addEventListener('change', function(e) {
                     if (e.target.classList.contains('attribute-change')) {
                         const selectedVal = e.target.value;
+                        const section = e.target.closest('.section');
+                        const attributeValuesDropdown = section.querySelector('.attribute-values');
+
                         if (selectedVal) {
                             const url = "{{ route('product.attributes.values') }}"; // Backend route
 
@@ -1272,13 +1191,14 @@
                                     return response.json();
                                 })
                                 .then(res => {
-                                    $('.attribute-values').empty();
+                                    attributeValuesDropdown.innerHTML = ''; // Clear existing options
                                     res.data.forEach(function(item) {
-                                        $('.attribute-values').append(
-                                            `<option value="${item.id}">${item.name}</option>`
-                                        );
+                                        const option = document.createElement('option');
+                                        option.value = item.id;
+                                        option.text = item.name;
+                                        attributeValuesDropdown.appendChild(option);
                                     });
-                                    $('.attribute-values').select2({
+                                    $(attributeValuesDropdown).select2({
                                         placeholder: "Select Values",
                                         allowClear: true,
                                     });

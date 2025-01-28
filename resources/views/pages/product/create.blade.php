@@ -333,7 +333,8 @@
                                 <label for="parent-category" class="form-label">Parent Category</label>
                                 <select id="parent-category" class="form-select">
                                     <option value="">Select Parent Category</option>
-                                    <option value="none" selected>None</option>
+                                    <option value="all" selected>All</option>
+                                    <option value="none">None <small>(Those who don`t have parent category)</small></option>
                                     @isset($parent_categories)
                                         @foreach($parent_categories as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
@@ -365,6 +366,19 @@
                                     @endisset
                                 </select>
                                 <small class="text-muted">Select multiple tags if needed.</small>
+                            </div>
+
+                            <!-- Color Select -->
+                            <div class="mb-3">
+                                <label for="color" class="form-label">Colors</label>
+                                <select id="color" class="form-select" name="color">
+                                    <option value="">Select Color</option>
+                                    @isset($colors)
+                                        @foreach($colors as $color)
+                                            <option value="{{$color->id}}">{{$color->name}}</option>
+                                        @endforeach
+                                    @endisset
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -449,8 +463,16 @@
                                         </div>
                                     </div>
                                     <div class="col-9">
-                                        <div class="mb-3 attribute-values">
-                                            
+                                        <div class="mb-3">
+                                            <label for="attribute-value" class="form-label">Attribute Value</label>
+                                            <select class="form-select attribute-values" multiple>
+                                                <option value="">Select Attribute Value</option>
+                                                {{-- @isset($data)
+                                                    @foreach($data as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                    @endforeach
+                                                @endisset --}}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -818,6 +840,29 @@
                     allowClear: true
                 });
 
+                $('#parent-category').on('change', function () {
+                    let parent_category_id = $(this).val();
+                    $.ajax({
+                        url: "{{route('product.get.categories')}}",
+                        method: 'POST',
+                        data: {
+                            _token: "{{csrf_token()}}",
+                            parent_category_id: parent_category_id,
+                        },
+                        success: function (response) {
+                            if(response.status == true){
+                                $('#category').empty();
+                                response.data.forEach(function (category) {
+                                    $('#category').append(
+                                        `<option value="${category.id}">${category.name}</option>`
+                                    );
+                                });
+                                console.log('Updated successfully:', response.data);
+                            }
+                        },
+                    });
+                });
+
                 $('#category').select2({
                     placeholder: "Select Category",
                     allowClear: true,
@@ -830,6 +875,16 @@
 
                 $('#productType').select2({
                     placeholder: "Select Type",
+                    allowClear: true,
+                });
+
+                $('#color').select2({
+                    placeholder: "Select Color",
+                    allowClear: true,
+                });
+
+                $('.attribute-values').select2({
+                    placeholder: "Select Values",
                     allowClear: true,
                 });
             });
@@ -942,11 +997,11 @@
 
                 function addField() {
                     const fieldHTML = `
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Enter dos or dont" />
-                <button class="btn btn-danger remove-field" type="button">Remove</button>
-            </div>
-        `;
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Enter dos or dont" />
+                            <button class="btn btn-danger remove-field" type="button">Remove</button>
+                        </div>
+                    `;
                     container.insertAdjacentHTML('beforeend', fieldHTML);
                 }
 
@@ -1006,8 +1061,10 @@
                                 </div>
                             </div>
                             <div class="col-9">
-                                <div class="mb-3 attribute-values">
-                                    
+                                <div class="mb-3">
+                                    <select class="form-control form-control-solid attribute-values" multiple>
+                                        <option value="">Select Attribute Value</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -1054,10 +1111,15 @@
                                 return response.json();
                             })
                             .then(res => {
-                                console.log(res.data);
-                                const attributeValues = document.querySelectorAll('.attribute-values');
-                                attributeValues.forEach(el => {
-                                    el.value = res.data; // Set the fetched value
+                                $('.attribute-values').empty();
+                                res.data.forEach(function (item) {
+                                    $('.attribute-values').append(
+                                        `<option value="${item.id}">${item.name}</option>`
+                                    );
+                                });
+                                $('.attribute-values').select2({
+                                    placeholder: "Select Values",
+                                    allowClear: true,
                                 });
                             })
                             .catch(error => {
@@ -1067,8 +1129,6 @@
                     }
                 });
             });
-
-            
         </script>
     @endpush
 </x-default-layout>

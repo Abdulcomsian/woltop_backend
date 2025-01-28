@@ -3,16 +3,19 @@
 namespace App\Services;
 
 use App\Models\AttributeValue;
+use App\Models\Category;
 use App\Models\Product;
 
 class ProductService
 {
     protected $model;
     protected $attributeModel;
-    public function __construct(Product $model, AttributeValue $attributeModel)
+    protected $categoriesModel;
+    public function __construct(Product $model, AttributeValue $attributeModel, Category $categoriesModel)
     {
         $this->model = $model;
         $this->attributeModel = $attributeModel;
+        $this->categoriesModel = $categoriesModel;
     }
 
     public function store($data)
@@ -72,5 +75,18 @@ class ProductService
 
     public function fetchAttributeValues($data){
         return $this->attributeModel::where('attribute_id', $data->attribute_id)->get();
+    }
+
+    public function getCategories($request)
+    {
+        $query = $this->categoriesModel::query();
+
+        if ($request->parent_category_id === "none") {
+            $query->whereNull('parent_category_id');
+        } elseif ($request->parent_category_id !== "all") {
+            $query->where('parent_category_id', $request->parent_category_id);
+        }
+
+        return $query->get();
     }
 }

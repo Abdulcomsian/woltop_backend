@@ -462,6 +462,20 @@
                                                 @endisset
                                             </select>
                                         </div>
+
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="mb-3">
+                                            <label for="attribute-value" class="form-label">Attribute Value</label>
+                                            <select class="form-select attribute-values" multiple>
+                                                <option value="">Select Attribute Value</option>
+                                                {{-- @isset($data)
+                                                    @foreach ($data as $item)
+                                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                                    @endforeach
+                                                @endisset --}}
+                                            </select>
+                                        </div>
                                         <div class="card">
                                             <div class="card-body py-4">
                                                 <div class="mb-3">
@@ -480,19 +494,6 @@
                                                         placeholder="Enter SKU">
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="mb-3">
-                                            <label for="attribute-value" class="form-label">Attribute Value</label>
-                                            <select class="form-select attribute-values" multiple>
-                                                <option value="">Select Attribute Value</option>
-                                                {{-- @isset($data)
-                                                    @foreach ($data as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                                    @endforeach
-                                                @endisset --}}
-                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -1123,6 +1124,25 @@
                                 <option value="">Select Attribute Value</option>
                             </select>
                         </div>
+                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="price" class="form-label">Price</label>
+                                                    <input type="number" id="price" class="form-control"
+                                                        placeholder="Enter Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="salePrice" class="form-label">Sale Price</label>
+                                                    <input type="number" id="salePrice" class="form-control"
+                                                        placeholder="Enter Sale Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="SKU" class="form-label">SKU</label>
+                                                    <input type="number" id="sku" class="form-control"
+                                                        placeholder="Enter SKU">
+                                                </div>
+                                            </div>
+                                        </div>
                     </div>
                 </div>
                 <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">

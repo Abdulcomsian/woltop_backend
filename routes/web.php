@@ -3,6 +3,8 @@
 use App\Http\Controllers\ApiControllers\AuthController;
 use App\Http\Controllers\WebControllers\Auth\SocialiteController;
 use App\Http\Controllers\WebControllers\{
+    AttributeController,
+    AttributeValueController,
     BlogController,
     CategoryController,
     DashboardController,
@@ -16,6 +18,7 @@ use App\Http\Controllers\WebControllers\{
     ToolController,
     UserController,
 };
+use App\Models\AttributeValue;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,6 +56,32 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::get('edit-category/{id}', [CategoryController::class, 'editCategory'])->name('edit.category');
     Route::post('update-category', [CategoryController::class, 'updateCategory'])->name('update.category');
 
+    // Attributes
+    Route::controller(AttributeController::class)
+        ->prefix('attribute')
+        ->as('attribute.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
+    // Attributes
+    Route::controller(AttributeValueController::class)
+        ->prefix('attributevalue')
+        ->as('attributevalue.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
     // Products
     Route::controller(ProductController::class)
         ->prefix('product')
@@ -65,6 +94,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
             Route::post('fetch-attributes-values', 'fetchAttributesValues')->name('attributes.values');
+            Route::post('get-categories', 'getCategories')->name('get.categories');
         });
     
     // Stories

@@ -43,18 +43,46 @@
     </div>
     <!--end:Menu item-->
 
-     <!--begin:Menu item-->
-     {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('product.index') ? 'here show' : '' }}">
-        <div class="menu-item">
-            <!--begin:Menu link-->
-            <a class="menu-link {{ request()->routeIs('product.index') ? 'active' : '' }}" href="{{ route('product.index') }}">
-                <span class="menu-icon"><i class="fa-solid fa-cube"></i></span>
-                <span class="menu-title">Manage Variables</span>
-            </a>
-            <!--end:Menu link-->
+    <!--begin:Menu item-->
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('attribute.*') || request()->routeIs('attributevalue.*') ? 'here show' : '' }}">
+        <!--begin:Menu link-->
+        <span class="menu-link">
+            <span class="menu-icon">
+                <i class="fa-brands fa-creative-commons-by"></i>
+            </span>
+            <span class="menu-title">Manage Attributes</span>
+            <span class="menu-arrow"></span> <!-- Arrow for the submenu -->
+        </span>
+        <!--end:Menu link-->
+
+        <!--begin:Menu sub-->
+        <div class="menu-sub menu-sub-accordion">
+            <!--begin:Submenu item-->
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('attribute.index') ? 'active' : '' }}" href="{{ route('attribute.index') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Attributes</span>
+                </a>
+            </div>
+            <!--end:Submenu item-->
+
+            <!--begin:Submenu item-->
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('attributevalue.index') ? 'active' : '' }}" href="{{ route('attributevalue.index') }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Attribute Values</span>
+                </a>
+            </div>
+            <!--end:Submenu item-->
         </div>
-    </div> --}}
+        <!--end:Menu sub-->
+    </div>
     <!--end:Menu item-->
+
 
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('product.index') ? 'here show' : '' }}">

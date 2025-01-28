@@ -511,32 +511,39 @@
                 <hr class="dotted-line my-4">
             </div>
 
-            <!-- delivery_detail Tab -->
-            <div class="tab-pane fade" id="delivery_detail" role="tabpanel" aria-labelledby="delivery_detail-tab"
-                style="flex-wrap: nowrap;">
-                <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Delivery Detail</label>
-                    <small class="text-muted d-block mb-2">
-                        Add Your Delivery detail details from here.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="city_details" class="form-label">City Details</label>
-                                <input type="text" id="city_details" class="form-control"
-                                    placeholder="Enter City Details">
-                            </div>
-                            <div class="mb-3">
-                                <label for="days" class="form-label">Days</label>
-                                <input type="text" id="days" class="form-control" placeholder="Enter Days">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="dotted-line my-4">
-            </div>
+           <!-- delivery_detail Tab -->
+           <div class="tab-pane fade" id="delivery_detail" role="tabpanel" aria-labelledby="delivery_detail-tab"
+           style="flex-wrap: nowrap;">
+           <div class="col-md-4">
+               <label for="delivery_detail" class="form-label fw-semibold">Delivery Detail</label>
+               <small class="text-muted d-block mb-2">
+                   Add Your Delivery details from here.
+               </small>
+           </div>
+           <div class="col-md-8">
+               <!-- Dynamic fields container -->
+               <div id="deliveryFieldsContainer">
+                   <!-- Initial card -->
+                   <div class="card mb-3 p-4 relative">
+                       <div class="mb-3">
+                           <label for="city_details" class="form-label">City Details</label>
+                           <input type="text" class="form-control" placeholder="Enter City Details">
+                       </div>
+                       <div class="mb-3">
+                           <label for="days" class="form-label">Days</label>
+                           <input type="text" class="form-control" placeholder="Enter Days">
+                       </div>
+                       <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                           style="top: 0; right: 10px;">
+                           Remove
+                       </span>
+                   </div>
+               </div>
+               <!-- Add More button -->
+               <button id="addDeliveryFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
+           </div>
+           <hr class="dotted-line my-4">
+       </div>
 
             <!-- dos_dont Tab -->
             <div class="tab-pane fade" id="dos_dont" role="tabpanel" aria-labelledby="dos_dont-tab"
@@ -636,73 +643,89 @@
                 <hr class="dotted-line my-4">
             </div>
 
-            <!-- installation_steps Tab -->
-            <div class="tab-pane fade" id="installation_steps" role="tabpanel"
-                aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
-                <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Installation Steps Details</label>
-                    <small class="text-muted d-block mb-2">
-                        Add Your Installation Steps Details from here.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" id="name" class="form-control"
-                                    placeholder="Enter product name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <input type="text" id="description" class="form-control"
-                                    placeholder="Enter product description">
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Image</label>
-                                <form action="/upload" method="POST" enctype="multipart/form-data"
-                                    id="gallery-upload" class="dropzone custom-page-dropzone">
-                                    <div class="dz-message text-gray-600">
-                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                            Images</span>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="dotted-line my-4">
-            </div>
+             <!-- installation_steps Tab -->
+             <div class="tab-pane fade" id="installation_steps" role="tabpanel"
+             aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
+             <div class="col-md-4">
+                 <label for="installation_steps" class="form-label fw-semibold">Installation Steps Details</label>
+                 <small class="text-muted d-block mb-2">
+                     Add Your Installation Steps Details from here.
+                 </small>
+             </div>
+             <div class="col-md-8">
+                 <!-- Dynamic fields container -->
+                 <div id="installationFieldsContainer">
+                     <!-- Initial card -->
+                     <div class="card mb-3">
+                         <div class="card-body py-4">
+                             <div class="mb-3">
+                                 <label for="name" class="form-label">Name</label>
+                                 <input type="text" id="name" class="form-control"
+                                     placeholder="Enter product name">
+                             </div>
+                             <div class="mb-3">
+                                 <label for="description" class="form-label">Description</label>
+                                 <input type="text" id="description" class="form-control"
+                                     placeholder="Enter product description">
+                             </div>
+                             <div class="mb-3">
+                                 <label for="image" class="form-label">Image</label>
+                                 <form action="/upload" method="POST" enctype="multipart/form-data"
+                                     id="gallery-upload" class="dropzone custom-page-dropzone">
+                                     <div class="dz-message text-gray-600">
+                                         <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                             Images</span>
+                                     </div>
+                                 </form>
+                             </div>
+                             <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                 style="top: 0; right: 10px;">Remove</span>
+                         </div>
+                     </div>
+                 </div>
+                 <!-- Add More button -->
+                 <button id="addInstallationFieldButton" class="btn btn-primary mt-3" type="button">Add
+                     More</button>
+             </div>
+             <hr class="dotted-line my-4">
+         </div>
 
-            <!-- Products Features Tab -->
+               <!-- Products Features Tab -->
             <div class="tab-pane fade" id="products_features" role="tabpanel"
                 aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
                 <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Products Features</label>
+                    <label for="products_features" class="form-label fw-semibold">Products Features</label>
                     <small class="text-muted d-block mb-2">
-                        Add Your Products features details from here.
+                        Add your products features details from here.
                     </small>
                 </div>
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" id="name" class="form-control"
-                                    placeholder="Enter product name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Image</label>
-                                <form action="/upload" method="POST" enctype="multipart/form-data"
-                                    id="gallery-upload" class="dropzone custom-page-dropzone">
-                                    <div class="dz-message text-gray-600">
-                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                            Images</span>
-                                    </div>
-                                </form>
+                    <!-- Dynamic fields container -->
+                    <div id="featuresFieldsContainer">
+                        <!-- Initial card -->
+                        <div class="card mb-3">
+                            <div class="card-body py-4">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter product name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Image</label>
+                                    <form action="/upload" method="POST" enctype="multipart/form-data"
+                                        class="dropzone custom-page-dropzone">
+                                        <div class="dz-message text-gray-600">
+                                            <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                                Images</span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                    style="top: 0; right: 10px;">Remove</span>
                             </div>
                         </div>
                     </div>
+                    <!-- Add More button -->
+                    <button id="addFeatureFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
                 </div>
                 <hr class="dotted-line my-4">
             </div>
@@ -977,6 +1000,142 @@
                 });
 
                 addButton.addEventListener('click', addField);
+            });
+
+
+             //delivery detail logic
+             document.addEventListener('DOMContentLoaded', function() {
+                const deliveryContainer = document.getElementById('deliveryFieldsContainer');
+                const addDeliveryButton = document.getElementById('addDeliveryFieldButton');
+
+                // Function to add a new delivery field card
+                function addDeliveryField() {
+                    const deliveryFieldHTML = `
+               <div class="card mb-3 p-4 relative">
+                <div class="mb-3">
+                    <label for="city_details" class="form-label">City Details</label>
+                    <input type="text" class="form-control" placeholder="Enter City Details">
+                </div>
+                <div class="mb-3">
+                    <label for="days" class="form-label">Days</label>
+                    <input type="text" class="form-control" placeholder="Enter Days">
+                </div>
+                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                    style="top: 0; right: 10px;">
+                    Remove
+                </span>
+                  </div>
+                    `;
+                    deliveryContainer.insertAdjacentHTML('beforeend', deliveryFieldHTML);
+                }
+
+                // Event listener for removing delivery fields
+                deliveryContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-field')) {
+                        const cardToRemove = e.target.closest('.card'); // Remove only the clicked card
+                        if (cardToRemove) {
+                            cardToRemove.remove();
+                        }
+                    }
+                });
+
+                // Event listener for "Add More" button
+                addDeliveryButton.addEventListener('click', addDeliveryField);
+            });
+
+            //installation logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const installationContainer = document.getElementById('installationFieldsContainer');
+                const addInstallationButton = document.getElementById('addInstallationFieldButton');
+
+                // Function to add a new installation card
+                function addInstallationField() {
+                    const installationFieldHTML = `
+                  <div class="card mb-3">
+                  <div class="card-body py-4">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" placeholder="Enter product name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" placeholder="Enter product description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <form action="/upload" method="POST" enctype="multipart/form-data"
+                            class="dropzone custom-page-dropzone">
+                            <div class="dz-message text-gray-600">
+                                <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                    Images</span>
+                            </div>
+                        </form>
+                    </div>
+                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                        style="top: 0; right: 10px;">Remove</span>
+                    </div>
+                   </div>
+                    `;
+                    installationContainer.insertAdjacentHTML('beforeend', installationFieldHTML);
+                }
+
+                // Handle removing cards and prevent removing all
+                installationContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-field')) {
+                        const cardToRemove = e.target.closest('.card'); // Only remove the clicked card
+                        if (cardToRemove) {
+                            cardToRemove.remove();
+                        }
+                    }
+                });
+
+                // Add event listener for "Add More" button
+                addInstallationButton.addEventListener('click', addInstallationField);
+            });
+
+            //features product logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const featuresContainer = document.getElementById('featuresFieldsContainer');
+                const addFeatureButton = document.getElementById('addFeatureFieldButton');
+
+                // Function to add a new feature card
+                function addFeatureField() {
+                    const featureFieldHTML = `
+               <div class="card mb-3">
+                <div class="card-body py-4">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" placeholder="Enter product name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <form action="/upload" method="POST" enctype="multipart/form-data"
+                            class="dropzone custom-page-dropzone">
+                            <div class="dz-message text-gray-600">
+                                <span class="block text-lg font-semibold">Drag & Drop or Click to Upload Images</span>
+                            </div>
+                        </form>
+                    </div>
+                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                        style="top: 0; right: 10px;">Remove</span>
+                </div>
+                 </div>
+                  `;
+                    featuresContainer.insertAdjacentHTML('beforeend', featureFieldHTML);
+                }
+
+                // Handle removing feature cards
+                featuresContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-field')) {
+                        const cardToRemove = e.target.closest('.card'); // Only remove the clicked card
+                        if (cardToRemove) {
+                            cardToRemove.remove();
+                        }
+                    }
+                });
+
+                // Add event listener for "Add More" button
+                addFeatureButton.addEventListener('click', addFeatureField);
             });
 
             // Product type logic

@@ -334,10 +334,11 @@
                                 <select id="parent-category" class="form-select">
                                     <option value="">Select Parent Category</option>
                                     <option value="all" selected>All</option>
-                                    <option value="none">None <small>(Those who don`t have parent category)</small></option>
+                                    <option value="none">None <small>(Those who don`t have parent category)</small>
+                                    </option>
                                     @isset($parent_categories)
-                                        @foreach($parent_categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @foreach ($parent_categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -348,8 +349,8 @@
                                 <label for="category" class="form-label">Category</label>
                                 <select id="category" class="form-select" multiple="multiple">
                                     @isset($categories)
-                                        @foreach($categories as $category)
-                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -360,8 +361,8 @@
                                 <label for="tags" class="form-label">Tags</label>
                                 <select id="tags" class="form-select" multiple="multiple">
                                     @isset($tags)
-                                        @foreach($tags as $tag)
-                                            <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                        @foreach ($tags as $tag)
+                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -374,8 +375,8 @@
                                 <select id="color" class="form-select" name="color">
                                     <option value="">Select Color</option>
                                     @isset($colors)
-                                        @foreach($colors as $color)
-                                            <option value="{{$color->id}}">{{$color->name}}</option>
+                                        @foreach ($colors as $color)
+                                            <option value="{{ $color->id }}">{{ $color->name }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -455,8 +456,9 @@
                                             <select class="form-select attributeName attribute-change">
                                                 <option value="">Select...</option>
                                                 @isset($attributes)
-                                                    @foreach($attributes as $attribute)
-                                                        <option value="{{$attribute->id}}">{{$attribute->name}}</option>
+                                                    @foreach ($attributes as $attribute)
+                                                        <option value="{{ $attribute->id }}">{{ $attribute->name }}
+                                                        </option>
                                                     @endforeach
                                                 @endisset
                                             </select>
@@ -468,7 +470,7 @@
                                             <select class="form-select attribute-values" multiple>
                                                 <option value="">Select Attribute Value</option>
                                                 {{-- @isset($data)
-                                                    @foreach($data as $item)
+                                                    @foreach ($data as $item)
                                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                                     @endforeach
                                                 @endisset --}}
@@ -494,25 +496,32 @@
             <div class="tab-pane fade" id="delivery_detail" role="tabpanel" aria-labelledby="delivery_detail-tab"
                 style="flex-wrap: nowrap;">
                 <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Delivery Detail</label>
+                    <label for="delivery_detail" class="form-label fw-semibold">Delivery Detail</label>
                     <small class="text-muted d-block mb-2">
-                        Add Your Delivery detail details from here.
+                        Add Your Delivery details from here.
                     </small>
                 </div>
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
+                    <!-- Dynamic fields container -->
+                    <div id="deliveryFieldsContainer">
+                        <!-- Initial card -->
+                        <div class="card mb-3 p-4 relative">
                             <div class="mb-3">
                                 <label for="city_details" class="form-label">City Details</label>
-                                <input type="text" id="city_details" class="form-control"
-                                    placeholder="Enter City Details">
+                                <input type="text" class="form-control" placeholder="Enter City Details">
                             </div>
                             <div class="mb-3">
                                 <label for="days" class="form-label">Days</label>
-                                <input type="text" id="days" class="form-control" placeholder="Enter Days">
+                                <input type="text" class="form-control" placeholder="Enter Days">
                             </div>
+                            <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                style="top: 0; right: 10px;">
+                                Remove
+                            </span>
                         </div>
                     </div>
+                    <!-- Add More button -->
+                    <button id="addDeliveryFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
                 </div>
                 <hr class="dotted-line my-4">
             </div>
@@ -619,36 +628,45 @@
             <div class="tab-pane fade" id="installation_steps" role="tabpanel"
                 aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
                 <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Installation Steps Details</label>
+                    <label for="installation_steps" class="form-label fw-semibold">Installation Steps Details</label>
                     <small class="text-muted d-block mb-2">
                         Add Your Installation Steps Details from here.
                     </small>
                 </div>
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" id="name" class="form-control"
-                                    placeholder="Enter product name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <input type="text" id="description" class="form-control"
-                                    placeholder="Enter product description">
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Image</label>
-                                <form action="/upload" method="POST" enctype="multipart/form-data"
-                                    id="gallery-upload" class="dropzone custom-page-dropzone">
-                                    <div class="dz-message text-gray-600">
-                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                            Images</span>
-                                    </div>
-                                </form>
+                    <!-- Dynamic fields container -->
+                    <div id="installationFieldsContainer">
+                        <!-- Initial card -->
+                        <div class="card mb-3">
+                            <div class="card-body py-4">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" id="name" class="form-control"
+                                        placeholder="Enter product name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <input type="text" id="description" class="form-control"
+                                        placeholder="Enter product description">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Image</label>
+                                    <form action="/upload" method="POST" enctype="multipart/form-data"
+                                        id="gallery-upload" class="dropzone custom-page-dropzone">
+                                        <div class="dz-message text-gray-600">
+                                            <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                                Images</span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                    style="top: 0; right: 10px;">Remove</span>
                             </div>
                         </div>
                     </div>
+                    <!-- Add More button -->
+                    <button id="addInstallationFieldButton" class="btn btn-primary mt-3" type="button">Add
+                        More</button>
                 </div>
                 <hr class="dotted-line my-4">
             </div>
@@ -657,31 +675,38 @@
             <div class="tab-pane fade" id="products_features" role="tabpanel"
                 aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
                 <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Products Features</label>
+                    <label for="products_features" class="form-label fw-semibold">Products Features</label>
                     <small class="text-muted d-block mb-2">
-                        Add Your Products features details from here.
+                        Add your products features details from here.
                     </small>
                 </div>
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" id="name" class="form-control"
-                                    placeholder="Enter product name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Image</label>
-                                <form action="/upload" method="POST" enctype="multipart/form-data"
-                                    id="gallery-upload" class="dropzone custom-page-dropzone">
-                                    <div class="dz-message text-gray-600">
-                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                            Images</span>
-                                    </div>
-                                </form>
+                    <!-- Dynamic fields container -->
+                    <div id="featuresFieldsContainer">
+                        <!-- Initial card -->
+                        <div class="card mb-3">
+                            <div class="card-body py-4">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter product name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label">Image</label>
+                                    <form action="/upload" method="POST" enctype="multipart/form-data"
+                                        class="dropzone custom-page-dropzone">
+                                        <div class="dz-message text-gray-600">
+                                            <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                                Images</span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                    style="top: 0; right: 10px;">Remove</span>
                             </div>
                         </div>
                     </div>
+                    <!-- Add More button -->
+                    <button id="addFeatureFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
                 </div>
                 <hr class="dotted-line my-4">
             </div>
@@ -840,19 +865,19 @@
                     allowClear: true
                 });
 
-                $('#parent-category').on('change', function () {
+                $('#parent-category').on('change', function() {
                     let parent_category_id = $(this).val();
                     $.ajax({
-                        url: "{{route('product.get.categories')}}",
+                        url: "{{ route('product.get.categories') }}",
                         method: 'POST',
                         data: {
-                            _token: "{{csrf_token()}}",
+                            _token: "{{ csrf_token() }}",
                             parent_category_id: parent_category_id,
                         },
-                        success: function (response) {
-                            if(response.status == true){
+                        success: function(response) {
+                            if (response.status == true) {
                                 $('#category').empty();
-                                response.data.forEach(function (category) {
+                                response.data.forEach(function(category) {
                                     $('#category').append(
                                         `<option value="${category.id}">${category.name}</option>`
                                     );
@@ -1014,6 +1039,141 @@
                 addButton.addEventListener('click', addField);
             });
 
+            //delivery detail logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const deliveryContainer = document.getElementById('deliveryFieldsContainer');
+                const addDeliveryButton = document.getElementById('addDeliveryFieldButton');
+
+                // Function to add a new delivery field card
+                function addDeliveryField() {
+                    const deliveryFieldHTML = `
+               <div class="card mb-3 p-4 relative">
+                <div class="mb-3">
+                    <label for="city_details" class="form-label">City Details</label>
+                    <input type="text" class="form-control" placeholder="Enter City Details">
+                </div>
+                <div class="mb-3">
+                    <label for="days" class="form-label">Days</label>
+                    <input type="text" class="form-control" placeholder="Enter Days">
+                </div>
+                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                    style="top: 0; right: 10px;">
+                    Remove
+                </span>
+                  </div>
+                    `;
+                    deliveryContainer.insertAdjacentHTML('beforeend', deliveryFieldHTML);
+                }
+
+                // Event listener for removing delivery fields
+                deliveryContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-field')) {
+                        const cardToRemove = e.target.closest('.card'); // Remove only the clicked card
+                        if (cardToRemove) {
+                            cardToRemove.remove();
+                        }
+                    }
+                });
+
+                // Event listener for "Add More" button
+                addDeliveryButton.addEventListener('click', addDeliveryField);
+            });
+
+            //installation logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const installationContainer = document.getElementById('installationFieldsContainer');
+                const addInstallationButton = document.getElementById('addInstallationFieldButton');
+
+                // Function to add a new installation card
+                function addInstallationField() {
+                    const installationFieldHTML = `
+                  <div class="card mb-3">
+                  <div class="card-body py-4">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" placeholder="Enter product name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <input type="text" class="form-control" placeholder="Enter product description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <form action="/upload" method="POST" enctype="multipart/form-data"
+                            class="dropzone custom-page-dropzone">
+                            <div class="dz-message text-gray-600">
+                                <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                    Images</span>
+                            </div>
+                        </form>
+                    </div>
+                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                        style="top: 0; right: 10px;">Remove</span>
+                    </div>
+                   </div>
+                    `;
+                    installationContainer.insertAdjacentHTML('beforeend', installationFieldHTML);
+                }
+
+                // Handle removing cards and prevent removing all
+                installationContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-field')) {
+                        const cardToRemove = e.target.closest('.card'); // Only remove the clicked card
+                        if (cardToRemove) {
+                            cardToRemove.remove();
+                        }
+                    }
+                });
+
+                // Add event listener for "Add More" button
+                addInstallationButton.addEventListener('click', addInstallationField);
+            });
+
+            //features product logic
+            document.addEventListener('DOMContentLoaded', function() {
+                const featuresContainer = document.getElementById('featuresFieldsContainer');
+                const addFeatureButton = document.getElementById('addFeatureFieldButton');
+
+                // Function to add a new feature card
+                function addFeatureField() {
+                    const featureFieldHTML = `
+               <div class="card mb-3">
+                <div class="card-body py-4">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" placeholder="Enter product name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <form action="/upload" method="POST" enctype="multipart/form-data"
+                            class="dropzone custom-page-dropzone">
+                            <div class="dz-message text-gray-600">
+                                <span class="block text-lg font-semibold">Drag & Drop or Click to Upload Images</span>
+                            </div>
+                        </form>
+                    </div>
+                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                        style="top: 0; right: 10px;">Remove</span>
+                </div>
+                 </div>
+                  `;
+                    featuresContainer.insertAdjacentHTML('beforeend', featureFieldHTML);
+                }
+
+                // Handle removing feature cards
+                featuresContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-field')) {
+                        const cardToRemove = e.target.closest('.card'); // Only remove the clicked card
+                        if (cardToRemove) {
+                            cardToRemove.remove();
+                        }
+                    }
+                });
+
+                // Add event listener for "Add More" button
+                addFeatureButton.addEventListener('click', addFeatureField);
+            });
+
             // Product type logic
             document.addEventListener('DOMContentLoaded', function() {
                 const productTypeDropdown = document.getElementById('productType');
@@ -1045,6 +1205,7 @@
                 const addSectionButton = document.getElementById('addSection');
                 const sectionsContainer = document.getElementById('sectionsContainer');
                 addSectionButton.style.display = 'block';
+
                 function createNewSection() {
                     const newSection = document.createElement('div');
                     newSection.className = 'card mb-3 section';
@@ -1087,7 +1248,7 @@
                     }
                 });
 
-                sectionsContainer.addEventListener('change', function (e) {
+                sectionsContainer.addEventListener('change', function(e) {
                     if (e.target.classList.contains('attribute-change')) {
                         const selectedVal = e.target.value;
                         if (selectedVal) {
@@ -1095,36 +1256,36 @@
 
                             // Make a fetch request
                             fetch(url, {
-                                method: 'POST', // Use POST if you are sending data
-                                headers: {
-                                    'Content-Type': 'application/json', // Send JSON data
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
-                                },
-                                body: JSON.stringify({
-                                    attribute_id: selectedVal // Send the selected attribute ID
+                                    method: 'POST', // Use POST if you are sending data
+                                    headers: {
+                                        'Content-Type': 'application/json', // Send JSON data
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
+                                    },
+                                    body: JSON.stringify({
+                                        attribute_id: selectedVal // Send the selected attribute ID
+                                    })
                                 })
-                            })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error(`HTTP error! Status: ${response.status}`);
-                                }
-                                return response.json();
-                            })
-                            .then(res => {
-                                $('.attribute-values').empty();
-                                res.data.forEach(function (item) {
-                                    $('.attribute-values').append(
-                                        `<option value="${item.id}">${item.name}</option>`
-                                    );
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! Status: ${response.status}`);
+                                    }
+                                    return response.json();
+                                })
+                                .then(res => {
+                                    $('.attribute-values').empty();
+                                    res.data.forEach(function(item) {
+                                        $('.attribute-values').append(
+                                            `<option value="${item.id}">${item.name}</option>`
+                                        );
+                                    });
+                                    $('.attribute-values').select2({
+                                        placeholder: "Select Values",
+                                        allowClear: true,
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
                                 });
-                                $('.attribute-values').select2({
-                                    placeholder: "Select Values",
-                                    allowClear: true,
-                                });
-                            })
-                            .catch(error => {
-                                console.error('Error fetching data:', error);
-                            });
                         }
                     }
                 });

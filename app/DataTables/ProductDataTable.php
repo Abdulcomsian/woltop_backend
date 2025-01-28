@@ -20,23 +20,23 @@ class ProductDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->addColumn('parent_category', function ($query) {
-                // return $query->parentCategory ? $query->parentCategory->name : 'N/A'; // Display the parent category name
-                return $query->color ? $query->color->name : 'N/A'; // Display the color name
+            ->editColumn('product_type', function ($query) {
+                return $query->product_type == "simple" ? "Simple" : "Variable";
             })
-            ->addColumn('category', function ($query) {
-                // return $query->categories->map(function ($category) {
-                //     return $category->name;
-                // })->implode(', '); // Display the category names
-                return $query->color ? $query->color->name : 'N/A'; // Display the color name
+            ->editColumn('category', function ($query) {
+                return $query->categories->pluck('name')->implode(', ');
             })
-            ->addColumn('color', function ($query) {
-                return $query->color ? $query->color->name : 'N/A'; // Display the color name
-            })
-            ->addColumn('tags', function ($query) {
-                return $query->tags->map(function ($tag) {
-                    return $tag->name;
-                })->implode(', '); // Display the tag names
+            ->editColumn('status', function ($query) {
+                $statusLabels = [
+                    'draft' => ['label' => 'Draft', 'class' => 'badge-light-warning'],
+                    'publish' => ['label' => 'Publish', 'class' => 'badge-light-success'],
+                ];
+                $status = $query->status;
+                $statusLabel = $statusLabels[$status]['label'] ?? 'Unknown';
+                $badgeClass = $statusLabels[$status]['class'] ?? 'badge-light-secondary';
+        
+                // Return the badge HTML
+                return '<span class="badge ' . $badgeClass . '">' . $statusLabel . '</span>';
             })
             ->editColumn('created_at', function ($query) {
                 return $query->created_at->format('Y-m-d');
@@ -44,6 +44,7 @@ class ProductDataTable extends DataTable
             ->addColumn('action', function($query) {
                 return view('pages.product.columns.action', compact("query"));
             })
+            ->rawColumns(['status'])
             ->setRowId('id');
     }
 
@@ -83,14 +84,11 @@ class ProductDataTable extends DataTable
               ->width(30)
               ->addClass('text-center'),
             Column::make('title'),
-            Column::make('color')
-                ->title('Color'),
-                Column::make('parent_category')
-                ->title('Parent Category'),
-            Column::make('category')
-                ->title('Categories'),
-            Column::make('tags')
-                ->title('Tags'),
+            Column::make('product_type')->title("Product Type"),
+            Column::make('category')->title('Categories'),
+            Column::make('price')->title('Price'),
+            Column::make('sale_price')->title('Sale Price'),
+            Column::make('status')->title('Status'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)

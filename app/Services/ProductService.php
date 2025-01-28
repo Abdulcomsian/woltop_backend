@@ -22,9 +22,7 @@ class ProductService
     {
         $save = new $this->model;
         $save->name = $data['name'];
-
         $save->save();
-
         return $save;
     }
 

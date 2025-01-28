@@ -368,7 +368,6 @@
                                 </select>
                                 <small class="text-muted">Select multiple tags if needed.</small>
                             </div>
-
                             <!-- Color Select -->
                             <div class="mb-3">
                                 <label for="color" class="form-label">Colors</label>

@@ -334,10 +334,11 @@
                                 <select id="parent-category" class="form-select">
                                     <option value="">Select Parent Category</option>
                                     <option value="all" selected>All</option>
-                                    <option value="none">None <small>(Those who don`t have parent category)</small></option>
+                                    <option value="none">None <small>(Those who don`t have parent category)</small>
+                                    </option>
                                     @isset($parent_categories)
-                                        @foreach($parent_categories as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @foreach ($parent_categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -348,8 +349,8 @@
                                 <label for="category" class="form-label">Category</label>
                                 <select id="category" class="form-select" multiple="multiple">
                                     @isset($categories)
-                                        @foreach($categories as $category)
-                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -360,8 +361,8 @@
                                 <label for="tags" class="form-label">Tags</label>
                                 <select id="tags" class="form-select" multiple="multiple">
                                     @isset($tags)
-                                        @foreach($tags as $tag)
-                                            <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                        @foreach ($tags as $tag)
+                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -374,8 +375,8 @@
                                 <select id="color" class="form-select" name="color">
                                     <option value="">Select Color</option>
                                     @isset($colors)
-                                        @foreach($colors as $color)
-                                            <option value="{{$color->id}}">{{$color->name}}</option>
+                                        @foreach ($colors as $color)
+                                            <option value="{{ $color->id }}">{{ $color->name }}</option>
                                         @endforeach
                                     @endisset
                                 </select>
@@ -455,11 +456,31 @@
                                             <select class="form-select attributeName attribute-change">
                                                 <option value="">Select...</option>
                                                 @isset($attributes)
-                                                    @foreach($attributes as $attribute)
-                                                        <option value="{{$attribute->id}}">{{$attribute->name}}</option>
+                                                    @foreach ($attributes as $attribute)
+                                                        <option value="{{ $attribute->id }}">{{ $attribute->name }}
+                                                        </option>
                                                     @endforeach
                                                 @endisset
                                             </select>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="price" class="form-label">Price</label>
+                                                    <input type="number" id="price" class="form-control"
+                                                        placeholder="Enter Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="salePrice" class="form-label">Sale Price</label>
+                                                    <input type="number" id="salePrice" class="form-control"
+                                                        placeholder="Enter Sale Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="SKU" class="form-label">SKU</label>
+                                                    <input type="number" id="sku" class="form-control"
+                                                        placeholder="Enter SKU">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-9">
@@ -468,7 +489,7 @@
                                             <select class="form-select attribute-values" multiple>
                                                 <option value="">Select Attribute Value</option>
                                                 {{-- @isset($data)
-                                                    @foreach($data as $item)
+                                                    @foreach ($data as $item)
                                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                                     @endforeach
                                                 @endisset --}}
@@ -840,19 +861,19 @@
                     allowClear: true
                 });
 
-                $('#parent-category').on('change', function () {
+                $('#parent-category').on('change', function() {
                     let parent_category_id = $(this).val();
                     $.ajax({
-                        url: "{{route('product.get.categories')}}",
+                        url: "{{ route('product.get.categories') }}",
                         method: 'POST',
                         data: {
-                            _token: "{{csrf_token()}}",
+                            _token: "{{ csrf_token() }}",
                             parent_category_id: parent_category_id,
                         },
-                        success: function (response) {
-                            if(response.status == true){
+                        success: function(response) {
+                            if (response.status == true) {
                                 $('#category').empty();
-                                response.data.forEach(function (category) {
+                                response.data.forEach(function(category) {
                                     $('#category').append(
                                         `<option value="${category.id}">${category.name}</option>`
                                     );
@@ -934,63 +955,7 @@
                 updateButtons();
             });
 
-            // Existing gallery drag-and-drop logic
-            // document.addEventListener('DOMContentLoaded', function() {
-            //     const gallery = document.querySelector('.gallery-images .row');
 
-            //     gallery.addEventListener('dragstart', function(e) {
-            //         if (e.target.classList.contains('image-item')) {
-            //             e.target.classList.add('dragging');
-            //         }
-            //     });
-
-            //     gallery.addEventListener('dragend', function(e) {
-            //         if (e.target.classList.contains('image-item')) {
-            //             e.target.classList.remove('dragging');
-            //         }
-            //     });
-
-            //     gallery.addEventListener('dragover', function(e) {
-            //         e.preventDefault();
-            //         const draggingItem = document.querySelector('.dragging');
-            //         const afterElement = getDragAfterElement(gallery, e.clientY);
-
-            //         if (afterElement == null) {
-            //             gallery.appendChild(draggingItem);
-            //         } else {
-            //             gallery.insertBefore(draggingItem, afterElement);
-            //         }
-            //     });
-
-            //     function getDragAfterElement(container, y) {
-            //         const draggableElements = [...container.querySelectorAll('.image-item:not(.dragging)')];
-
-            //         return draggableElements.reduce((closest, child) => {
-            //             const box = child.getBoundingClientRect();
-            //             const offset = y - box.top - box.height / 2;
-
-            //             if (offset < 0 && offset > closest.offset) {
-            //                 return {
-            //                     offset: offset,
-            //                     element: child
-            //                 };
-            //             } else {
-            //                 return closest;
-            //             }
-            //         }, {
-            //             offset: Number.NEGATIVE_INFINITY
-            //         }).element;
-            //     }
-
-            //     document.querySelectorAll('.delete-btn').forEach(button => {
-            //         button.addEventListener('click', function() {
-            //             const imageItem = this.closest('.image-item');
-            //             imageItem.remove();
-            //         });
-            //     });
-            // });
-
-            // dos logic
             document.addEventListener('DOMContentLoaded', function() {
                 const container = document.getElementById('dynamicFieldsContainer');
                 const addButton = document.getElementById('addFieldButton');
@@ -1041,38 +1006,131 @@
             });
             const attributes = @json($attributes);
 
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     const addSectionButton = document.getElementById('addSection');
+            //     const sectionsContainer = document.getElementById('sectionsContainer');
+            //     addSectionButton.style.display = 'block';
+
+            //     function createNewSection() {
+            //         const newSection = document.createElement('div');
+            //         newSection.className = 'card mb-3 section';
+            //         newSection.innerHTML = `
+    //         <div class="card-body d-flex gap-2 py-4">
+    //             <div class="row w-100 relative">
+    //                 <div class="col-3">
+    //                     <div class="mb-3">
+    //                         <label for="attributeName" class="form-label">Attribute Name</label>
+    //                         <select class="form-select attributeName attribute-change">
+    //                             <option value="">Select...</option>
+    //                             ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
+    //                         </select>
+    //                     </div>
+    //                 </div>
+    //                 <div class="col-9">
+    //                     <div class="mb-3">
+    //                                 <label for="attribute-value" class="form-label">Attribute Value</label>
+
+    //                         <select class="form-select form-control-solid attribute-values" multiple>
+    //                             <option value="">Select Attribute Value</option>
+    //                         </select>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
+    //                 Remove
+    //             </span>
+    //         </div>
+    //     `;
+            //         return newSection;
+            //     }
+
+            //     addSectionButton.addEventListener('click', function() {
+            //         const newSection = createNewSection();
+            //         sectionsContainer.appendChild(newSection);
+            //     });
+
+            //     sectionsContainer.addEventListener('click', function(e) {
+            //         if (e.target.classList.contains('removeSection')) {
+            //             e.target.closest('.section').remove();
+            //         }
+            //     });
+
+            //     sectionsContainer.addEventListener('change', function(e) {
+            //         if (e.target.classList.contains('attribute-change')) {
+            //             const selectedVal = e.target.value;
+            //             if (selectedVal) {
+            //                 const url = "{{ route('product.attributes.values') }}"; // Backend route
+
+            //                 // Make a fetch request
+            //                 fetch(url, {
+            //                         method: 'POST', // Use POST if you are sending data
+            //                         headers: {
+            //                             'Content-Type': 'application/json', // Send JSON data
+            //                             'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
+            //                         },
+            //                         body: JSON.stringify({
+            //                             attribute_id: selectedVal // Send the selected attribute ID
+            //                         })
+            //                     })
+            //                     .then(response => {
+            //                         if (!response.ok) {
+            //                             throw new Error(`HTTP error! Status: ${response.status}`);
+            //                         }
+            //                         return response.json();
+            //                     })
+            //                     .then(res => {
+            //                         $('.attribute-values').empty();
+            //                         res.data.forEach(function(item) {
+            //                             $('.attribute-values').append(
+            //                                 `<option value="${item.id}">${item.name}</option>`
+            //                             );
+            //                         });
+            //                         $('.attribute-values').select2({
+            //                             placeholder: "Select Values",
+            //                             allowClear: true,
+            //                         });
+            //                     })
+            //                     .catch(error => {
+            //                         console.error('Error fetching data:', error);
+            //                     });
+            //             }
+            //         }
+            //     });
+            // });
             document.addEventListener('DOMContentLoaded', function() {
                 const addSectionButton = document.getElementById('addSection');
                 const sectionsContainer = document.getElementById('sectionsContainer');
                 addSectionButton.style.display = 'block';
+
                 function createNewSection() {
                     const newSection = document.createElement('div');
                     newSection.className = 'card mb-3 section';
                     newSection.innerHTML = `
-                    <div class="card-body d-flex gap-2 py-4">
-                        <div class="row w-100 relative">
-                            <div class="col-3">
-                                <div class="mb-3">
-                                    <label for="attributeName" class="form-label">Attribute Name</label>
-                                    <select class="form-select attributeName attribute-change">
-                                        <option value="">Select...</option>
-                                        ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div class="mb-3">
-                                    <select class="form-control form-control-solid attribute-values" multiple>
-                                        <option value="">Select Attribute Value</option>
-                                    </select>
-                                </div>
-                            </div>
+            <div class="card-body d-flex gap-2 py-4">
+                <div class="row w-100 relative">
+                    <div class="col-3">
+                        <div class="mb-3">
+                            <label for="attributeName" class="form-label">Attribute Name</label>
+                            <select class="form-select attributeName attribute-change">
+                                <option value="">Select...</option>
+                                ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
+                            </select>
                         </div>
-                        <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
-                            Remove
-                        </span>
                     </div>
-                `;
+                    <div class="col-9">
+                        <div class="mb-3">
+                            <label for="attribute-value" class="form-label">Attribute Value</label>
+                            <select class="form-select form-control-solid attribute-values" multiple>
+                                <option value="">Select Attribute Value</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
+                    Remove
+                </span>
+            </div>
+        `;
                     return newSection;
                 }
 
@@ -1087,44 +1145,48 @@
                     }
                 });
 
-                sectionsContainer.addEventListener('change', function (e) {
+                sectionsContainer.addEventListener('change', function(e) {
                     if (e.target.classList.contains('attribute-change')) {
                         const selectedVal = e.target.value;
+                        const section = e.target.closest('.section');
+                        const attributeValuesDropdown = section.querySelector('.attribute-values');
+
                         if (selectedVal) {
                             const url = "{{ route('product.attributes.values') }}"; // Backend route
 
                             // Make a fetch request
                             fetch(url, {
-                                method: 'POST', // Use POST if you are sending data
-                                headers: {
-                                    'Content-Type': 'application/json', // Send JSON data
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
-                                },
-                                body: JSON.stringify({
-                                    attribute_id: selectedVal // Send the selected attribute ID
+                                    method: 'POST', // Use POST if you are sending data
+                                    headers: {
+                                        'Content-Type': 'application/json', // Send JSON data
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
+                                    },
+                                    body: JSON.stringify({
+                                        attribute_id: selectedVal // Send the selected attribute ID
+                                    })
                                 })
-                            })
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error(`HTTP error! Status: ${response.status}`);
-                                }
-                                return response.json();
-                            })
-                            .then(res => {
-                                $('.attribute-values').empty();
-                                res.data.forEach(function (item) {
-                                    $('.attribute-values').append(
-                                        `<option value="${item.id}">${item.name}</option>`
-                                    );
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! Status: ${response.status}`);
+                                    }
+                                    return response.json();
+                                })
+                                .then(res => {
+                                    attributeValuesDropdown.innerHTML = ''; // Clear existing options
+                                    res.data.forEach(function(item) {
+                                        const option = document.createElement('option');
+                                        option.value = item.id;
+                                        option.text = item.name;
+                                        attributeValuesDropdown.appendChild(option);
+                                    });
+                                    $(attributeValuesDropdown).select2({
+                                        placeholder: "Select Values",
+                                        allowClear: true,
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
                                 });
-                                $('.attribute-values').select2({
-                                    placeholder: "Select Values",
-                                    allowClear: true,
-                                });
-                            })
-                            .catch(error => {
-                                console.error('Error fetching data:', error);
-                            });
                         }
                     }
                 });

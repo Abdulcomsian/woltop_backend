@@ -50,216 +50,230 @@
     </style>
     @section('page-title', 'Products')
     <div class="row g-4">
-        <!-- Tabs Navigation -->
-        <div class="nav-tabs-container" style="overflow-x: auto; white-space: nowrap;">
-            <ul class="nav nav-tabs mb-4 text-white" id="product-tabs" role="tablist"
-                style="display: inline-flex; flex-wrap: nowrap;">
-                <li class="nav-item">
-                    <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                        data-bs-target="#description-section" type="button" role="tab"
-                        aria-controls="description-section" aria-selected="false">
-                        Basic Info
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="featured-tab" data-bs-toggle="tab" data-bs-target="#featured"
-                        type="button" role="tab" aria-controls="featured" aria-selected="true">
-                        Featured Image
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="gallery-tab" data-bs-toggle="tab" data-bs-target="#gallery"
-                        type="button" role="tab" aria-controls="gallery" aria-selected="false">
-                        Gallery
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories"
-                        type="button" role="tab" aria-controls="categories" aria-selected="false">
-                        Categories
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="product-type-tab" data-bs-toggle="tab" data-bs-target="#product-type"
-                        type="button" role="tab" aria-controls="product-type" aria-selected="false">
-                        Product Type
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="delivery_detail-tab" data-bs-toggle="tab"
-                        data-bs-target="#delivery_detail" type="button" role="tab" aria-controls="delivery_detail"
-                        aria-selected="false">
-                        Delivery Detail
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="dos_dont-tab" data-bs-toggle="tab" data-bs-target="#dos_dont"
-                        type="button" role="tab" aria-controls="dos_dont" aria-selected="false">
-                        Dos Dont
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="design_application_details-tab" data-bs-toggle="tab"
-                        data-bs-target="#design_application_details" type="button" role="tab"
-                        aria-controls="design_application_details" aria-selected="false">
-                        Design Application
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="storage_usage_details-tab" data-bs-toggle="tab"
-                        data-bs-target="#storage_usage_details" type="button" role="tab"
-                        aria-controls="storage_usage_details" aria-selected="false">
-                        Storage Usage Details
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="installation_steps-tab" data-bs-toggle="tab"
-                        data-bs-target="#installation_steps" type="button" role="tab"
-                        aria-controls="installation_steps" aria-selected="false">
-                        Installation Steps
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="products_features-tab" data-bs-toggle="tab"
-                        data-bs-target="#products_features" type="button" role="tab"
-                        aria-controls="products_features" aria-selected="false">
-                        Products Features
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" id="product_seo-tab" data-bs-toggle="tab" data-bs-target="#product_seo"
-                        type="button" role="tab" aria-controls="product_seo" aria-selected="false">
-                        Products Seo
-                    </button>
-                </li>
-            </ul>
-        </div>
+        <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <!-- Tabs Navigation -->
+            <div class="nav-tabs-container" style="overflow-x: auto; white-space: nowrap;">
+                <ul class="nav nav-tabs mb-4 text-white" id="product-tabs" role="tablist"
+                    style="display: inline-flex; flex-wrap: nowrap;">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                            data-bs-target="#description-section" type="button" role="tab"
+                            aria-controls="description-section" aria-selected="false">
+                            Basic Info
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="featured-tab" data-bs-toggle="tab" data-bs-target="#featured"
+                            type="button" role="tab" aria-controls="featured" aria-selected="true">
+                            Featured Image
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="gallery-tab" data-bs-toggle="tab" data-bs-target="#gallery"
+                            type="button" role="tab" aria-controls="gallery" aria-selected="false">
+                            Gallery
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories"
+                            type="button" role="tab" aria-controls="categories" aria-selected="false">
+                            Categories
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="product-type-tab" data-bs-toggle="tab"
+                            data-bs-target="#product-type" type="button" role="tab" aria-controls="product-type"
+                            aria-selected="false">
+                            Product Type
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="delivery_detail-tab" data-bs-toggle="tab"
+                            data-bs-target="#delivery_detail" type="button" role="tab"
+                            aria-controls="delivery_detail" aria-selected="false">
+                            Delivery Detail
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="dos_dont-tab" data-bs-toggle="tab" data-bs-target="#dos_dont"
+                            type="button" role="tab" aria-controls="dos_dont" aria-selected="false">
+                            Dos Dont
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="design_application_details-tab" data-bs-toggle="tab"
+                            data-bs-target="#design_application_details" type="button" role="tab"
+                            aria-controls="design_application_details" aria-selected="false">
+                            Design Application
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="storage_usage_details-tab" data-bs-toggle="tab"
+                            data-bs-target="#storage_usage_details" type="button" role="tab"
+                            aria-controls="storage_usage_details" aria-selected="false">
+                            Storage Usage Details
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="installation_steps-tab" data-bs-toggle="tab"
+                            data-bs-target="#installation_steps" type="button" role="tab"
+                            aria-controls="installation_steps" aria-selected="false">
+                            Installation Steps
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="products_features-tab" data-bs-toggle="tab"
+                            data-bs-target="#products_features" type="button" role="tab"
+                            aria-controls="products_features" aria-selected="false">
+                            Products Features
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="product_seo-tab" data-bs-toggle="tab"
+                            data-bs-target="#product_seo" type="button" role="tab" aria-controls="product_seo"
+                            aria-selected="false">
+                            Products Seo
+                        </button>
+                    </li>
+                </ul>
+            </div>
 
-        <!-- Tab Content -->
-        <div class="tab-content" id="product-tabs-content">
-            <!-- Description Tab -->
-            <div class="tab-pane fade show active" id="description-section" role="tabpanel"
-                aria-labelledby="description-tab">
-                <div class="col-md-4">
-                    <label for="description" class="form-label fw-semibold">Description</label>
-                    <small class="text-muted d-block mb-2">
-                        Edit your product description and necessary information from here.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <!-- Name Input Field -->
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" id="name" class="form-control"
-                                    placeholder="Enter product name">
-                            </div>
+            <!-- Tab Content -->
+            <div class="tab-content" id="product-tabs-content">
+                <!-- Description Tab -->
+                <div class="tab-pane fade show active" id="description-section" role="tabpanel"
+                    aria-labelledby="description-tab">
+                    <div class="col-md-4">
+                        <label for="description" class="form-label fw-semibold">Description</label>
+                        <small class="text-muted d-block mb-2">
+                            Edit your product description and necessary information from here.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <!-- Name Input Field -->
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" id="name" name="product_name" class="form-control"
+                                        placeholder="Enter product name">
+                                </div>
 
-                            <!-- Slug Input Field -->
-                            {{-- <div class="mb-3">
+                                <!-- Slug Input Field -->
+                                {{-- <div class="mb-3">
                                 <label for="slug" class="form-label">Slug</label>
                                 <input type="text" id="slug" class="form-control"
                                     placeholder="Enter product slug" readonly>
                             </div> --}}
 
-                            <!-- Description Textarea -->
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea id="description" name="description"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label fw-semibold">Status</label><br>
-                                <!-- Published Radio Button -->
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status" id="published"
-                                        value="published">
-                                    <label class="form-check-label" for="published">Published</label>
+                                <!-- Description Textarea -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea id="description" name="description"></textarea>
                                 </div>
-                                <!-- Draft Radio Button -->
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status" id="draft"
-                                        value="draft" checked>
-                                    <label class="form-check-label" for="draft">Draft</label>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Status</label><br>
+                                    <!-- Published Radio Button -->
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" id="published"
+                                            value="published">
+                                        <label class="form-check-label" for="published">Published</label>
+                                    </div>
+                                    <!-- Draft Radio Button -->
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" id="draft"
+                                            value="draft" checked>
+                                        <label class="form-check-label" for="draft">Draft</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <hr class="dotted-line my-4">
                 </div>
-                <hr class="dotted-line my-4">
-            </div>
 
-            <!-- Featured Image Tab -->
-            <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab"
-                style="flex-wrap: nowrap;">
-                <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Featured Image</label>
-                    <small class="text-muted d-block mb-2">
-                        Upload your product featured image here.<br>
-                        Image size should not be more than 2 MB.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <!-- Featured Image Dropzone -->
-                            <form action="/upload" method="POST" enctype="multipart/form-data"
-                                id="featured-image-upload" class="dropzone custom-page-dropzone">
-                                <div class="dz-message text-gray-600">
-                                    <span class="block text-lg font-semibold">Drag & Drop or Click to Upload PDF</span>
+                <!-- Featured Image Tab -->
+                <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab"
+                    style="flex-wrap: nowrap;">
+                    <div class="col-md-4">
+                        <label for="featured-image" class="form-label fw-semibold">Featured Image</label>
+                        <small class="text-muted d-block mb-2">
+                            Upload your product featured image here.<br>
+                            Image size should not be more than 2 MB.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <!-- Featured Image Dropzone -->
+                                {{-- <div class="featured-image-dropzone dropzone custom-page-dropzone">
+                                <div class="dz-message">
+                                    <div>
+                                        <img class="drop-img"
+                                            src="{{ asset('images/dropbox.png') }}"
+                                            alt="">
+                                    </div>
+                                    <h5 class="drop-zone__prompt2" style="color:black;">Upload Featured Image</h5>
                                 </div>
-                            </form>
+                            </div> --}}
+                                <input type="file" name="featured_image" class="form-control form-control-solid">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Video</label>
-                    <small class="text-muted d-block">
-                        Upload your product featured video here.<br>
-                        video size should not be more than 50 MB.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <!-- Featured Image Dropzone -->
-                            <form action="/upload" method="POST" enctype="multipart/form-data"
+                    <div class="col-md-4">
+                        <label for="featured-image" class="form-label fw-semibold">Video</label>
+                        <small class="text-muted d-block">
+                            Upload your product featured video here.<br>
+                            video size should not be more than 50 MB.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <!-- Featured Image Dropzone -->
+                                {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
                                 id="featured-image-upload" class="dropzone custom-page-dropzone">
                                 <div class="dz-message text-gray-600">
                                     <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
                                         Video</span>
                                 </div>
-                            </form>
+                            </form> --}}
+                                <input type="file" name="video" class="form-control form-control-solid"
+                                    accept="video/*">
+                            </div>
                         </div>
                     </div>
+                    <hr class="dotted-line my-4">
                 </div>
-                <hr class="dotted-line my-4">
-            </div>
 
-            <!-- Gallery Tab -->
-            <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
-                <div class="col-md-4">
-                    <label for="gallery-upload" class="form-label fw-semibold">Gallery</label>
-                    <small class="text-muted d-block mb-2">
-                        Upload your product image gallery here.<br>
-                        Image size should not be more than 2 MB.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <!-- Gallery Dropzone -->
-                            <form action="/upload" method="POST" enctype="multipart/form-data" id="gallery-upload"
+                <!-- Gallery Tab -->
+                <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
+                    <div class="col-md-4">
+                        <label for="gallery-upload" class="form-label fw-semibold">Gallery</label>
+                        <small class="text-muted d-block mb-2">
+                            Upload your product image gallery here.<br>
+                            Image size should not be more than 2 MB.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <!-- Gallery Dropzone -->
+                                {{-- <form action="/upload" method="POST" enctype="multipart/form-data" id="gallery-upload"
                                 class="dropzone custom-page-dropzone">
                                 <div class="dz-message text-gray-600">
                                     <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
                                         Images</span>
                                 </div>
-                            </form>
+                            </form> --}}
 
-                            <!-- Gallery Images Section -->
-                            {{-- <div class="gallery-images mt-4">
+                                <input type="file" name="gallery_images[]" class="form-control form-control-solid"
+                                    multiple>
+
+                                <!-- Gallery Images Section -->
+                                {{-- <div class="gallery-images mt-4">
                                 <div class="row">
                                     <!-- Example Image 1 -->
                                     <div class="col-md-4 mb-3 image-item" draggable="true">
@@ -313,569 +327,493 @@
                                     </div>
                                 </div>
                             </div> --}}
-                        </div>
-                    </div>
-                </div>
-                <hr class="dotted-line my-4">
-            </div>
-
-            <!-- Categories Tab -->
-            <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
-                <div class="col-md-4">
-                    <label for="categories" class="form-label fw-semibold">Categories</label>
-                    <small class="text-muted d-block mb-2">Select categories from here.</small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <!-- Parent Category Select -->
-                            <div class="mb-3">
-                                <label for="parent-category" class="form-label">Parent Category</label>
-                                <select id="parent-category" class="form-select">
-                                    <option value="">Select Parent Category</option>
-                                    <option value="all" selected>All</option>
-                                    <option value="none">None <small>(Those who don`t have parent category)</small>
-                                    </option>
-                                    @isset($parent_categories)
-                                        @foreach ($parent_categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    @endisset
-                                </select>
-                            </div>
-
-                            <!-- Category Select -->
-                            <div class="mb-3">
-                                <label for="category" class="form-label">Category</label>
-                                <select id="category" class="form-select" multiple="multiple">
-                                    @isset($categories)
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                        @endforeach
-                                    @endisset
-                                </select>
-                            </div>
-
-                            <!-- Tags Select -->
-                            <div class="mb-3">
-                                <label for="tags" class="form-label">Tags</label>
-                                <select id="tags" class="form-select" multiple="multiple">
-                                    @isset($tags)
-                                        @foreach ($tags as $tag)
-                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                        @endforeach
-                                    @endisset
-                                </select>
-                                <small class="text-muted">Select multiple tags if needed.</small>
-                            </div>
-                            <!-- Color Select -->
-                            <div class="mb-3">
-                                <label for="color" class="form-label">Colors</label>
-                                <select id="color" class="form-select" name="color">
-                                    <option value="">Select Color</option>
-                                    @isset($colors)
-                                        @foreach ($colors as $color)
-                                            <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                        @endforeach
-                                    @endisset
-                                </select>
                             </div>
                         </div>
                     </div>
+                    <hr class="dotted-line my-4">
                 </div>
 
-                <hr class="dotted-line my-4">
-            </div>
-
-            <!-- Product Type Tab -->
-            <div class="tab-pane fade" id="product-type" role="tabpanel" aria-labelledby="product-type-tab">
-                <div class="col-md-4">
-                    <label for="productType" class="form-label fw-semibold">Product Type</label>
-                    <small class="text-muted d-block mb-2">Select product type from here.</small>
-                </div>
-                <div class="col-md-8 mb-5">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="productType" class="form-label">Product Type</label>
-                                <select id="productType" class="form-select">
-                                    <option value="simple">Simple Product</option>
-                                    <option value="variable">Variable Product</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Simple Product Form -->
-                <div id="simpleProductForm" class="col-md-8" style="display: none;">
+                <!-- Categories Tab -->
+                <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
                     <div class="col-md-4">
-                        <label for="product-variation" class="form-label fw-semibold">Simple Product
-                            Information</label>
-                        <small class="text-muted d-block">
-                            Add your simple product description and necessary information
-                        </small>
+                        <label for="categories" class="form-label fw-semibold">Categories</label>
+                        <small class="text-muted d-block mb-2">Select categories from here.</small>
                     </div>
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="price" class="form-label">Price</label>
-                                <input type="number" id="price" class="form-control" placeholder="Enter Price">
-                            </div>
-                            <div class="mb-3">
-                                <label for="salePrice" class="form-label">Sale Price</label>
-                                <input type="number" id="salePrice" class="form-control"
-                                    placeholder="Enter Sale Price">
-                            </div>
-                            <div class="mb-3">
-                                <label for="SKU" class="form-label">SKU</label>
-                                <input type="number" id="sku" class="form-control" placeholder="Enter SKU">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <!-- Parent Category Select -->
+                                <div class="mb-3">
+                                    <label for="parent-category" class="form-label">Parent Category</label>
+                                    <select id="parent-category" name="parent_category" class="form-select">
+                                        <option value="">Select Parent Category</option>
+                                        <option value="all" selected>All</option>
+                                        <option value="none">None <small>(Those who don`t have parent
+                                                category)</small>
+                                        </option>
+                                        @isset($parent_categories)
+                                            @foreach ($parent_categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
+
+                                <!-- Category Select -->
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select id="category" class="form-select" name="categories[]" multiple="multiple">
+                                        @isset($categories)
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
+
+                                <!-- Tags Select -->
+                                <div class="mb-3">
+                                    <label for="tags" class="form-label">Tags</label>
+                                    <select id="tags" class="form-select" name="tags[]" multiple="multiple">
+                                        @isset($tags)
+                                            @foreach ($tags as $tag)
+                                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                    <small class="text-muted">Select multiple tags if needed.</small>
+                                </div>
+                                <!-- Color Select -->
+                                <div class="mb-3">
+                                    <label for="color" class="form-label">Colors</label>
+                                    <select id="color" class="form-select" name="color">
+                                        <option value="">Select Color</option>
+                                        @isset($colors)
+                                            @foreach ($colors as $color)
+                                                <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <hr class="dotted-line my-4">
                 </div>
 
-                <!-- Variable Product Form -->
-                <div id="variableProductForm" class="col-md-8">
+                <!-- Product Type Tab -->
+                <div class="tab-pane fade" id="product-type" role="tabpanel" aria-labelledby="product-type-tab">
                     <div class="col-md-4">
-                        <label for="product-variation" class="form-label fw-semibold">Product Variation
-                            Information</label>
-                        <small class="text-muted d-block">
-                            Add your product variation and necessary information from here
-                        </small>
+                        <label for="productType" class="form-label fw-semibold">Product Type</label>
+                        <small class="text-muted d-block mb-2">Select product type from here.</small>
                     </div>
-                    <div id="sectionsContainer">
-                        <!-- Initial section -->
-                        <div class="card mb-3 section">
-                            <div class="card-body d-flex gap-2 py-4">
-                                <div class="row w-100 relative">
-                                    <div class="col-3">
-                                        <div class="mb-3">
-                                            <label for="attributeName" class="form-label">Attribute Name</label>
-                                            <select class="form-select attributeName attribute-change">
-                                                <option value="">Select...</option>
-                                                @isset($attributes)
-                                                    @foreach ($attributes as $attribute)
-                                                        <option value="{{ $attribute->id }}">{{ $attribute->name }}
-                                                        </option>
-                                                    @endforeach
-                                                @endisset
-                                            </select>
+                    <div class="col-md-8 mb-5">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <div class="mb-3">
+                                    <label for="productType" class="form-label">Product Type</label>
+                                    <select id="productType" class="form-select" name="product_type">
+                                        <option value="simple">Simple Product</option>
+                                        <option value="variable">Variable Product</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simple Product Form -->
+                    <div id="simpleProductForm" class="col-md-8" style="display: none;">
+                        <div class="col-md-4">
+                            <label for="product-variation" class="form-label fw-semibold">Simple Product
+                                Information</label>
+                            <small class="text-muted d-block">
+                                Add your simple product description and necessary information
+                            </small>
+                        </div>
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="number" id="price" name="simple_price" class="form-control"
+                                        placeholder="Enter Price">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="salePrice" class="form-label">Sale Price</label>
+                                    <input type="number" id="salePrice" name="simple_sale_price" class="form-control"
+                                        placeholder="Enter Sale Price">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="SKU" class="form-label">SKU</label>
+                                    <input type="number" id="sku" name="simple_sku" class="form-control"
+                                        placeholder="Enter SKU">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Variable Product Form -->
+                    <div id="variableProductForm" class="col-md-8">
+                        <div class="col-md-4">
+                            <label for="product-variation" class="form-label fw-semibold">Product Variation
+                                Information</label>
+                            <small class="text-muted d-block">
+                                Add your product variation and necessary information from here
+                            </small>
+                        </div>
+                        <div id="sectionsContainer">
+                            <!-- Initial section -->
+                            <div class="card mb-3 section">
+                                <div class="card-body d-flex gap-2 py-4">
+                                    <div class="row w-100 relative">
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="attributeName" class="form-label">Attribute Name</label>
+                                                <select class="form-select attributeName attribute-change" name="attribute_name[]">
+                                                    <option value="">Select...</option>
+                                                    @isset($attributes)
+                                                        @foreach ($attributes as $attribute)
+                                                            <option value="{{ $attribute->id }}">{{ $attribute->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endisset
+                                                </select>
+                                            </div>
+
                                         </div>
-
-                                    </div>
-                                    <div class="col-9">
-                                        <div class="mb-3">
-                                            <label for="attribute-value" class="form-label">Attribute Value</label>
-                                            <select class="form-select attribute-values" multiple>
-                                                <option value="">Select Attribute Value</option>
-                                                {{-- @isset($data)
+                                        <div class="col-9">
+                                            <div class="mb-3">
+                                                <label for="attribute-value" class="form-label">Attribute
+                                                    Value</label>
+                                                <select class="form-select attribute-values" name="attribute_value[]" multiple>
+                                                    <option value="">Select Attribute Value</option>
+                                                    {{-- @isset($data)
                                                     @foreach ($data as $item)
                                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                                     @endforeach
                                                 @endisset --}}
-                                            </select>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card-body py-4">
-                                                <div class="mb-3">
-                                                    <label for="price" class="form-label">Price</label>
-                                                    <input type="number" id="price" class="form-control"
-                                                        placeholder="Enter Price">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="salePrice" class="form-label">Sale Price</label>
-                                                    <input type="number" id="salePrice" class="form-control"
-                                                        placeholder="Enter Sale Price">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="SKU" class="form-label">SKU</label>
-                                                    <input type="number" id="sku" class="form-control"
-                                                        placeholder="Enter SKU">
+                                                </select>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body py-4">
+                                                    <div class="mb-3">
+                                                        <label for="price" class="form-label">Price</label>
+                                                        <input type="number" id="price" name="price[]" class="form-control"
+                                                            placeholder="Enter Price">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="salePrice" class="form-label">Sale Price</label>
+                                                        <input type="number" id="salePrice" name="sale_price[]" class="form-control"
+                                                            placeholder="Enter Sale Price">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="SKU" class="form-label">SKU</label>
+                                                        <input type="number" id="sku" name="sku[]" class="form-control"
+                                                            placeholder="Enter SKU">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <span class="text-danger removeSection cursor-pointer position-absolute p-2"
+                                        style="top: 0; right: 10px;">
+                                        Remove
+                                    </span>
                                 </div>
-                                <span class="text-danger removeSection cursor-pointer position-absolute p-2"
+                            </div>
+                        </div>
+                        <button id="addSection" class="btn btn-primary mt-3" style="display: block !important;">Add
+                            New
+                            Section</button>
+                    </div>
+
+                    <hr class="dotted-line my-4">
+                </div>
+
+                <!-- delivery_detail Tab -->
+                <div class="tab-pane fade" id="delivery_detail" role="tabpanel"
+                    aria-labelledby="delivery_detail-tab" style="flex-wrap: nowrap;">
+                    <div class="col-md-4">
+                        <label for="delivery_detail" class="form-label fw-semibold">Delivery Detail</label>
+                        <small class="text-muted d-block mb-2">
+                            Add Your Delivery details from here.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Dynamic fields container -->
+                        <div id="deliveryFieldsContainer">
+                            <!-- Initial card -->
+                            <div class="card mb-3 p-4 relative">
+                                <div class="mb-3">
+                                    <label for="city_details" class="form-label">City Details</label>
+                                    <input type="text" class="form-control" name="city_details[]" placeholder="Enter City Details">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="days" class="form-label">Days</label>
+                                    <input type="text" class="form-control" name="days_details[]" placeholder="Enter Days">
+                                </div>
+                                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
                                     style="top: 0; right: 10px;">
                                     Remove
                                 </span>
                             </div>
                         </div>
+                        <!-- Add More button -->
+                        <button id="addDeliveryFieldButton" class="btn btn-primary mt-3" type="button">Add
+                            More</button>
                     </div>
-                    <button id="addSection" class="btn btn-primary mt-3" style="display: block !important;">Add New
-                        Section</button>
+                    <hr class="dotted-line my-4">
                 </div>
 
-                <hr class="dotted-line my-4">
-            </div>
-
-           <!-- delivery_detail Tab -->
-           <div class="tab-pane fade" id="delivery_detail" role="tabpanel" aria-labelledby="delivery_detail-tab"
-           style="flex-wrap: nowrap;">
-           <div class="col-md-4">
-               <label for="delivery_detail" class="form-label fw-semibold">Delivery Detail</label>
-               <small class="text-muted d-block mb-2">
-                   Add Your Delivery details from here.
-               </small>
-           </div>
-           <div class="col-md-8">
-               <!-- Dynamic fields container -->
-               <div id="deliveryFieldsContainer">
-                   <!-- Initial card -->
-                   <div class="card mb-3 p-4 relative">
-                       <div class="mb-3">
-                           <label for="city_details" class="form-label">City Details</label>
-                           <input type="text" class="form-control" placeholder="Enter City Details">
-                       </div>
-                       <div class="mb-3">
-                           <label for="days" class="form-label">Days</label>
-                           <input type="text" class="form-control" placeholder="Enter Days">
-                       </div>
-                       <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                           style="top: 0; right: 10px;">
-                           Remove
-                       </span>
-                   </div>
-               </div>
-               <!-- Add More button -->
-               <button id="addDeliveryFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
-           </div>
-           <hr class="dotted-line my-4">
-       </div>
-
-            <!-- dos_dont Tab -->
-            <div class="tab-pane fade" id="dos_dont" role="tabpanel" aria-labelledby="dos_dont-tab"
-                style="flex-wrap: nowrap;">
-                <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Dos Dont</label>
-                    <small class="text-muted d-block mb-2">
-                        Add Your Dos Dont details from here.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div id="dynamicFieldsContainer">
-                        <!-- Initial input field -->
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Enter dos or dont" />
-                            <button class="btn btn-danger remove-field" type="button">Remove</button>
+                <!-- dos_dont Tab -->
+                <div class="tab-pane fade" id="dos_dont" role="tabpanel" aria-labelledby="dos_dont-tab"
+                    style="flex-wrap: nowrap;">
+                    <div class="col-md-4">
+                        <label for="featured-image" class="form-label fw-semibold">Dos Dont</label>
+                        <small class="text-muted d-block mb-2">
+                            Add Your Dos Dont details from here.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <div id="dynamicFieldsContainer">
+                            <!-- Initial input field -->
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Enter dos or dont" name="dos_dont[]"/>
+                                <button class="btn btn-danger remove-field" type="button">Remove</button>
+                            </div>
                         </div>
+                        <button id="addFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
                     </div>
-                    <button id="addFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
+                    <hr class="dotted-line my-4">
                 </div>
-                <hr class="dotted-line my-4">
-            </div>
 
-            <!-- design_application_details Tab -->
-            <div class="tab-pane fade" id="design_application_details" role="tabpanel"
-                aria-labelledby="design_application_details-tab" style="flex-wrap: nowrap;">
-                <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Design_Application Details</label>
-                    <small class="text-muted d-block mb-2">
-                        Add Your Design_Application Details from here.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="room_type" class="form-label">Room Type</label>
-                                <input type="text" id="room_type" class="form-control"
-                                    placeholder="Enter Room Type">
-                            </div>
-                            <div class="mb-3">
-                                <label for="finish_type" class="form-label">Finish Type</label>
-                                <input type="text" id="finish_type" class="form-control"
-                                    placeholder="Enter Finish Type">
-                            </div>
-                            <div class="mb-3">
-                                <label for="pattern_repeat" class="form-label">Pattern Repeat</label>
-                                <input type="text" id="pattern_repeat" class="form-control"
-                                    placeholder="Enter Pattern Repeat">
-                            </div>
-                            <div class="mb-3">
-                                <label for="pattern_match" class="form-label">Pattern Match</label>
-                                <input type="text" id="pattern_match" class="form-control"
-                                    placeholder="Enter Pattern Match">
-                            </div>
-                            <div class="mb-3">
-                                <label for="application_guide" class="form-label">Application Guide</label>
-                                <input type="text" id="application_guide" class="form-control"
-                                    placeholder="Enter product Application Guide">
+                <!-- design_application_details Tab -->
+                <div class="tab-pane fade" id="design_application_details" role="tabpanel"
+                    aria-labelledby="design_application_details-tab" style="flex-wrap: nowrap;">
+                    <div class="col-md-4">
+                        <label for="featured-image" class="form-label fw-semibold">Design_Application Details</label>
+                        <small class="text-muted d-block mb-2">
+                            Add Your Design_Application Details from here.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <div class="mb-3">
+                                    <label for="room_type" class="form-label">Room Type</label>
+                                    <input type="text" id="room_type" class="form-control"
+                                        placeholder="Enter Room Type" name="room_type">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="finish_type" class="form-label">Finish Type</label>
+                                    <input type="text" id="finish_type" class="form-control" name="finish_type"
+                                        placeholder="Enter Finish Type">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pattern_repeat" class="form-label">Pattern Repeat</label>
+                                    <input type="text" id="pattern_repeat" class="form-control" name="pattern_repeat"
+                                        placeholder="Enter Pattern Repeat">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pattern_match" class="form-label">Pattern Match</label>
+                                    <input type="text" id="pattern_match" class="form-control" name="pattern_match"
+                                        placeholder="Enter Pattern Match">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="application_guide" class="form-label">Application Guide</label>
+                                    <input type="text" id="application_guide" class="form-control" name="application_guide"
+                                        placeholder="Enter product Application Guide">
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <hr class="dotted-line my-4">
                 </div>
-                <hr class="dotted-line my-4">
-            </div>
 
-            <!-- storage_usage_details Tab -->
-            <div class="tab-pane fade" id="storage_usage_details" role="tabpanel"
-                aria-labelledby="storage_usage_details-tab" style="flex-wrap: nowrap;">
-                <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Storage Usage Details</label>
-                    <small class="text-muted d-block mb-2">
-                        Add Your Storage Usage Details from here.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="storage" class="form-label">Storage</label>
-                                <input type="text" id="storage" class="form-control"
-                                    placeholder="Enter product Storage">
-                            </div>
-                            <div class="mb-3">
-                                <label for="net_weight" class="form-label">Net Weight</label>
-                                <input type="number" id="net_weight" class="form-control"
-                                    placeholder="Enter product net_weight">
-                            </div>
-                            <div class="mb-3">
-                                <label for="coverage" class="form-label">Coverage</label>
-                                <input type="text" id="coverage" class="form-control"
-                                    placeholder="Enter product coverage">
+                <!-- storage_usage_details Tab -->
+                <div class="tab-pane fade" id="storage_usage_details" role="tabpanel"
+                    aria-labelledby="storage_usage_details-tab" style="flex-wrap: nowrap;">
+                    <div class="col-md-4">
+                        <label for="featured-image" class="form-label fw-semibold">Storage Usage Details</label>
+                        <small class="text-muted d-block mb-2">
+                            Add Your Storage Usage Details from here.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <div class="mb-3">
+                                    <label for="storage" class="form-label">Storage</label>
+                                    <input type="text" id="storage" class="form-control" name="storage"
+                                        placeholder="Enter product Storage">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="net_weight" class="form-label">Net Weight</label>
+                                    <input type="number" id="net_weight" class="form-control" name="net_weight"
+                                        placeholder="Enter product net_weight">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="coverage" class="form-label">Coverage</label>
+                                    <input type="text" id="coverage" class="form-control" name="coverage"
+                                        placeholder="Enter product coverage">
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <hr class="dotted-line my-4">
                 </div>
-                <hr class="dotted-line my-4">
-            </div>
 
-             <!-- installation_steps Tab -->
-             <div class="tab-pane fade" id="installation_steps" role="tabpanel"
-             aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
-             <div class="col-md-4">
-                 <label for="installation_steps" class="form-label fw-semibold">Installation Steps Details</label>
-                 <small class="text-muted d-block mb-2">
-                     Add Your Installation Steps Details from here.
-                 </small>
-             </div>
-             <div class="col-md-8">
-                 <!-- Dynamic fields container -->
-                 <div id="installationFieldsContainer">
-                     <!-- Initial card -->
-                     <div class="card mb-3">
-                         <div class="card-body py-4">
-                             <div class="mb-3">
-                                 <label for="name" class="form-label">Name</label>
-                                 <input type="text" id="name" class="form-control"
-                                     placeholder="Enter product name">
-                             </div>
-                             <div class="mb-3">
-                                 <label for="description" class="form-label">Description</label>
-                                 <input type="text" id="description" class="form-control"
-                                     placeholder="Enter product description">
-                             </div>
-                             <div class="mb-3">
-                                 <label for="image" class="form-label">Image</label>
-                                 <form action="/upload" method="POST" enctype="multipart/form-data"
+                <!-- installation_steps Tab -->
+                <div class="tab-pane fade" id="installation_steps" role="tabpanel"
+                    aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
+                    <div class="col-md-4">
+                        <label for="installation_steps" class="form-label fw-semibold">Installation Steps
+                            Details</label>
+                        <small class="text-muted d-block mb-2">
+                            Add Your Installation Steps Details from here.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Dynamic fields container -->
+                        <div id="installationFieldsContainer">
+                            <!-- Initial card -->
+                            <div class="card mb-3">
+                                <div class="card-body py-4">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" id="name" class="form-control" name="installation_name[]"
+                                            placeholder="Enter product name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Description</label>
+                                        <input type="text" id="description" class="form-control" name="installation_description[]"
+                                            placeholder="Enter product description">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="image" class="form-label">Image</label>
+                                        {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
                                      id="gallery-upload" class="dropzone custom-page-dropzone">
                                      <div class="dz-message text-gray-600">
                                          <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
                                              Images</span>
                                      </div>
-                                 </form>
-                             </div>
-                             <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                 style="top: 0; right: 10px;">Remove</span>
-                         </div>
-                     </div>
-                 </div>
-                 <!-- Add More button -->
-                 <button id="addInstallationFieldButton" class="btn btn-primary mt-3" type="button">Add
-                     More</button>
-             </div>
-             <hr class="dotted-line my-4">
-         </div>
-
-               <!-- Products Features Tab -->
-            <div class="tab-pane fade" id="products_features" role="tabpanel"
-                aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
-                <div class="col-md-4">
-                    <label for="products_features" class="form-label fw-semibold">Products Features</label>
-                    <small class="text-muted d-block mb-2">
-                        Add your products features details from here.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <!-- Dynamic fields container -->
-                    <div id="featuresFieldsContainer">
-                        <!-- Initial card -->
-                        <div class="card mb-3">
-                            <div class="card-body py-4">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" placeholder="Enter product name">
+                                 </form> --}}
+                                        <input type="file" name="installation_steps_images[]"
+                                            class="form-control">
+                                    </div>
+                                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                        style="top: 0; right: 10px;">Remove</span>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="image" class="form-label">Image</label>
-                                    <form action="/upload" method="POST" enctype="multipart/form-data"
+                            </div>
+                        </div>
+                        <!-- Add More button -->
+                        <button id="addInstallationFieldButton" class="btn btn-primary mt-3" type="button">Add
+                            More</button>
+                    </div>
+                    <hr class="dotted-line my-4">
+                </div>
+
+                <!-- Products Features Tab -->
+                <div class="tab-pane fade" id="products_features" role="tabpanel"
+                    aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
+                    <div class="col-md-4">
+                        <label for="products_features" class="form-label fw-semibold">Products Features</label>
+                        <small class="text-muted d-block mb-2">
+                            Add your products features details from here.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Dynamic fields container -->
+                        <div id="featuresFieldsContainer">
+                            <!-- Initial card -->
+                            <div class="card mb-3">
+                                <div class="card-body py-4">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" placeholder="Enter product name" name="products_feature_names[]">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="image" class="form-label">Image</label>
+                                        {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
                                         class="dropzone custom-page-dropzone">
                                         <div class="dz-message text-gray-600">
                                             <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
                                                 Images</span>
                                         </div>
-                                    </form>
+                                    </form> --}}
+                                        <input type="file" name="products_feature_images[]" class="form-control">
+                                    </div>
+                                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                        style="top: 0; right: 10px;">Remove</span>
                                 </div>
-                                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                    style="top: 0; right: 10px;">Remove</span>
+                            </div>
+                        </div>
+                        <!-- Add More button -->
+                        <button id="addFeatureFieldButton" class="btn btn-primary mt-3" type="button">Add
+                            More</button>
+                    </div>
+                    <hr class="dotted-line my-4">
+                </div>
+
+                <!-- product_seo Tab -->
+                <div class="tab-pane fade" id="product_seo" role="tabpanel" aria-labelledby="product_seo-tab"
+                    style="flex-wrap: nowrap;">
+                    <div class="col-md-4">
+                        <label for="featured-image" class="form-label fw-semibold">Product Seo</label>
+                        <small class="text-muted d-block mb-2">
+                            Add Your Product Seo Details from here.
+                        </small>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body py-4">
+                                <div class="mb-3">
+                                    <label for="metaTitle" class="form-label">Meta Title </label>
+                                    <input type="text" id="metaTitle" class="form-control"
+                                        placeholder="Enter product Meta Title">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="metaDesc" class="form-label">Meta Description</label>
+                                    <input type="text" id="metaDesc" class="form-control"
+                                        placeholder="Enter product Meta Description">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Add More button -->
-                    <button id="addFeatureFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
+                    <hr class="dotted-line my-4">
                 </div>
-                <hr class="dotted-line my-4">
-            </div>
 
-            <!-- product_seo Tab -->
-            <div class="tab-pane fade" id="product_seo" role="tabpanel" aria-labelledby="product_seo-tab"
-                style="flex-wrap: nowrap;">
-                <div class="col-md-4">
-                    <label for="featured-image" class="form-label fw-semibold">Product Seo</label>
-                    <small class="text-muted d-block mb-2">
-                        Add Your Product Seo Details from here.
-                    </small>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body py-4">
-                            <div class="mb-3">
-                                <label for="metaTitle" class="form-label">Meta Title </label>
-                                <input type="text" id="metaTitle" class="form-control"
-                                    placeholder="Enter product Meta Title">
-                            </div>
-                            <div class="mb-3">
-                                <label for="metaDesc" class="form-label">Meta Description</label>
-                                <input type="text" id="metaDesc" class="form-control"
-                                    placeholder="Enter product Meta Description">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="dotted-line my-4">
             </div>
-
-        </div>
-        <div class="d-flex justify-content-end">
-            {{-- <button type="button" class="btn btn-secondary me-2">Cancel</button> --}}
-            <button type="button" class="btn btn-primary next-tab-btn me-2">Next</button>
-            <button type="button" class="btn btn-primary">Save Product</button>
-        </div>
+            <div class="d-flex justify-content-end">
+                {{-- <button type="button" class="btn btn-secondary me-2">Cancel</button> --}}
+                <button type="button" class="btn btn-primary next-tab-btn me-2">Next</button>
+                <button type="submit" class="btn btn-primary">Save Product</button>
+            </div>
+        </form>
     </div>
 
     @include('partials.modals.product.delete')
     @push('scripts')
         <script>
+            // Dropzone.autoDiscover = false;
+            // var reportDropZone = new Dropzone(".report-dropzone", {
+            //     paramName: "file",
+            //     maxFilesize: 10,
+            //     maxFiles: 1,
+            //     addRemoveLinks: true,
+            //     acceptedFiles: ".pdf",
+            //     autoProcessQueue: false,
+            //     url: '#',
+            // });
+
+
+
             // Existing deleteProduct function
             function deleteProduct(id) {
                 document.querySelector("#product_id_delete").value = id;
                 var deleteModal = new bootstrap.Modal(document.getElementById('delete_product_modal'));
                 deleteModal.show();
             }
-
-            // Existing Dropzone initialization
-            Dropzone.autoDiscover = false;
-
-            const featuredImageUploadDropzone = new Dropzone("#featured-image-upload", {
-                // url: saveMultipleFilesFromDropZoneRoute, // Uncomment and provide actual URL if needed
-                uploadMultiple: true,
-                parallelUploads: 100,
-                maxFiles: 100,
-                acceptedFiles: ".pdf", // Accept only PDF files
-                addRemoveLinks: true,
-                dictRemoveFile: "Remove",
-                dictDefaultMessage: "Drag & Drop or Click to Upload",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-
-                init: function() {
-                    // Validate file type when added
-                    this.on("addedfile", function(file) {
-                        if (!file.type.match('application/pdf')) {
-                            this.removeFile(file); // Remove invalid file
-                            showErrorNotification('Only PDFs are allowed.');
-                        }
-                    });
-
-                    // Handle sending additional form data when a file is uploaded
-                    this.on("sending", function(file, xhr, formData) {
-                        formData.append('type', 'product_compatibility_files');
-                        formData.append('page_id', pageId); // Assuming `pageId` is defined elsewhere
-                        formData.append('folder', 'product_compatibility');
-                    });
-
-                    // Handle successful multiple file uploads
-                    this.on("successmultiple", function(files, response) {
-                        if (response.status && response.file_details.length === files.length) {
-                            files.forEach((file, index) => {
-                                const fileData = response.file_details[index];
-                                file.file_id = fileData.file_id;
-                            });
-                            showSuccessNotification(response.message);
-                        } else {
-                            showErrorNotification("Mismatch between uploaded files and server response.");
-                        }
-                    });
-
-                    // Handle file removal event
-                    this.on("removedfile", function(file) {
-                        console.log('File removed:', file);
-                    });
-                }
-            });
-
-            const galleryUploadDropzone = new Dropzone("#gallery-upload", {
-                // url: saveMultipleFilesFromDropZoneRoute, // Uncomment and provide actual URL if needed
-                uploadMultiple: true,
-                parallelUploads: 100,
-                maxFiles: 100,
-                acceptedFiles: ".pdf", // Accept only PDF files
-                addRemoveLinks: true,
-                dictRemoveFile: "Remove",
-                dictDefaultMessage: "Drag & Drop or Click to Upload",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-
-                init: function() {
-                    // Validate file type when added
-                    this.on("addedfile", function(file) {
-                        if (!file.type.match('application/pdf')) {
-                            this.removeFile(file); // Remove invalid file
-                            showErrorNotification('Only PDFs are allowed.');
-                        }
-                    });
-
-                    // Handle sending additional form data when a file is uploaded
-                    this.on("sending", function(file, xhr, formData) {
-                        formData.append('type', 'product_compatibility_files');
-                        formData.append('page_id', pageId); // Assuming `pageId` is defined elsewhere
-                        formData.append('folder', 'product_compatibility');
-                    });
-
-                    // Handle successful multiple file uploads
-                    this.on("successmultiple", function(files, response) {
-                        if (response.status && response.file_details.length === files.length) {
-                            files.forEach((file, index) => {
-                                const fileData = response.file_details[index];
-                                file.file_id = fileData.file_id;
-                            });
-                            showSuccessNotification(response.message);
-                        } else {
-                            showErrorNotification("Mismatch between uploaded files and server response.");
-                        }
-                    });
-
-                    // Handle file removal event
-                    this.on("removedfile", function(file) {
-                        console.log('File removed:', file);
-                    });
-                }
-            });
 
             // Existing Select2 initialization
             $(document).ready(function() {
@@ -986,7 +924,7 @@
                 function addField() {
                     const fieldHTML = `
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Enter dos or dont" />
+                            <input type="text" class="form-control" placeholder="Enter dos or dont" name="dos_dont[]"/>
                             <button class="btn btn-danger remove-field" type="button">Remove</button>
                         </div>
                     `;
@@ -1003,8 +941,8 @@
             });
 
 
-             //delivery detail logic
-             document.addEventListener('DOMContentLoaded', function() {
+            //delivery detail logic
+            document.addEventListener('DOMContentLoaded', function() {
                 const deliveryContainer = document.getElementById('deliveryFieldsContainer');
                 const addDeliveryButton = document.getElementById('addDeliveryFieldButton');
 
@@ -1014,11 +952,11 @@
                <div class="card mb-3 p-4 relative">
                 <div class="mb-3">
                     <label for="city_details" class="form-label">City Details</label>
-                    <input type="text" class="form-control" placeholder="Enter City Details">
+                    <input type="text" class="form-control" placeholder="Enter City Details" name="city_details[]">
                 </div>
                 <div class="mb-3">
                     <label for="days" class="form-label">Days</label>
-                    <input type="text" class="form-control" placeholder="Enter Days">
+                    <input type="text" class="form-control" placeholder="Enter Days" name="days_details[]">
                 </div>
                 <span class="text-danger remove-field cursor-pointer position-absolute p-2"
                     style="top: 0; right: 10px;">
@@ -1055,21 +993,15 @@
                   <div class="card-body py-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" placeholder="Enter product name">
+                        <input type="text" class="form-control" placeholder="Enter product name" name="installation_name[]">
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <input type="text" class="form-control" placeholder="Enter product description">
+                        <input type="text" class="form-control" placeholder="Enter product description" name="installation_description[]">
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
-                        <form action="/upload" method="POST" enctype="multipart/form-data"
-                            class="dropzone custom-page-dropzone">
-                            <div class="dz-message text-gray-600">
-                                <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                    Images</span>
-                            </div>
-                        </form>
+                        <input type="file" name="installation_steps_images[]" class="form-control">
                     </div>
                     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
                         style="top: 0; right: 10px;">Remove</span>
@@ -1105,16 +1037,11 @@
                 <div class="card-body py-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" placeholder="Enter product name">
+                        <input type="text" class="form-control" placeholder="Enter product name" name="products_feature_names[]">
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
-                        <form action="/upload" method="POST" enctype="multipart/form-data"
-                            class="dropzone custom-page-dropzone">
-                            <div class="dz-message text-gray-600">
-                                <span class="block text-lg font-semibold">Drag & Drop or Click to Upload Images</span>
-                            </div>
-                        </form>
+                       <input type="file" name="products_feature_images[]" class="form-control">
                     </div>
                     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
                         style="top: 0; right: 10px;">Remove</span>
@@ -1270,7 +1197,7 @@
                     <div class="col-3">
                         <div class="mb-3">
                             <label for="attributeName" class="form-label">Attribute Name</label>
-                            <select class="form-select attributeName attribute-change">
+                            <select class="form-select attributeName attribute-change" name="attribute_name[]">
                                 <option value="">Select...</option>
                                 ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
                             </select>
@@ -1279,7 +1206,7 @@
                     <div class="col-9">
                         <div class="mb-3">
                             <label for="attribute-value" class="form-label">Attribute Value</label>
-                            <select class="form-select form-control-solid attribute-values" multiple>
+                            <select class="form-select form-control-solid attribute-values" name="attribute_value[]" multiple>
                                 <option value="">Select Attribute Value</option>
                             </select>
                         </div>
@@ -1287,17 +1214,17 @@
                                             <div class="card-body py-4">
                                                 <div class="mb-3">
                                                     <label for="price" class="form-label">Price</label>
-                                                    <input type="number" id="price" class="form-control"
+                                                    <input type="number" id="price" name="price[]" class="form-control"
                                                         placeholder="Enter Price">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="salePrice" class="form-label">Sale Price</label>
-                                                    <input type="number" id="salePrice" class="form-control"
+                                                    <input type="number" id="salePrice" name="sale_price[]" class="form-control"
                                                         placeholder="Enter Sale Price">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="SKU" class="form-label">SKU</label>
-                                                    <input type="number" id="sku" class="form-control"
+                                                    <input type="number" id="sku" name="sku[]" class="form-control"
                                                         placeholder="Enter SKU">
                                                 </div>
                                             </div>

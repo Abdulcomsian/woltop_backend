@@ -43,15 +43,15 @@
     @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
-        function deleteTool(id){
+        function deleteItem(id){
             document.querySelector("#tool_id_delete").value = id;
             var deleteModal = new bootstrap.Modal(document.getElementById('delete_tool_modal'));
             deleteModal.show();
         }
 
-        function editTool(id){
+        function editItem(id){
             let tool_id = id;
-            let url = `{{ route('tool.edit', ':tool_id') }}`.replace(':tool_id', id);
+            let url = `{{ route('tool.edit', ':tool_id') }}`.replace(':tool_id', tool_id);
             console.log('url',url)
             fetch(url)
                 .then((response) => {
@@ -61,16 +61,18 @@
                     return response.json();
                 })
                 .then((data) => {
-                    document.querySelector("#tool_name_edit").value = data.data.name;
-                    document.querySelector("#tool_id").value = data.data.id;
+                    document.querySelector("#name").value = data.data.name;
+                    document.querySelector("#description").value = data.data.description;
+                    document.querySelector("#price").value = data.data.price;
+                    document.querySelector("#sale_price").value = data.data.sale_price;
+                    document.querySelector("#edit_id").value = data.data.id;
                     if(data.data.image != ""){
-                        let imageUrl = data.data.image;
-                        let url = `${imageUrl}`;
-                        document.querySelector("#tool_image_style").style.backgroundImage = `url('${url}')`;
+                        let imageName = data.data.image;
+                        let url = `{{asset("assets/wolpin_media/tools/" . ':imageurl')}}`.replace(":imageurl", imageName);
+                        document.querySelector("#tool_image").style.backgroundImage = `url('${url}')`
+                        document.querySelector("input[name='avatar_remove']").value = 0; // means there is picture
                     }
-                    // var editModal = new bootstrap.Modal(document.getElementById('edit_tool_modal'));
-            var editModal = new bootstrap.Modal(document.getElementById('edit_tool_modal'));
-
+                    var editModal = new bootstrap.Modal(document.getElementById('edit_modal'));
                     editModal.show();
                 })
                 .catch((error) => {
@@ -78,53 +80,51 @@
                 });
         }
 
-        // add modal validation
-        let add_tool_form = document.querySelector("#add_tool_form");
-        add_tool_form.addEventListener("submit", function(e){
+
+        function validateForm(form, isEdit = false) {
+            let fields = [
+                { selector: "input[name='name']", type: "input" },
+                { selector: "textarea[name='description']", type: "textarea" },
+                { selector: "input[name='price']", type: "input" },
+                { selector: "input[name='sale_price']", type: "input" }
+            ];
+            if(isEdit){ // means its edit
+                fields.push({selector: "input[name='avatar_remove']", type: "input"});
+            }else{ // means its add
+                fields.push({ selector: "input[name='image']", type: "input" });
+            }
+
+            form.querySelectorAll(".text-danger").forEach(el => el.remove());
+            let isValid = true;
+            fields.forEach(field => {
+                let element = form.querySelector(field.selector);
+                if (element && (element.value.trim() === "" || element.value.trim() == 1)) {
+                    isValid = false;
+                    let errorSpan = document.createElement("span");
+                    errorSpan.classList.add("text-danger");
+                    errorSpan.innerText = "This field is required";
+                    if (!element.parentNode.querySelector(".text-danger")) {
+                        element.parentNode.appendChild(errorSpan);
+                    }
+                }
+            });
+
+            return isValid;
+        }
+
+        document.querySelector(".submitFormAdd").addEventListener("submit", function(e) {
             e.preventDefault();
-            let formSubmit  = true;
-            let tool_image = document.querySelector("#tool_imege_add").value;
-            let tool_name = document.querySelector("#tool_name_add").value;
-            if(tool_image == ""){
-                document.querySelector("#add_tool_image_err").style.display = "block";
-                formSubmit = false;
+            if (validateForm(this)) {
+                this.submit();
             }
-            
-            if(tool_name == ""){
-                document.querySelector("#add_tool_name_err").style.display = "block";
-                formSubmit = false;
-            }
+        });
 
-
-            if(formSubmit == true){
-                this.submit()
-            }
-        })
-
-        //edit modal validation
-        let edit_tool_form = document.querySelector("#edit_tool_form");
-        edit_tool_form.addEventListener("submit", function(e){
+        document.querySelector(".submitFormEdit").addEventListener("submit", function(e) {
             e.preventDefault();
-            let formSubmit  = true;
-            let tool_image = document.querySelector("#tool_image_edit").value;
-            let tool_name = document.querySelector("#tool_name_edit").value;
-            let avatar_image = document.querySelector("#avatar_image").value;
-            if(tool_image == "" && avatar_image == 1){
-                document.querySelector("#edit_tool_image_err").style.display = "block";
-                formSubmit = false;
+            if (validateForm(this, true)) { // true means it's edit mode
+                this.submit();
             }
-            
-            if(tool_name == ""){
-                document.querySelector("#edit_tool_name_err").style.display = "block";
-                formSubmit = false;
-            }
-
-
-            if(formSubmit == true){
-                this.submit()
-            }
-        })
-
+        });
     </script>
     @endpush
 </x-default-layout>

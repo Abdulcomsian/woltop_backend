@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit_tool_modal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="edit_modal" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <!--begin::Modal content-->
@@ -18,11 +18,17 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form action="#" id="edit_tool_form" method="POST" enctype="multipart/form-data">
+
+                <form action="{{ route('tool.update') }}" class="submitFormEdit" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
+                    @method("PATCH")
                     <!--begin::Scroll-->
-                    <input type="hidden" id="tool_id" name="tool_id" value="">
-                    <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                    <input type="hidden" id="edit_id" name="id" value="">
+                    <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll"
+                        data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto"
+                        data-kt-scroll-dependencies="#kt_modal_add_user_header"
+                        data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -31,52 +37,61 @@
                             <!--begin::Image placeholder-->
                             <style>
                                 .image-input-placeholder {
-                                    background-image: url('{{ image('svg/files/blank-image.svg') }}');
+                                    background-image: url('{{ image(' svg/files/blank-image.svg') }}');
                                 }
 
                                 [data-bs-theme="dark"] .image-input-placeholder {
-                                    background-image: url('{{ image('svg/files/blank-image-dark.svg') }}');
+                                    background-image: url('{{ image(' svg/files/blank-image-dark.svg') }}');
                                 }
                             </style>
                             <!--end::Image placeholder-->
                             <!--begin::Image input-->
                             {{-- {{ $avatar || $saved_avatar ? '' : 'image-input-empty' }} --}}
-                            <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
+                            <div class="image-input image-input-outline image-input-placeholder"
+                                data-kt-image-input="true">
                                 <!--begin::Preview existing avatar-->
-                                {{-- @if($avatar)
-                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $avatar ? $avatar->temporaryUrl() : '' }});"></div>
-                                @else
-                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $saved_avatar }});"></div>
-                                @endif --}}
-                                <div class="image-input-wrapper w-125px h-125px" id="tool_image_style" style="background-image: url('{{ image('svg/files/blank-image.svg') }}');"></div>
+                                {{-- @if ($avatar)
+                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $avatar ? $avatar->temporaryUrl() : '' }});">
+                            </div>
+                            @else
+                            <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $saved_avatar }});"></div>
+                            @endif --}}
+                                <div class="image-input-wrapper w-125px h-125px" id="tool_image"
+                                    style="background-image: url('{{ image('svg/files/blank-image.svg') }}');"></div>
                                 <!--end::Preview existing avatar-->
                                 <!--begin::Label-->
-                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                    {!! getIcon('pencil','fs-7') !!}
+                                <label
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                    {!! getIcon('pencil', 'fs-7') !!}
                                     <!--begin::Inputs-->
-                                    <input type="file" name="tool_image" id="tool_image_edit" accept=".png, .jpg, .jpeg"/>
-                                    <input type="hidden" name="avatar_remove" id="avatar_image"/>
+                                    <input type="file" name="image" id="edit_image" accept=".png, .jpg, .jpeg" />
+                                    <input type="hidden" name="avatar_remove" />
                                     <!--end::Inputs-->
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Cancel-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-                                    {!! getIcon('cross','fs-2') !!}
+                                <span
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                    {!! getIcon('cross', 'fs-2') !!}
                                 </span>
                                 <!--end::Cancel-->
                                 <!--begin::Remove-->
-                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                    {!! getIcon('cross','fs-2') !!}
+                                <span
+                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                    {!! getIcon('cross', 'fs-2') !!}
                                 </span>
                                 <!--end::Remove-->
                             </div>
                             <!--end::Image input-->
                             <!--begin::Hint-->
                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                            <span class="text-danger" id="edit_tool_image_err" style="display: none;">Tool image is required</span>
                             <!--end::Hint-->
                             @error('tool_image')
-                            <span class="text-danger">{{ $message }}</span> @enderror
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -85,18 +100,62 @@
                             <label class="required fw-semibold fs-6 mb-2">Tool Name</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" name="tool_name" id="tool_name_edit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Tool Name"/>
-                            <span class="text-danger" id="edit_tool_name_err" style="display: none;">Tool name is required</span>
+                            <input type="text" name="name" id="name" class="form-control form-control-solid mb-3 mb-lg-0"
+                                placeholder="Tool Name" />
                             <!--end::Input-->
-                            @error('tool_name')
-                            <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Tool Description</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <textarea name="description" id="description" class="form-control form-control-solid" cols="30" rows="5"
+                                placeholder="Add Description"></textarea>
+                            <!--end::Input-->
+                            @error('description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Price</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="number" name="price" id="price" class="form-control form-control-solid mb-3 mb-lg-0"
+                                placeholder="Add price" />
+                            <!--end::Input-->
+                            @error('price')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Sale Price</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="number" name="sale_price" id="sale_price" class="form-control form-control-solid mb-3 mb-lg-0"
+                                placeholder="Add Sale Price" />
+                            <!--end::Input-->
+                            @error('sale_price')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <!--end::Input group-->
                     </div>
                     <!--end::Scroll-->
                     <!--begin::Actions-->
                     <div class="text-center pt-15">
-                        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close">Discard</button>
+                        <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal"
+                            aria-label="Close">Discard</button>
                         <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
                             <span class="indicator-label">Submit</span>
                             <span class="indicator-progress">

@@ -2,7 +2,7 @@
 <div class="menu" data-kt-menu="true">
     <!--begin::Menu item-->
     <div class="menu-item">
-        <a href="#" class="menu-link" data-bs-toggle="modal" id="edit_tool_modal" onclick="editTool({{$query->id}})">
+        <a href="#" class="menu-link" data-bs-toggle="modal" onclick="editItem({{$query->id}})">
             <i class="fas fa-edit"></i>
         </a>
     </div>
@@ -10,7 +10,7 @@
 
     <!--begin::Menu item-->
     <div class="menu-item">
-        <span class="menu-link" id="tool_id_delete" onclick="deleteTool({{$query->id}})">
+        <span class="menu-link" onclick="deleteItem({{$query->id}})">
             <i class="fas fa-trash"></i>
         </span>
     </div>

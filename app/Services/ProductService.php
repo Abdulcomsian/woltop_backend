@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\AttributeValue;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Str;
 
 class ProductService
 {
@@ -20,8 +21,26 @@ class ProductService
 
     public function store($data)
     {
+        dd($data);
         $save = new $this->model;
-        $save->name = $data['name'];
+        $save->title = $data['product_name'];
+        $save->slug = Str::slug($data['product_name']);
+        $save->short_description = $data['short_description'];
+        $save->description = $data['description'];
+        $save->video = $data['video'];
+        if($data['product_type'] == "simple"){
+            $save->price = $data['simple_price'];
+            $save->sale_price = $data['simple_sale_price'];
+            $save->sku = $data['simple_sku'];
+        }
+        $save->featured_image = $data['featured_image'];
+        $save->product_type = $data['product_type'];
+        $save->status = $data['status'];
+        $save->meta_title = $data['meta_title'];
+        $save->meta_description = $data['meta_description'];
+        if($data['product_type'] == "simple"){
+            $save->discount = calculateDiscount($data['price'], $data['sale_price']);
+        }
         $save->save();
         return $save;
     }

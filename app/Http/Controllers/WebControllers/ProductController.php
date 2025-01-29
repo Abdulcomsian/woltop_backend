@@ -37,10 +37,10 @@ class ProductController extends Controller
         return view('pages.product.create', compact("parent_categories", "categories", "tags", "attributes", "colors"));
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         try {
-            $this->productService->store($request);
+            $this->productService->store($request->validated());
             toastr()->success('Product Saved Successfully!');
             return redirect()->back();
         } catch(\Exception $e) {

@@ -49,6 +49,15 @@
         }
     </style>
     @section('page-title', 'Products')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="row g-4">
         <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -86,13 +95,6 @@
                             data-bs-target="#product-type" type="button" role="tab" aria-controls="product-type"
                             aria-selected="false">
                             Product Type
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="delivery_detail-tab" data-bs-toggle="tab"
-                            data-bs-target="#delivery_detail" type="button" role="tab"
-                            aria-controls="delivery_detail" aria-selected="false">
-                            Delivery Detail
                         </button>
                     </li>
                     <li class="nav-item">
@@ -469,7 +471,7 @@
                                         <div class="col-3">
                                             <div class="mb-3">
                                                 <label for="attributeName" class="form-label">Attribute Name</label>
-                                                <select class="form-select attributeName attribute-change" name="attribute_name[]">
+                                                <select class="form-select attributeName attribute-change" name="variations[0][attribute_id]">
                                                     <option value="">Select...</option>
                                                     @isset($attributes)
                                                         @foreach ($attributes as $attribute)
@@ -479,36 +481,34 @@
                                                     @endisset
                                                 </select>
                                             </div>
-
                                         </div>
                                         <div class="col-9">
                                             <div class="mb-3">
-                                                <label for="attribute-value" class="form-label">Attribute
-                                                    Value</label>
-                                                <select class="form-select attribute-values" name="attribute_value[]" multiple>
+                                                <label for="attribute-value" class="form-label">Attribute Value</label>
+                                                <select class="form-select attribute-values" name="variations[0][attribute_values][]" multiple>
                                                     <option value="">Select Attribute Value</option>
-                                                    {{-- @isset($data)
-                                                    @foreach ($data as $item)
-                                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                                    @endforeach
-                                                @endisset --}}
+                                                    @isset($data)
+                                                        @foreach ($data as $item)
+                                                            <option value="{{$item->id}}">{{$item->name}}</option>
+                                                        @endforeach
+                                                    @endisset
                                                 </select>
                                             </div>
                                             <div class="card">
                                                 <div class="card-body py-4">
                                                     <div class="mb-3">
                                                         <label for="price" class="form-label">Price</label>
-                                                        <input type="number" id="price" name="price[]" class="form-control"
+                                                        <input type="number" id="price" name="variations[0][price]" class="form-control"
                                                             placeholder="Enter Price">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="salePrice" class="form-label">Sale Price</label>
-                                                        <input type="number" id="salePrice" name="sale_price[]" class="form-control"
+                                                        <input type="number" id="salePrice" name="variations[0][sale_price]" class="form-control"
                                                             placeholder="Enter Sale Price">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="SKU" class="form-label">SKU</label>
-                                                        <input type="number" id="sku" name="sku[]" class="form-control"
+                                                        <input type="number" id="sku" name="variations[0][sku]" class="form-control"
                                                             placeholder="Enter SKU">
                                                     </div>
                                                 </div>
@@ -522,49 +522,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button id="addSection" class="btn btn-primary mt-3" style="display: block !important;">Add
+                        <button id="addSection" type="button" class="btn btn-primary mt-3" style="display: block !important;">Add
                             New
                             Section</button>
                     </div>
 
                     <hr class="dotted-line my-4">
                 </div>
-
-                <!-- delivery_detail Tab -->
-                <div class="tab-pane fade" id="delivery_detail" role="tabpanel"
-                    aria-labelledby="delivery_detail-tab" style="flex-wrap: nowrap;">
-                    <div class="col-md-4">
-                        <label for="delivery_detail" class="form-label fw-semibold">Delivery Detail</label>
-                        <small class="text-muted d-block mb-2">
-                            Add Your Delivery details from here.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <!-- Dynamic fields container -->
-                        <div id="deliveryFieldsContainer">
-                            <!-- Initial card -->
-                            <div class="card mb-3 p-4 relative">
-                                <div class="mb-3">
-                                    <label for="city_details" class="form-label">City Details</label>
-                                    <input type="text" class="form-control" name="city_details[]" placeholder="Enter City Details">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="days" class="form-label">Days</label>
-                                    <input type="text" class="form-control" name="days_details[]" placeholder="Enter Days">
-                                </div>
-                                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                    style="top: 0; right: 10px;">
-                                    Remove
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Add More button -->
-                        <button id="addDeliveryFieldButton" class="btn btn-primary mt-3" type="button">Add
-                            More</button>
-                    </div>
-                    <hr class="dotted-line my-4">
-                </div>
-
                 <!-- dos_dont Tab -->
                 <div class="tab-pane fade" id="dos_dont" role="tabpanel" aria-labelledby="dos_dont-tab"
                     style="flex-wrap: nowrap;">
@@ -681,12 +645,12 @@
                                 <div class="card-body py-4">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Name</label>
-                                        <input type="text" id="name" class="form-control" name="installation_name[]"
+                                        <input type="text" id="name" class="form-control" name="installation_steps[0][installation_name]"
                                             placeholder="Enter product name">
                                     </div>
                                     <div class="mb-3">
                                         <label for="description" class="form-label">Description</label>
-                                        <input type="text" id="description" class="form-control" name="installation_description[]"
+                                        <input type="text" id="description" class="form-control" name="installation_steps[0][installation_description]"
                                             placeholder="Enter product description">
                                     </div>
                                     <div class="mb-3">
@@ -698,7 +662,7 @@
                                              Images</span>
                                      </div>
                                  </form> --}}
-                                        <input type="file" name="installation_steps_images[]"
+                                        <input type="file" name="installation_steps[0][installation_image]"
                                             class="form-control">
                                     </div>
                                     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
@@ -730,7 +694,7 @@
                                 <div class="card-body py-4">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter product name" name="products_feature_names[]">
+                                        <input type="text" class="form-control" placeholder="Enter product name" name="product_features[0][name]">
                                     </div>
                                     <div class="mb-3">
                                         <label for="image" class="form-label">Image</label>
@@ -741,7 +705,7 @@
                                                 Images</span>
                                         </div>
                                     </form> --}}
-                                        <input type="file" name="products_feature_images[]" class="form-control">
+                                        <input type="file" name="product_features[0][image]" class="form-control">
                                     </div>
                                     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
                                         style="top: 0; right: 10px;">Remove</span>
@@ -769,12 +733,12 @@
                             <div class="card-body py-4">
                                 <div class="mb-3">
                                     <label for="metaTitle" class="form-label">Meta Title </label>
-                                    <input type="text" id="metaTitle" class="form-control"
+                                    <input type="text" id="metaTitle" class="form-control" name="meta_title"
                                         placeholder="Enter product Meta Title">
                                 </div>
                                 <div class="mb-3">
                                     <label for="metaDesc" class="form-label">Meta Description</label>
-                                    <input type="text" id="metaDesc" class="form-control"
+                                    <input type="text" id="metaDesc" class="form-control" name="meta_description"
                                         placeholder="Enter product Meta Description">
                                 </div>
                             </div>
@@ -785,9 +749,8 @@
 
             </div>
             <div class="d-flex justify-content-end">
-                {{-- <button type="button" class="btn btn-secondary me-2">Cancel</button> --}}
                 <button type="button" class="btn btn-primary next-tab-btn me-2">Next</button>
-                <button type="submit" class="btn btn-primary">Save Product</button>
+                <button type="submit" class="btn btn-primary save-btn">Save Product</button>
             </div>
         </form>
     </div>
@@ -882,7 +845,7 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const tabs = document.querySelectorAll('#product-tabs .nav-link');
                 const nextButton = document.querySelector('.next-tab-btn');
-                const saveButton = document.querySelector('.btn-primary:not(.next-tab-btn)');
+                const saveButton = document.querySelector('.save-btn');
 
                 function updateButtons() {
                     const activeTabIndex = Array.from(tabs).findIndex(tab => tab.classList.contains('active'));
@@ -942,66 +905,68 @@
 
 
             //delivery detail logic
-            document.addEventListener('DOMContentLoaded', function() {
-                const deliveryContainer = document.getElementById('deliveryFieldsContainer');
-                const addDeliveryButton = document.getElementById('addDeliveryFieldButton');
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     const deliveryContainer = document.getElementById('deliveryFieldsContainer');
+            //     const addDeliveryButton = document.getElementById('addDeliveryFieldButton');
 
-                // Function to add a new delivery field card
-                function addDeliveryField() {
-                    const deliveryFieldHTML = `
-               <div class="card mb-3 p-4 relative">
-                <div class="mb-3">
-                    <label for="city_details" class="form-label">City Details</label>
-                    <input type="text" class="form-control" placeholder="Enter City Details" name="city_details[]">
-                </div>
-                <div class="mb-3">
-                    <label for="days" class="form-label">Days</label>
-                    <input type="text" class="form-control" placeholder="Enter Days" name="days_details[]">
-                </div>
-                <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                    style="top: 0; right: 10px;">
-                    Remove
-                </span>
-                  </div>
-                    `;
-                    deliveryContainer.insertAdjacentHTML('beforeend', deliveryFieldHTML);
-                }
+            //     // Function to add a new delivery field card
+            //     function addDeliveryField() {
+            //         const deliveryFieldHTML = `
+            //    <div class="card mb-3 p-4 relative">
+            //     <div class="mb-3">
+            //         <label for="city_details" class="form-label">City Details</label>
+            //         <input type="text" class="form-control" placeholder="Enter City Details" name="city_details[]">
+            //     </div>
+            //     <div class="mb-3">
+            //         <label for="days" class="form-label">Days</label>
+            //         <input type="text" class="form-control" placeholder="Enter Days" name="days_details[]">
+            //     </div>
+            //     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+            //         style="top: 0; right: 10px;">
+            //         Remove
+            //     </span>
+            //       </div>
+            //         `;
+            //         deliveryContainer.insertAdjacentHTML('beforeend', deliveryFieldHTML);
+            //     }
 
-                // Event listener for removing delivery fields
-                deliveryContainer.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('remove-field')) {
-                        const cardToRemove = e.target.closest('.card'); // Remove only the clicked card
-                        if (cardToRemove) {
-                            cardToRemove.remove();
-                        }
-                    }
-                });
+            //     // Event listener for removing delivery fields
+            //     deliveryContainer.addEventListener('click', function(e) {
+            //         if (e.target.classList.contains('remove-field')) {
+            //             const cardToRemove = e.target.closest('.card'); // Remove only the clicked card
+            //             if (cardToRemove) {
+            //                 cardToRemove.remove();
+            //             }
+            //         }
+            //     });
 
-                // Event listener for "Add More" button
-                addDeliveryButton.addEventListener('click', addDeliveryField);
-            });
+            //     // Event listener for "Add More" button
+            //     addDeliveryButton.addEventListener('click', addDeliveryField);
+            // });
 
             //installation logic
             document.addEventListener('DOMContentLoaded', function() {
                 const installationContainer = document.getElementById('installationFieldsContainer');
                 const addInstallationButton = document.getElementById('addInstallationFieldButton');
+                let installationIndex = 0;
 
                 // Function to add a new installation card
                 function addInstallationField() {
+                    installationIndex++;
                     const installationFieldHTML = `
                   <div class="card mb-3">
                   <div class="card-body py-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" placeholder="Enter product name" name="installation_name[]">
+                        <input type="text" class="form-control" placeholder="Enter product name" name="installation_steps[${installationIndex}][installation_name]">
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <input type="text" class="form-control" placeholder="Enter product description" name="installation_description[]">
+                        <input type="text" class="form-control" placeholder="Enter product description" name="installation_steps[${installationIndex}][installation_description]">
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
-                        <input type="file" name="installation_steps_images[]" class="form-control">
+                        <input type="file" name="installation_steps[${installationIndex}][installation_image]" class="form-control">
                     </div>
                     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
                         style="top: 0; right: 10px;">Remove</span>
@@ -1029,19 +994,20 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const featuresContainer = document.getElementById('featuresFieldsContainer');
                 const addFeatureButton = document.getElementById('addFeatureFieldButton');
-
+                let pFeatureIndex = 0;
                 // Function to add a new feature card
                 function addFeatureField() {
+                    pFeatureIndex++;
                     const featureFieldHTML = `
                <div class="card mb-3">
                 <div class="card-body py-4">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" placeholder="Enter product name" name="products_feature_names[]">
+                        <input type="text" class="form-control" placeholder="Enter product name" name="product_features[${pFeatureIndex}][name]">
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
-                       <input type="file" name="products_feature_images[]" class="form-control">
+                       <input type="file" name="product_features[${pFeatureIndex}][image]" class="form-control">
                     </div>
                     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
                         style="top: 0; right: 10px;">Remove</span>
@@ -1188,7 +1154,7 @@
                 const sectionsContainer = document.getElementById('sectionsContainer');
                 addSectionButton.style.display = 'block';
 
-                function createNewSection() {
+                function createNewSection(sessionIncrement) {
                     const newSection = document.createElement('div');
                     newSection.className = 'card mb-3 section';
                     newSection.innerHTML = `
@@ -1197,7 +1163,7 @@
                     <div class="col-3">
                         <div class="mb-3">
                             <label for="attributeName" class="form-label">Attribute Name</label>
-                            <select class="form-select attributeName attribute-change" name="attribute_name[]">
+                            <select class="form-select attributeName attribute-change" name="variations[${sessionIncrement}][attribute_id]">
                                 <option value="">Select...</option>
                                 ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
                             </select>
@@ -1206,7 +1172,7 @@
                     <div class="col-9">
                         <div class="mb-3">
                             <label for="attribute-value" class="form-label">Attribute Value</label>
-                            <select class="form-select form-control-solid attribute-values" name="attribute_value[]" multiple>
+                            <select class="form-select form-control-solid attribute-values" name="variations[${sessionIncrement}][attribute_values][]" multiple>
                                 <option value="">Select Attribute Value</option>
                             </select>
                         </div>
@@ -1214,17 +1180,17 @@
                                             <div class="card-body py-4">
                                                 <div class="mb-3">
                                                     <label for="price" class="form-label">Price</label>
-                                                    <input type="number" id="price" name="price[]" class="form-control"
+                                                    <input type="number" id="price" name="variations[${sessionIncrement}][price]" class="form-control"
                                                         placeholder="Enter Price">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="salePrice" class="form-label">Sale Price</label>
-                                                    <input type="number" id="salePrice" name="sale_price[]" class="form-control"
+                                                    <input type="number" id="salePrice" name="variations[${sessionIncrement}][sale_price]" class="form-control"
                                                         placeholder="Enter Sale Price">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="SKU" class="form-label">SKU</label>
-                                                    <input type="number" id="sku" name="sku[]" class="form-control"
+                                                    <input type="number" id="sku" name="variations[${sessionIncrement}][sku]" class="form-control"
                                                         placeholder="Enter SKU">
                                                 </div>
                                             </div>
@@ -1238,9 +1204,10 @@
         `;
                     return newSection;
                 }
-
+                let sessionIncrement = 0;
                 addSectionButton.addEventListener('click', function() {
-                    const newSection = createNewSection();
+                    sessionIncrement++;
+                    const newSection = createNewSection(sessionIncrement);
                     sectionsContainer.appendChild(newSection);
                 });
 

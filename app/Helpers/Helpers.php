@@ -431,3 +431,18 @@ if (!function_exists('getIcon')) {
         return theme()->getIcon($name, $class, $type, $tag);
     }
 }
+
+if (!function_exists('calculateDiscount')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function calculateDiscount($price, $sale_price)
+    {
+        if ($price == 0) return 0;
+        return (($price - $sale_price) / $price) * 100;
+    }
+}

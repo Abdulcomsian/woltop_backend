@@ -3,6 +3,7 @@
         /* navigation style start.. */
         .nav-tabs .nav-link {
             color: black;
+            width: 120px;
         }
 
         .nav-tabs .nav-link:hover {
@@ -16,6 +17,19 @@
 
         .nav-tabs .nav-link.active:hover {
             color: #3E97FF;
+        }
+
+        .nav-pills .nav-link {
+            border-radius: 0;
+            text-align: left;
+            padding: 1rem;
+            color: #333;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px !important;
         }
 
         /* navigation style end... */
@@ -59,698 +73,779 @@
         </div>
     @endif
     <div class="row g-4">
-        <form action="{{route('product.store')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <!-- Tabs Navigation -->
-            <div class="nav-tabs-container" style="overflow-x: auto; white-space: nowrap;">
-                <ul class="nav nav-tabs mb-4 text-white" id="product-tabs" role="tablist"
-                    style="display: inline-flex; flex-wrap: nowrap;">
+            <!-- Parent Tabs Navigation -->
+            <div class="nav-tabs-container">
+                <ul class="nav nav-tabs mb-4 text-white" id="parent-tabs" role="tablist">
                     <li class="nav-item">
-                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                            data-bs-target="#description-section" type="button" role="tab"
-                            aria-controls="description-section" aria-selected="false">
-                            Basic Info
+                        <button class="nav-link active" id="ps1-tab" data-bs-toggle="tab"
+                            data-bs-target="#ps1-content" type="button" role="tab" aria-controls="ps1-content"
+                            aria-selected="true">
+                            PS1
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" id="featured-tab" data-bs-toggle="tab" data-bs-target="#featured"
-                            type="button" role="tab" aria-controls="featured" aria-selected="true">
-                            Featured Image
+                        <button class="nav-link" id="ps2-tab" data-bs-toggle="tab" data-bs-target="#ps2-content"
+                            type="button" role="tab" aria-controls="ps2-content" aria-selected="false">
+                            PS2
                         </button>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" id="gallery-tab" data-bs-toggle="tab" data-bs-target="#gallery"
-                            type="button" role="tab" aria-controls="gallery" aria-selected="false">
-                            Gallery
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories"
-                            type="button" role="tab" aria-controls="categories" aria-selected="false">
-                            Categories
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="product-type-tab" data-bs-toggle="tab"
-                            data-bs-target="#product-type" type="button" role="tab" aria-controls="product-type"
-                            aria-selected="false">
-                            Product Type
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="dos_dont-tab" data-bs-toggle="tab" data-bs-target="#dos_dont"
-                            type="button" role="tab" aria-controls="dos_dont" aria-selected="false">
-                            Dos Dont
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="design_application_details-tab" data-bs-toggle="tab"
-                            data-bs-target="#design_application_details" type="button" role="tab"
-                            aria-controls="design_application_details" aria-selected="false">
-                            Design Application
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="storage_usage_details-tab" data-bs-toggle="tab"
-                            data-bs-target="#storage_usage_details" type="button" role="tab"
-                            aria-controls="storage_usage_details" aria-selected="false">
-                            Storage Usage Details
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="installation_steps-tab" data-bs-toggle="tab"
-                            data-bs-target="#installation_steps" type="button" role="tab"
-                            aria-controls="installation_steps" aria-selected="false">
-                            Installation Steps
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="products_features-tab" data-bs-toggle="tab"
-                            data-bs-target="#products_features" type="button" role="tab"
-                            aria-controls="products_features" aria-selected="false">
-                            Products Features
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="product_seo-tab" data-bs-toggle="tab"
-                            data-bs-target="#product_seo" type="button" role="tab" aria-controls="product_seo"
-                            aria-selected="false">
-                            Products Seo
+                        <button class="nav-link" id="ps3-tab" data-bs-toggle="tab" data-bs-target="#ps3-content"
+                            type="button" role="tab" aria-controls="ps3-content" aria-selected="false">
+                            PS3
                         </button>
                     </li>
                 </ul>
             </div>
 
-            <!-- Tab Content -->
-            <div class="tab-content" id="product-tabs-content">
-                <!-- Description Tab -->
-                <div class="tab-pane fade show active" id="description-section" role="tabpanel"
-                    aria-labelledby="description-tab">
-                    <div class="col-md-4">
-                        <label for="description" class="form-label fw-semibold">Description</label>
-                        <small class="text-muted d-block mb-2">
-                            Edit your product description and necessary information from here.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <!-- Name Input Field -->
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" id="name" name="product_name" class="form-control"
-                                        placeholder="Enter product name">
-                                </div>
+            <!-- Parent Tab Content -->
+            <div class="tab-content" id="parent-tabs-content">
 
-                                <!-- Slug Input Field -->
-                                {{-- <div class="mb-3">
-                                <label for="slug" class="form-label">Slug</label>
-                                <input type="text" id="slug" class="form-control"
-                                    placeholder="Enter product slug" readonly>
-                            </div> --}}
-
-                                <!-- Description Textarea -->
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea id="description" name="description"></textarea>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-semibold">Status</label><br>
-                                    <!-- Published Radio Button -->
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status" id="published"
-                                            value="published">
-                                        <label class="form-check-label" for="published">Published</label>
-                                    </div>
-                                    <!-- Draft Radio Button -->
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="status" id="draft"
-                                            value="draft" checked>
-                                        <label class="form-check-label" for="draft">Draft</label>
-                                    </div>
-                                </div>
+                <!-- PS1 Content -->
+                <div class="tab-pane fade show active" id="ps1-content" role="tabpanel" aria-labelledby="ps1-tab">
+                    <div class="row">
+                        <!-- Vertical Child Tabs Navigation -->
+                        <div class="col-md-3">
+                            <div class="nav flex-column nav-pills me-3" id="ps1-child-tabs" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="nav-link active" id="description-tab" data-bs-toggle="pill"
+                                    data-bs-target="#description-section" type="button" role="tab"
+                                    aria-controls="description-section" aria-selected="true">
+                                    Basic Info
+                                </button>
+                                <button class="nav-link" id="featured-tab" data-bs-toggle="pill"
+                                    data-bs-target="#featured" type="button" role="tab" aria-controls="featured"
+                                    aria-selected="false">
+                                    Featured Image
+                                </button>
+                                <button class="nav-link" id="gallery-tab" data-bs-toggle="pill"
+                                    data-bs-target="#gallery" type="button" role="tab" aria-controls="gallery"
+                                    aria-selected="false">
+                                    Gallery
+                                </button>
+                                <button class="nav-link" id="categories-tab" data-bs-toggle="pill"
+                                    data-bs-target="#categories" type="button" role="tab"
+                                    aria-controls="categories" aria-selected="false">
+                                    Categories
+                                </button>
+                                <button class="nav-link" id="product-type-tab" data-bs-toggle="pill"
+                                    data-bs-target="#product-type" type="button" role="tab"
+                                    aria-controls="product-type" aria-selected="false">
+                                    Product Type
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <hr class="dotted-line my-4">
-                </div>
 
-                <!-- Featured Image Tab -->
-                <div class="tab-pane fade" id="featured" role="tabpanel" aria-labelledby="featured-tab"
-                    style="flex-wrap: nowrap;">
-                    <div class="col-md-4">
-                        <label for="featured-image" class="form-label fw-semibold">Featured Image</label>
-                        <small class="text-muted d-block mb-2">
-                            Upload your product featured image here.<br>
-                            Image size should not be more than 2 MB.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <!-- Featured Image Dropzone -->
-                                {{-- <div class="featured-image-dropzone dropzone custom-page-dropzone">
-                                <div class="dz-message">
-                                    <div>
-                                        <img class="drop-img"
-                                            src="{{ asset('images/dropbox.png') }}"
-                                            alt="">
+                        <!-- Child Tab Content -->
+                        <div class="col-md-9">
+                            <div class="tab-content" id="ps1-child-tabs-content">
+                                <!-- Description Tab -->
+                                <div class="tab-pane fade show active" id="description-section" role="tabpanel"
+                                    aria-labelledby="description-tab">
+                                    <div class="col-md-4">
+                                        <label for="description" class="form-label fw-semibold">Description</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Edit your product description and necessary information from here.
+                                        </small>
                                     </div>
-                                    <h5 class="drop-zone__prompt2" style="color:black;">Upload Featured Image</h5>
-                                </div>
-                            </div> --}}
-                                <input type="file" name="featured_image" class="form-control form-control-solid">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="featured-image" class="form-label fw-semibold">Video</label>
-                        <small class="text-muted d-block">
-                            Upload your product featured video here.<br>
-                            video size should not be more than 50 MB.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <!-- Featured Image Dropzone -->
-                                {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
-                                id="featured-image-upload" class="dropzone custom-page-dropzone">
-                                <div class="dz-message text-gray-600">
-                                    <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                        Video</span>
-                                </div>
-                            </form> --}}
-                                <input type="file" name="video" class="form-control form-control-solid"
-                                    accept="video/*">
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="dotted-line my-4">
-                </div>
-
-                <!-- Gallery Tab -->
-                <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
-                    <div class="col-md-4">
-                        <label for="gallery-upload" class="form-label fw-semibold">Gallery</label>
-                        <small class="text-muted d-block mb-2">
-                            Upload your product image gallery here.<br>
-                            Image size should not be more than 2 MB.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <!-- Gallery Dropzone -->
-                                {{-- <form action="/upload" method="POST" enctype="multipart/form-data" id="gallery-upload"
-                                class="dropzone custom-page-dropzone">
-                                <div class="dz-message text-gray-600">
-                                    <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                        Images</span>
-                                </div>
-                            </form> --}}
-
-                                <input type="file" name="gallery_images[]" class="form-control form-control-solid"
-                                    multiple>
-
-                                <!-- Gallery Images Section -->
-                                {{-- <div class="gallery-images mt-4">
-                                <div class="row">
-                                    <!-- Example Image 1 -->
-                                    <div class="col-md-4 mb-3 image-item" draggable="true">
+                                    <div class="col-md-8">
                                         <div class="card">
-                                            <img src="https://via.placeholder.com/150" class="card-img-top"
-                                                alt="Gallery Image 1">
-                                            <div class="card-body d-flex justify-content-end">
-                                                <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-secondary drag-handle"
-                                                    title="Drag to Sort">
-                                                    <i class="fas fa-arrows-alt"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            <div class="card-body py-4">
+                                                <!-- Name Input Field -->
+                                                <div class="mb-3">
+                                                    <label for="name" class="form-label">Name</label>
+                                                    <input type="text" id="name" name="product_name"
+                                                        class="form-control" placeholder="Enter product name">
+                                                </div>
 
-                                    <!-- Example Image 2 -->
-                                    <div class="col-md-4 mb-3 image-item" draggable="true">
-                                        <div class="card">
-                                            <img src="https://via.placeholder.com/150" class="card-img-top"
-                                                alt="Gallery Image 2">
-                                            <div class="card-body d-flex justify-content-end">
-                                                <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-secondary drag-handle"
-                                                    title="Drag to Sort">
-                                                    <i class="fas fa-arrows-alt"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                <!-- Slug Input Field -->
+                                                {{-- <div class="mb-3">
+                                                        <label for="slug" class="form-label">Slug</label>
+                                                        <input type="text" id="slug" class="form-control"
+                                                            placeholder="Enter product slug" readonly>
+                                                    </div> --}}
 
-                                    <!-- Example Image 3 -->
-                                    <div class="col-md-4 mb-3 image-item" draggable="true">
-                                        <div class="card">
-                                            <img src="https://via.placeholder.com/150" class="card-img-top"
-                                                alt="Gallery Image 3">
-                                            <div class="card-body d-flex justify-content-end">
-                                                <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-secondary drag-handle"
-                                                    title="Drag to Sort">
-                                                    <i class="fas fa-arrows-alt"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="dotted-line my-4">
-                </div>
+                                                <!-- Description Textarea -->
+                                                <div class="mb-3">
+                                                    <label for="description" class="form-label">Description</label>
+                                                    <textarea id="description" name="description"></textarea>
+                                                </div>
 
-                <!-- Categories Tab -->
-                <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
-                    <div class="col-md-4">
-                        <label for="categories" class="form-label fw-semibold">Categories</label>
-                        <small class="text-muted d-block mb-2">Select categories from here.</small>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <!-- Parent Category Select -->
-                                <div class="mb-3">
-                                    <label for="parent-category" class="form-label">Parent Category</label>
-                                    <select id="parent-category" name="parent_category" class="form-select">
-                                        <option value="">Select Parent Category</option>
-                                        <option value="all" selected>All</option>
-                                        <option value="none">None <small>(Those who don`t have parent
-                                                category)</small>
-                                        </option>
-                                        @isset($parent_categories)
-                                            @foreach ($parent_categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach
-                                        @endisset
-                                    </select>
-                                </div>
-
-                                <!-- Category Select -->
-                                <div class="mb-3">
-                                    <label for="category" class="form-label">Category</label>
-                                    <select id="category" class="form-select" name="categories[]" multiple="multiple">
-                                        @isset($categories)
-                                            @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach
-                                        @endisset
-                                    </select>
-                                </div>
-
-                                <!-- Tags Select -->
-                                <div class="mb-3">
-                                    <label for="tags" class="form-label">Tags</label>
-                                    <select id="tags" class="form-select" name="tags[]" multiple="multiple">
-                                        @isset($tags)
-                                            @foreach ($tags as $tag)
-                                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                            @endforeach
-                                        @endisset
-                                    </select>
-                                    <small class="text-muted">Select multiple tags if needed.</small>
-                                </div>
-                                <!-- Color Select -->
-                                <div class="mb-3">
-                                    <label for="color" class="form-label">Colors</label>
-                                    <select id="color" class="form-select" name="color">
-                                        <option value="">Select Color</option>
-                                        @isset($colors)
-                                            @foreach ($colors as $color)
-                                                <option value="{{ $color->id }}">{{ $color->name }}</option>
-                                            @endforeach
-                                        @endisset
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="dotted-line my-4">
-                </div>
-
-                <!-- Product Type Tab -->
-                <div class="tab-pane fade" id="product-type" role="tabpanel" aria-labelledby="product-type-tab">
-                    <div class="col-md-4">
-                        <label for="productType" class="form-label fw-semibold">Product Type</label>
-                        <small class="text-muted d-block mb-2">Select product type from here.</small>
-                    </div>
-                    <div class="col-md-8 mb-5">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <div class="mb-3">
-                                    <label for="productType" class="form-label">Product Type</label>
-                                    <select id="productType" class="form-select" name="product_type">
-                                        <option value="simple">Simple Product</option>
-                                        <option value="variable">Variable Product</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Simple Product Form -->
-                    <div id="simpleProductForm" class="col-md-8" style="display: none;">
-                        <div class="col-md-4">
-                            <label for="product-variation" class="form-label fw-semibold">Simple Product
-                                Information</label>
-                            <small class="text-muted d-block">
-                                Add your simple product description and necessary information
-                            </small>
-                        </div>
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <div class="mb-3">
-                                    <label for="price" class="form-label">Price</label>
-                                    <input type="number" id="price" name="simple_price" class="form-control"
-                                        placeholder="Enter Price">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="salePrice" class="form-label">Sale Price</label>
-                                    <input type="number" id="salePrice" name="simple_sale_price" class="form-control"
-                                        placeholder="Enter Sale Price">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="SKU" class="form-label">SKU</label>
-                                    <input type="number" id="sku" name="simple_sku" class="form-control"
-                                        placeholder="Enter SKU">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Variable Product Form -->
-                    <div id="variableProductForm" class="col-md-8">
-                        <div class="col-md-4">
-                            <label for="product-variation" class="form-label fw-semibold">Product Variation
-                                Information</label>
-                            <small class="text-muted d-block">
-                                Add your product variation and necessary information from here
-                            </small>
-                        </div>
-                        <div id="sectionsContainer">
-                            <!-- Initial section -->
-                            <div class="card mb-3 section">
-                                <div class="card-body d-flex gap-2 py-4">
-                                    <div class="row w-100 relative">
-                                        <div class="col-3">
-                                            <div class="mb-3">
-                                                <label for="attributeName" class="form-label">Attribute Name</label>
-                                                <select class="form-select attributeName attribute-change" name="variations[0][attribute_id]">
-                                                    <option value="">Select...</option>
-                                                    @isset($attributes)
-                                                        @foreach ($attributes as $attribute)
-                                                            <option value="{{ $attribute->id }}">{{ $attribute->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endisset
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="mb-3">
-                                                <label for="attribute-value" class="form-label">Attribute Value</label>
-                                                <select class="form-select attribute-values" name="variations[0][attribute_values][]" multiple>
-                                                    <option value="">Select Attribute Value</option>
-                                                    @isset($data)
-                                                        @foreach ($data as $item)
-                                                            <option value="{{$item->id}}">{{$item->name}}</option>
-                                                        @endforeach
-                                                    @endisset
-                                                </select>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-body py-4">
-                                                    <div class="mb-3">
-                                                        <label for="price" class="form-label">Price</label>
-                                                        <input type="number" id="price" name="variations[0][price]" class="form-control"
-                                                            placeholder="Enter Price">
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-semibold">Status</label><br>
+                                                    <!-- Published Radio Button -->
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="status"
+                                                            id="published" value="published">
+                                                        <label class="form-check-label"
+                                                            for="published">Published</label>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="salePrice" class="form-label">Sale Price</label>
-                                                        <input type="number" id="salePrice" name="variations[0][sale_price]" class="form-control"
-                                                            placeholder="Enter Sale Price">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="SKU" class="form-label">SKU</label>
-                                                        <input type="number" id="sku" name="variations[0][sku]" class="form-control"
-                                                            placeholder="Enter SKU">
+                                                    <!-- Draft Radio Button -->
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="status"
+                                                            id="draft" value="draft" checked>
+                                                        <label class="form-check-label" for="draft">Draft</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="text-danger removeSection cursor-pointer position-absolute p-2"
-                                        style="top: 0; right: 10px;">
-                                        Remove
-                                    </span>
+                                    <hr class="dotted-line my-4">
                                 </div>
-                            </div>
-                        </div>
-                        <button id="addSection" type="button" class="btn btn-primary mt-3" style="display: block !important;">Add
-                            New
-                            Section</button>
-                    </div>
 
-                    <hr class="dotted-line my-4">
-                </div>
-                <!-- dos_dont Tab -->
-                <div class="tab-pane fade" id="dos_dont" role="tabpanel" aria-labelledby="dos_dont-tab"
-                    style="flex-wrap: nowrap;">
-                    <div class="col-md-4">
-                        <label for="featured-image" class="form-label fw-semibold">Dos Dont</label>
-                        <small class="text-muted d-block mb-2">
-                            Add Your Dos Dont details from here.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <div id="dynamicFieldsContainer">
-                            <!-- Initial input field -->
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Enter dos or dont" name="dos_dont[]"/>
-                                <button class="btn btn-danger remove-field" type="button">Remove</button>
-                            </div>
-                        </div>
-                        <button id="addFieldButton" class="btn btn-primary mt-3" type="button">Add More</button>
-                    </div>
-                    <hr class="dotted-line my-4">
-                </div>
-
-                <!-- design_application_details Tab -->
-                <div class="tab-pane fade" id="design_application_details" role="tabpanel"
-                    aria-labelledby="design_application_details-tab" style="flex-wrap: nowrap;">
-                    <div class="col-md-4">
-                        <label for="featured-image" class="form-label fw-semibold">Design_Application Details</label>
-                        <small class="text-muted d-block mb-2">
-                            Add Your Design_Application Details from here.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <div class="mb-3">
-                                    <label for="room_type" class="form-label">Room Type</label>
-                                    <input type="text" id="room_type" class="form-control"
-                                        placeholder="Enter Room Type" name="room_type">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="finish_type" class="form-label">Finish Type</label>
-                                    <input type="text" id="finish_type" class="form-control" name="finish_type"
-                                        placeholder="Enter Finish Type">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="pattern_repeat" class="form-label">Pattern Repeat</label>
-                                    <input type="text" id="pattern_repeat" class="form-control" name="pattern_repeat"
-                                        placeholder="Enter Pattern Repeat">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="pattern_match" class="form-label">Pattern Match</label>
-                                    <input type="text" id="pattern_match" class="form-control" name="pattern_match"
-                                        placeholder="Enter Pattern Match">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="application_guide" class="form-label">Application Guide</label>
-                                    <input type="text" id="application_guide" class="form-control" name="application_guide"
-                                        placeholder="Enter product Application Guide">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="dotted-line my-4">
-                </div>
-
-                <!-- storage_usage_details Tab -->
-                <div class="tab-pane fade" id="storage_usage_details" role="tabpanel"
-                    aria-labelledby="storage_usage_details-tab" style="flex-wrap: nowrap;">
-                    <div class="col-md-4">
-                        <label for="featured-image" class="form-label fw-semibold">Storage Usage Details</label>
-                        <small class="text-muted d-block mb-2">
-                            Add Your Storage Usage Details from here.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <div class="mb-3">
-                                    <label for="storage" class="form-label">Storage</label>
-                                    <input type="text" id="storage" class="form-control" name="storage"
-                                        placeholder="Enter product Storage">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="net_weight" class="form-label">Net Weight</label>
-                                    <input type="number" id="net_weight" class="form-control" name="net_weight"
-                                        placeholder="Enter product net_weight">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="coverage" class="form-label">Coverage</label>
-                                    <input type="text" id="coverage" class="form-control" name="coverage"
-                                        placeholder="Enter product coverage">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="dotted-line my-4">
-                </div>
-
-                <!-- installation_steps Tab -->
-                <div class="tab-pane fade" id="installation_steps" role="tabpanel"
-                    aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
-                    <div class="col-md-4">
-                        <label for="installation_steps" class="form-label fw-semibold">Installation Steps
-                            Details</label>
-                        <small class="text-muted d-block mb-2">
-                            Add Your Installation Steps Details from here.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <!-- Dynamic fields container -->
-                        <div id="installationFieldsContainer">
-                            <!-- Initial card -->
-                            <div class="card mb-3">
-                                <div class="card-body py-4">
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" id="name" class="form-control" name="installation_steps[0][installation_name]"
-                                            placeholder="Enter product name">
+                                <!-- Featured Image Tab -->
+                                <div class="tab-pane fade" id="featured" role="tabpanel"
+                                    aria-labelledby="featured-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="featured-image" class="form-label fw-semibold">Featured
+                                            Image</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Upload your product featured image here.<br>
+                                            Image size should not be more than 2 MB.
+                                        </small>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="description" class="form-label">Description</label>
-                                        <input type="text" id="description" class="form-control" name="installation_steps[0][installation_description]"
-                                            placeholder="Enter product description">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="image" class="form-label">Image</label>
-                                        {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
-                                     id="gallery-upload" class="dropzone custom-page-dropzone">
-                                     <div class="dz-message text-gray-600">
-                                         <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                             Images</span>
-                                     </div>
-                                 </form> --}}
-                                        <input type="file" name="installation_steps[0][installation_image]"
-                                            class="form-control">
-                                    </div>
-                                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                        style="top: 0; right: 10px;">Remove</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Add More button -->
-                        <button id="addInstallationFieldButton" class="btn btn-primary mt-3" type="button">Add
-                            More</button>
-                    </div>
-                    <hr class="dotted-line my-4">
-                </div>
-
-                <!-- Products Features Tab -->
-                <div class="tab-pane fade" id="products_features" role="tabpanel"
-                    aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
-                    <div class="col-md-4">
-                        <label for="products_features" class="form-label fw-semibold">Products Features</label>
-                        <small class="text-muted d-block mb-2">
-                            Add your products features details from here.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <!-- Dynamic fields container -->
-                        <div id="featuresFieldsContainer">
-                            <!-- Initial card -->
-                            <div class="card mb-3">
-                                <div class="card-body py-4">
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter product name" name="product_features[0][name]">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="image" class="form-label">Image</label>
-                                        {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
-                                        class="dropzone custom-page-dropzone">
-                                        <div class="dz-message text-gray-600">
-                                            <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                                Images</span>
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <!-- Featured Image Dropzone -->
+                                                {{-- <div class="featured-image-dropzone dropzone custom-page-dropzone">
+                                                    <div class="dz-message">
+                                                        <div>
+                                                            <img class="drop-img"
+                                                                src="{{ asset('images/dropbox.png') }}"
+                                                                alt="">
+                                                        </div>
+                                                        <h5 class="drop-zone__prompt2" style="color:black;">Upload Featured Image</h5>
+                                                    </div>
+                                                </div> --}}
+                                                <input type="file" name="featured_image"
+                                                    class="form-control form-control-solid">
+                                            </div>
                                         </div>
-                                    </form> --}}
-                                        <input type="file" name="product_features[0][image]" class="form-control">
                                     </div>
-                                    <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                        style="top: 0; right: 10px;">Remove</span>
+                                    <div class="col-md-4">
+                                        <label for="featured-image" class="form-label fw-semibold">Video</label>
+                                        <small class="text-muted d-block">
+                                            Upload your product featured video here.<br>
+                                            video size should not be more than 50 MB.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <!-- Featured Image Dropzone -->
+                                                {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
+                                                    id="featured-image-upload" class="dropzone custom-page-dropzone">
+                                                    <div class="dz-message text-gray-600">
+                                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                                            Video</span>
+                                                    </div>
+                                                </form> --}}
+                                                <input type="file" name="video"
+                                                    class="form-control form-control-solid" accept="video/*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+
+                                <!-- Gallery Tab -->
+                                <div class="tab-pane fade" id="gallery" role="tabpanel"
+                                    aria-labelledby="gallery-tab">
+                                    <div class="col-md-4">
+                                        <label for="gallery-upload" class="form-label fw-semibold">Gallery</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Upload your product image gallery here.<br>
+                                            Image size should not be more than 2 MB.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <!-- Gallery Dropzone -->
+                                                {{-- <form action="/upload" method="POST" enctype="multipart/form-data" id="gallery-upload"
+                                                        class="dropzone custom-page-dropzone">
+                                                        <div class="dz-message text-gray-600">
+                                                            <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                                                Images</span>
+                                                        </div>
+                                                    </form> --}}
+
+                                                <input type="file" name="gallery_images[]"
+                                                    class="form-control form-control-solid" multiple>
+
+                                                <!-- Gallery Images Section -->
+                                                {{-- <div class="gallery-images mt-4">
+                                                    <div class="row">
+                                                        <!-- Example Image 1 -->
+                                                        <div class="col-md-4 mb-3 image-item" draggable="true">
+                                                            <div class="card">
+                                                                <img src="https://via.placeholder.com/150" class="card-img-top"
+                                                                    alt="Gallery Image 1">
+                                                                <div class="card-body d-flex justify-content-end">
+                                                                    <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                    <button class="btn btn-sm btn-secondary drag-handle"
+                                                                        title="Drag to Sort">
+                                                                        <i class="fas fa-arrows-alt"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                            <!-- Example Image 2 -->
+                                                            <div class="col-md-4 mb-3 image-item" draggable="true">
+                                                                <div class="card">
+                                                                    <img src="https://via.placeholder.com/150" class="card-img-top"
+                                                                        alt="Gallery Image 2">
+                                                                    <div class="card-body d-flex justify-content-end">
+                                                                        <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-sm btn-secondary drag-handle"
+                                                                            title="Drag to Sort">
+                                                                            <i class="fas fa-arrows-alt"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                                <!-- Example Image 3 -->
+                                                                <div class="col-md-4 mb-3 image-item" draggable="true">
+                                                                    <div class="card">
+                                                                        <img src="https://via.placeholder.com/150" class="card-img-top"
+                                                                            alt="Gallery Image 3">
+                                                                        <div class="card-body d-flex justify-content-end">
+                                                                            <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
+                                                                                <i class="fas fa-trash"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-sm btn-secondary drag-handle"
+                                                                                title="Drag to Sort">
+                                                                                <i class="fas fa-arrows-alt"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+
+                                <!-- Categories Tab -->
+                                <div class="tab-pane fade" id="categories" role="tabpanel"
+                                    aria-labelledby="categories-tab">
+                                    <div class="col-md-4">
+                                        <label for="categories" class="form-label fw-semibold">Categories</label>
+                                        <small class="text-muted d-block mb-2">Select categories from here.</small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <!-- Parent Category Select -->
+                                                <div class="mb-3">
+                                                    <label for="parent-category" class="form-label">Parent
+                                                        Category</label>
+                                                    <select id="parent-category" name="parent_category"
+                                                        class="form-select">
+                                                        <option value="">Select Parent Category</option>
+                                                        <option value="all" selected>All</option>
+                                                        <option value="none">None <small>(Those who don`t have parent
+                                                                category)</small>
+                                                        </option>
+                                                        @isset($parent_categories)
+                                                            @foreach ($parent_categories as $category)
+                                                                <option value="{{ $category->id }}">{{ $category->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endisset
+                                                    </select>
+                                                </div>
+
+                                                <!-- Category Select -->
+                                                <div class="mb-3">
+                                                    <label for="category" class="form-label">Category</label>
+                                                    <select id="category" class="form-select" name="categories[]"
+                                                        multiple="multiple">
+                                                        @isset($categories)
+                                                            @foreach ($categories as $category)
+                                                                <option value="{{ $category->id }}">{{ $category->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endisset
+                                                    </select>
+                                                </div>
+
+                                                <!-- Tags Select -->
+                                                <div class="mb-3">
+                                                    <label for="tags" class="form-label">Tags</label>
+                                                    <select id="tags" class="form-select" name="tags[]"
+                                                        multiple="multiple">
+                                                        @isset($tags)
+                                                            @foreach ($tags as $tag)
+                                                                <option value="{{ $tag->id }}">{{ $tag->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endisset
+                                                    </select>
+                                                    <small class="text-muted">Select multiple tags if needed.</small>
+                                                </div>
+                                                <!-- Color Select -->
+                                                <div class="mb-3">
+                                                    <label for="color" class="form-label">Colors</label>
+                                                    <select id="color" class="form-select" name="color">
+                                                        <option value="">Select Color</option>
+                                                        @isset($colors)
+                                                            @foreach ($colors as $color)
+                                                                <option value="{{ $color->id }}">{{ $color->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endisset
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="dotted-line my-4">
+                                </div>
+
+                                <!-- Product Type Tab -->
+                                <div class="tab-pane fade" id="product-type" role="tabpanel"
+                                    aria-labelledby="product-type-tab">
+                                    <div class="col-md-4">
+                                        <label for="productType" class="form-label fw-semibold">Product Type</label>
+                                        <small class="text-muted d-block mb-2">Select product type from here.</small>
+                                    </div>
+                                    <div class="col-md-8 mb-5">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="productType" class="form-label">Product Type</label>
+                                                    <select id="productType" class="form-select" name="product_type">
+                                                        <option value="simple">Simple Product</option>
+                                                        <option value="variable">Variable Product</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Simple Product Form -->
+                                    <div id="simpleProductForm" class="col-md-8" style="display: none;">
+                                        <div class="col-md-4">
+                                            <label for="product-variation" class="form-label fw-semibold">Simple
+                                                Product
+                                                Information</label>
+                                            <small class="text-muted d-block">
+                                                Add your simple product description and necessary information
+                                            </small>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="price" class="form-label">Price</label>
+                                                    <input type="number" id="price" name="simple_price"
+                                                        class="form-control" placeholder="Enter Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="salePrice" class="form-label">Sale Price</label>
+                                                    <input type="number" id="salePrice" name="simple_sale_price"
+                                                        class="form-control" placeholder="Enter Sale Price">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="SKU" class="form-label">SKU</label>
+                                                    <input type="number" id="sku" name="simple_sku"
+                                                        class="form-control" placeholder="Enter SKU">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Variable Product Form -->
+                                    <div id="variableProductForm" class="col-md-8">
+                                        <div class="col-md-4">
+                                            <label for="product-variation" class="form-label fw-semibold">Product
+                                                Variation Information</label>
+                                            <small class="text-muted d-block">
+                                                Add your product variation and necessary information from here
+                                            </small>
+                                        </div>
+                                        <div id="sectionsContainer">
+                                            <!-- Initial section matching dynamic structure -->
+                                            <div class="card mb-3 section" data-section="0">
+                                                <div class="card-body py-4">
+                                                    <div class="row w-100 relative">
+                                                        <div class="col-3">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Attribute Name</label>
+                                                                <select
+                                                                    class="form-select attributeName attribute-change"
+                                                                    name="variations[0][attribute_id]"
+                                                                    data-section="0">
+                                                                    <option value="">Select...</option>
+                                                                    @isset($attributes)
+                                                                        @foreach ($attributes as $attribute)
+                                                                            <option value="{{ $attribute->id }}">
+                                                                                {{ $attribute->name }}</option>
+                                                                        @endforeach
+                                                                    @endisset
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Attribute Values</label>
+                                                                <select class="form-select attribute-values"
+                                                                    name="variations[0][attribute_values][]"
+                                                                    data-section="0" multiple>
+                                                                    <option value="">Select Attribute Value
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span
+                                                        class="text-danger removeSection cursor-pointer position-absolute p-2"
+                                                        style="top: 0; right: 10px;">
+                                                        Remove
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Moved value-container OUTSIDE sectionsContainer -->
+                                        <div id="valuesContainer">
+                                            <!-- Selected attribute values will appear here dynamically -->
+                                        </div>
+
+                                        <button id="addSection" type="button" class="btn btn-primary mt-3">Add New
+                                            Section</button>
+                                    </div>
+
+                                    <hr class="dotted-line my-4">
                                 </div>
                             </div>
                         </div>
-                        <!-- Add More button -->
-                        <button id="addFeatureFieldButton" class="btn btn-primary mt-3" type="button">Add
-                            More</button>
                     </div>
-                    <hr class="dotted-line my-4">
                 </div>
 
-                <!-- product_seo Tab -->
-                <div class="tab-pane fade" id="product_seo" role="tabpanel" aria-labelledby="product_seo-tab"
-                    style="flex-wrap: nowrap;">
-                    <div class="col-md-4">
-                        <label for="featured-image" class="form-label fw-semibold">Product Seo</label>
-                        <small class="text-muted d-block mb-2">
-                            Add Your Product Seo Details from here.
-                        </small>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-body py-4">
-                                <div class="mb-3">
-                                    <label for="metaTitle" class="form-label">Meta Title </label>
-                                    <input type="text" id="metaTitle" class="form-control" name="meta_title"
-                                        placeholder="Enter product Meta Title">
+                <!-- PS2 Content -->
+                <div class="tab-pane fade" id="ps2-content" role="tabpanel" aria-labelledby="ps2-tab">
+                    <div class="row">
+                        <!-- Vertical Child Tabs Navigation -->
+                        <div class="col-md-3">
+                            <div class="nav flex-column nav-pills me-3" id="ps2-child-tabs" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="nav-link show active" id="dos_dont-tab" data-bs-toggle="pill"
+                                    data-bs-target="#dos_dont" type="button" role="tab"
+                                    aria-controls="dos_dont" aria-selected="true">
+                                    Dos Dont
+                                </button>
+                                <button class="nav-link" id="design_application_details-tab" data-bs-toggle="pill"
+                                    data-bs-target="#design_application_details" type="button" role="tab"
+                                    aria-controls="design_application_details" aria-selected="false">
+                                    Design Application
+                                </button>
+                                <button class="nav-link" id="storage_usage_details-tab" data-bs-toggle="pill"
+                                    data-bs-target="#storage_usage_details" type="button" role="tab"
+                                    aria-controls="storage_usage_details" aria-selected="false">
+                                    Storage Usage
+                                </button>
+                                <button class="nav-link" id="installation_steps-tab" data-bs-toggle="pill"
+                                    data-bs-target="#installation_steps" type="button" role="tab"
+                                    aria-controls="installation_steps" aria-selected="false">
+                                    Installation Steps
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Child Tab Content -->
+                        <div class="col-md-9">
+                            <div class="tab-content" id="ps2-child-tabs-content">
+                                <!-- dos_dont Tab -->
+                                <div class="tab-pane fade show active" id="dos_dont" role="tabpanel"
+                                    aria-labelledby="dos_dont-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="featured-image" class="form-label fw-semibold">Dos Dont</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add Your Dos Dont details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div id="dynamicFieldsContainer">
+                                            <!-- Initial input field -->
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Enter dos or dont" name="dos_dont[]" />
+                                                <button class="btn btn-danger remove-field"
+                                                    type="button">Remove</button>
+                                            </div>
+                                        </div>
+                                        <button id="addFieldButton" class="btn btn-primary mt-3" type="button">Add
+                                            More</button>
+                                    </div>
+                                    <hr class="dotted-line my-4">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="metaDesc" class="form-label">Meta Description</label>
-                                    <input type="text" id="metaDesc" class="form-control" name="meta_description"
-                                        placeholder="Enter product Meta Description">
+
+                                <!-- design_application_details Tab -->
+                                <div class="tab-pane fade" id="design_application_details" role="tabpanel"
+                                    aria-labelledby="design_application_details-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="featured-image" class="form-label fw-semibold">Design_Application
+                                            Details</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add Your Design_Application Details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="room_type" class="form-label">Room Type</label>
+                                                    <input type="text" id="room_type" class="form-control"
+                                                        placeholder="Enter Room Type" name="room_type">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="finish_type" class="form-label">Finish Type</label>
+                                                    <input type="text" id="finish_type" class="form-control"
+                                                        name="finish_type" placeholder="Enter Finish Type">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="pattern_repeat" class="form-label">Pattern
+                                                        Repeat</label>
+                                                    <input type="text" id="pattern_repeat" class="form-control"
+                                                        name="pattern_repeat" placeholder="Enter Pattern Repeat">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="pattern_match" class="form-label">Pattern
+                                                        Match</label>
+                                                    <input type="text" id="pattern_match" class="form-control"
+                                                        name="pattern_match" placeholder="Enter Pattern Match">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="application_guide" class="form-label">Application
+                                                        Guide</label>
+                                                    <input type="text" id="application_guide" class="form-control"
+                                                        name="application_guide"
+                                                        placeholder="Enter product Application Guide">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+
+                                <!-- storage_usage_details Tab -->
+                                <div class="tab-pane fade" id="storage_usage_details" role="tabpanel"
+                                    aria-labelledby="storage_usage_details-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="featured-image" class="form-label fw-semibold">Storage Usage
+                                            Details</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add Your Storage Usage Details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="storage" class="form-label">Storage</label>
+                                                    <input type="text" id="storage" class="form-control"
+                                                        name="storage" placeholder="Enter product Storage">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="net_weight" class="form-label">Net Weight</label>
+                                                    <input type="number" id="net_weight" class="form-control"
+                                                        name="net_weight" placeholder="Enter product net_weight">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="coverage" class="form-label">Coverage</label>
+                                                    <input type="text" id="coverage" class="form-control"
+                                                        name="coverage" placeholder="Enter product coverage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+
+                                <!-- installation_steps Tab -->
+                                <div class="tab-pane fade" id="installation_steps" role="tabpanel"
+                                    aria-labelledby="installation_steps-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="installation_steps" class="form-label fw-semibold">Installation
+                                            Steps
+                                            Details</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add Your Installation Steps Details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <!-- Dynamic fields container -->
+                                        <div id="installationFieldsContainer">
+                                            <!-- Initial card -->
+                                            <div class="card mb-3">
+                                                <div class="card-body py-4">
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label">Name</label>
+                                                        <input type="text" id="name" class="form-control"
+                                                            name="installation_steps[0][installation_name]"
+                                                            placeholder="Enter product name">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="description"
+                                                            class="form-label">Description</label>
+                                                        <input type="text" id="description" class="form-control"
+                                                            name="installation_steps[0][installation_description]"
+                                                            placeholder="Enter product description">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="image" class="form-label">Image</label>
+                                                        {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
+                                 id="gallery-upload" class="dropzone custom-page-dropzone">
+                                 <div class="dz-message text-gray-600">
+                                     <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                         Images</span>
+                                 </div>
+                             </form> --}}
+                                                        <input type="file"
+                                                            name="installation_steps[0][installation_image]"
+                                                            class="form-control">
+                                                    </div>
+                                                    <span
+                                                        class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                                        style="top: 0; right: 10px;">Remove</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Add More button -->
+                                        <button id="addInstallationFieldButton" class="btn btn-primary mt-3"
+                                            type="button">Add
+                                            More</button>
+                                    </div>
+                                    <hr class="dotted-line my-4">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr class="dotted-line my-4">
                 </div>
 
+                <!-- PS3 Content -->
+                <div class="tab-pane fade" id="ps3-content" role="tabpanel" aria-labelledby="ps3-tab">
+                    <div class="row">
+                        <!-- Vertical Child Tabs Navigation -->
+                        <div class="col-md-3">
+                            <div class="nav flex-column nav-pills me-3" id="ps3-child-tabs" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="nav-link active" id="products_features-tab" data-bs-toggle="pill"
+                                    data-bs-target="#products_features" type="button" role="tab"
+                                    aria-controls="products_features" aria-selected="true">
+                                    Products Features
+                                </button>
+                                <button class="nav-link" id="product_seo-tab" data-bs-toggle="pill"
+                                    data-bs-target="#product_seo" type="button" role="tab"
+                                    aria-controls="product_seo" aria-selected="false">
+                                    Products SEO
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Child Tab Content -->
+                        <div class="col-md-9">
+                            <div class="tab-content" id="ps3-child-tabs-content">
+                                <!-- Products Features Tab -->
+                                <div class="tab-pane fade show active" id="products_features" role="tabpanel"
+                                    aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="products_features" class="form-label fw-semibold">Products
+                                            Features</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add your products features details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <!-- Dynamic fields container -->
+                                        <div id="featuresFieldsContainer">
+                                            <!-- Initial card -->
+                                            <div class="card mb-3">
+                                                <div class="card-body py-4">
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label">Name</label>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Enter product name"
+                                                            name="product_features[0][name]">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="image" class="form-label">Image</label>
+                                                        {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
+                                    class="dropzone custom-page-dropzone">
+                                    <div class="dz-message text-gray-600">
+                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
+                                            Images</span>
+                                    </div>
+                                </form> --}}
+                                                        <input type="file" name="product_features[0][image]"
+                                                            class="form-control">
+                                                    </div>
+                                                    <span
+                                                        class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                                        style="top: 0; right: 10px;">Remove</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Add More button -->
+                                        <button id="addFeatureFieldButton" class="btn btn-primary mt-3"
+                                            type="button">Add
+                                            More</button>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+
+                                <!-- product_seo Tab -->
+                                <div class="tab-pane fade" id="product_seo" role="tabpanel"
+                                    aria-labelledby="product_seo-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="featured-image" class="form-label fw-semibold">Product Seo</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add Your Product Seo Details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="metaTitle" class="form-label">Meta Title </label>
+                                                    <input type="text" id="metaTitle" class="form-control"
+                                                        name="meta_title" placeholder="Enter product Meta Title">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="metaDesc" class="form-label">Meta Description</label>
+                                                    <input type="text" id="metaDesc" class="form-control"
+                                                        name="meta_description"
+                                                        placeholder="Enter product Meta Description">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-primary next-tab-btn me-2">Next</button>
-                <button type="submit" class="btn btn-primary save-btn">Save Product</button>
+
+            <div class="row mt-4">
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary next-tab-btn me-2">Next</button>
+                    <button type="submit" class="btn btn-primary save-btn">Save Product</button>
+                </div>
             </div>
         </form>
     </div>
@@ -912,21 +1007,21 @@
             //     // Function to add a new delivery field card
             //     function addDeliveryField() {
             //         const deliveryFieldHTML = `
-            //    <div class="card mb-3 p-4 relative">
-            //     <div class="mb-3">
-            //         <label for="city_details" class="form-label">City Details</label>
-            //         <input type="text" class="form-control" placeholder="Enter City Details" name="city_details[]">
-            //     </div>
-            //     <div class="mb-3">
-            //         <label for="days" class="form-label">Days</label>
-            //         <input type="text" class="form-control" placeholder="Enter Days" name="days_details[]">
-            //     </div>
-            //     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
-            //         style="top: 0; right: 10px;">
-            //         Remove
-            //     </span>
-            //       </div>
-            //         `;
+    //    <div class="card mb-3 p-4 relative">
+    //     <div class="mb-3">
+    //         <label for="city_details" class="form-label">City Details</label>
+    //         <input type="text" class="form-control" placeholder="Enter City Details" name="city_details[]">
+    //     </div>
+    //     <div class="mb-3">
+    //         <label for="days" class="form-label">Days</label>
+    //         <input type="text" class="form-control" placeholder="Enter Days" name="days_details[]">
+    //     </div>
+    //     <span class="text-danger remove-field cursor-pointer position-absolute p-2"
+    //         style="top: 0; right: 10px;">
+    //         Remove
+    //     </span>
+    //       </div>
+    //         `;
             //         deliveryContainer.insertAdjacentHTML('beforeend', deliveryFieldHTML);
             //     }
 
@@ -1058,209 +1153,233 @@
             });
             const attributes = @json($attributes);
 
-            // document.addEventListener('DOMContentLoaded', function() {
-            //     const addSectionButton = document.getElementById('addSection');
-            //     const sectionsContainer = document.getElementById('sectionsContainer');
-            //     addSectionButton.style.display = 'block';
 
-            //     function createNewSection() {
-            //         const newSection = document.createElement('div');
-            //         newSection.className = 'card mb-3 section';
-            //         newSection.innerHTML = `
-    //         <div class="card-body d-flex gap-2 py-4">
-    //             <div class="row w-100 relative">
-    //                 <div class="col-3">
-    //                     <div class="mb-3">
-    //                         <label for="attributeName" class="form-label">Attribute Name</label>
-    //                         <select class="form-select attributeName attribute-change">
-    //                             <option value="">Select...</option>
-    //                             ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
-    //                         </select>
-    //                     </div>
-    //                 </div>
-    //                 <div class="col-9">
-    //                     <div class="mb-3">
-    //                                 <label for="attribute-value" class="form-label">Attribute Value</label>
 
-    //                         <select class="form-select form-control-solid attribute-values" multiple>
-    //                             <option value="">Select Attribute Value</option>
-    //                         </select>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //             <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
-    //                 Remove
-    //             </span>
-    //         </div>
-    //     `;
-            //         return newSection;
-            //     }
+            document.addEventListener("DOMContentLoaded", function() {
+                const attributes = @json($attributes);
+                const addSectionButton = document.getElementById("addSection");
+                const sectionsContainer = document.getElementById("sectionsContainer");
+                const valuesContainer = document.getElementById("valuesContainer");
+                let sectionCounter = 0;
 
-            //     addSectionButton.addEventListener('click', function() {
-            //         const newSection = createNewSection();
-            //         sectionsContainer.appendChild(newSection);
-            //     });
+                // Store selected values per section
+                let selectedAttributes = {}; // { sectionId: [selectedValues] }
 
-            //     sectionsContainer.addEventListener('click', function(e) {
-            //         if (e.target.classList.contains('removeSection')) {
-            //             e.target.closest('.section').remove();
-            //         }
-            //     });
+                $(".attribute-values").select2({
+                    placeholder: "Select Values",
+                    allowClear: true,
+                });
 
-            //     sectionsContainer.addEventListener('change', function(e) {
-            //         if (e.target.classList.contains('attribute-change')) {
-            //             const selectedVal = e.target.value;
-            //             if (selectedVal) {
-            //                 const url = "{{ route('product.attributes.values') }}"; // Backend route
-
-            //                 // Make a fetch request
-            //                 fetch(url, {
-            //                         method: 'POST', // Use POST if you are sending data
-            //                         headers: {
-            //                             'Content-Type': 'application/json', // Send JSON data
-            //                             'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
-            //                         },
-            //                         body: JSON.stringify({
-            //                             attribute_id: selectedVal // Send the selected attribute ID
-            //                         })
-            //                     })
-            //                     .then(response => {
-            //                         if (!response.ok) {
-            //                             throw new Error(`HTTP error! Status: ${response.status}`);
-            //                         }
-            //                         return response.json();
-            //                     })
-            //                     .then(res => {
-            //                         $('.attribute-values').empty();
-            //                         res.data.forEach(function(item) {
-            //                             $('.attribute-values').append(
-            //                                 `<option value="${item.id}">${item.name}</option>`
-            //                             );
-            //                         });
-            //                         $('.attribute-values').select2({
-            //                             placeholder: "Select Values",
-            //                             allowClear: true,
-            //                         });
-            //                     })
-            //                     .catch(error => {
-            //                         console.error('Error fetching data:', error);
-            //                     });
-            //             }
-            //         }
-            //     });
-            // });
-            document.addEventListener('DOMContentLoaded', function() {
-                const addSectionButton = document.getElementById('addSection');
-                const sectionsContainer = document.getElementById('sectionsContainer');
-                addSectionButton.style.display = 'block';
-
-                function createNewSection(sessionIncrement) {
-                    const newSection = document.createElement('div');
-                    newSection.className = 'card mb-3 section';
+                // Function to create a new section
+                function createNewSection() {
+                    sectionCounter++;
+                    const newSection = document.createElement("div");
+                    newSection.className = "card mb-3 section";
+                    newSection.dataset.section = sectionCounter;
                     newSection.innerHTML = `
-            <div class="card-body d-flex gap-2 py-4">
+            <div class="card-body py-4">
                 <div class="row w-100 relative">
                     <div class="col-3">
                         <div class="mb-3">
-                            <label for="attributeName" class="form-label">Attribute Name</label>
-                            <select class="form-select attributeName attribute-change" name="variations[${sessionIncrement}][attribute_id]">
+                            <label class="form-label">Attribute Name</label>
+                            <select class="form-select attributeName attribute-change" 
+                                    name="variations[${sectionCounter}][attribute_id]"
+                                    data-section="${sectionCounter}">
                                 <option value="">Select...</option>
-                                ${attributes.map(attribute => `<option value="${attribute.id}">${attribute.name}</option>`).join('')}
+                                ${attributes.map(attr => 
+                                    `<option value="${attr.id}">${attr.name}</option>`
+                                ).join('')}
                             </select>
                         </div>
                     </div>
                     <div class="col-9">
                         <div class="mb-3">
-                            <label for="attribute-value" class="form-label">Attribute Value</label>
-                            <select class="form-select form-control-solid attribute-values" name="variations[${sessionIncrement}][attribute_values][]" multiple>
-                                <option value="">Select Attribute Value</option>
+                            <label class="form-label">Attribute Values</label>
+                            <select class="form-select attribute-values" 
+                                    name="variations[${sectionCounter}][attribute_values][]" 
+                                    data-section="${sectionCounter}" 
+                                    multiple>
                             </select>
                         </div>
-                        <div class="card">
-                                            <div class="card-body py-4">
-                                                <div class="mb-3">
-                                                    <label for="price" class="form-label">Price</label>
-                                                    <input type="number" id="price" name="variations[${sessionIncrement}][price]" class="form-control"
-                                                        placeholder="Enter Price">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="salePrice" class="form-label">Sale Price</label>
-                                                    <input type="number" id="salePrice" name="variations[${sessionIncrement}][sale_price]" class="form-control"
-                                                        placeholder="Enter Sale Price">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="SKU" class="form-label">SKU</label>
-                                                    <input type="number" id="sku" name="variations[${sessionIncrement}][sku]" class="form-control"
-                                                        placeholder="Enter SKU">
-                                                </div>
-                                            </div>
-                                        </div>
                     </div>
                 </div>
-                <span class="text-danger removeSection cursor-pointer position-absolute p-2" style="top: 0; right: 10px;">
+                <span class="text-danger removeSection cursor-pointer position-absolute p-2" 
+                    style="top: 0; right: 10px;">
                     Remove
                 </span>
             </div>
         `;
+
+                    // Initialize Select2 for the new select
+                    $(newSection).find(".attribute-values").select2({
+                        placeholder: "Select Values",
+                        allowClear: true,
+                    });
+
                     return newSection;
                 }
-                let sessionIncrement = 0;
-                addSectionButton.addEventListener('click', function() {
-                    sessionIncrement++;
-                    const newSection = createNewSection(sessionIncrement);
-                    sectionsContainer.appendChild(newSection);
-                });
 
-                sectionsContainer.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('removeSection')) {
-                        e.target.closest('.section').remove();
+                // Generate all combinations of selected values
+                function generateCombinations() {
+                    valuesContainer.innerHTML = ""; // Clear existing values
+
+                    let sections = Object.values(selectedAttributes);
+                    if (sections.length === 0) return;
+
+                    function getCombinations(arr, prefix = []) {
+                        if (arr.length === 0) return [prefix];
+                        let result = [];
+                        let firstSet = arr[0];
+                        let remainingSets = arr.slice(1);
+                        firstSet.forEach(value => {
+                            result = result.concat(getCombinations(remainingSets, prefix.concat(value)));
+                        });
+                        return result;
                     }
-                });
 
-                sectionsContainer.addEventListener('change', function(e) {
-                    if (e.target.classList.contains('attribute-change')) {
-                        const selectedVal = e.target.value;
-                        const section = e.target.closest('.section');
-                        const attributeValuesDropdown = section.querySelector('.attribute-values');
+                    let combinations = getCombinations(sections);
 
-                        if (selectedVal) {
-                            const url = "{{ route('product.attributes.values') }}"; // Backend route
+                    combinations.forEach(comb => {
+                        const valueName = comb.join(" / ");
+                        const valueId = comb.join("-");
 
-                            // Make a fetch request
-                            fetch(url, {
-                                    method: 'POST', // Use POST if you are sending data
+                        if (!document.querySelector(`[data-value-id="${valueId}"]`)) {
+                            const valueSection = createValueSection(valueId, valueName);
+                            valuesContainer.appendChild(valueSection);
+                        }
+                    });
+                }
+
+                // Create a value section
+                function createValueSection(valueId, valueName) {
+                    const div = document.createElement("div");
+                    div.className = "card mb-3 value-section";
+                    div.dataset.valueId = valueId;
+                    div.innerHTML = `
+            <div class="card-body">
+                <h5 class="mb-3">${valueName}</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="form-label">Price</label>
+                        <input type="number" 
+                            name="variations[values][${valueId}][price]" 
+                            class="form-control" 
+                            placeholder="Enter Price">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Sale Price</label>
+                        <input type="number" 
+                            name="variations[values][${valueId}][sale_price]" 
+                            class="form-control" 
+                            placeholder="Enter Sale Price">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">SKU</label>
+                        <input type="text" 
+                            name="variations[values][${valueId}][sku]" 
+                            class="form-control" 
+                            placeholder="Enter SKU">
+                    </div>
+                </div>
+                <button type="button" 
+                        class="btn btn-sm btn-danger remove-value-section mt-2">
+                    Remove
+                </button>
+            </div>
+        `;
+                    return div;
+                }
+
+                // Event: Attribute selection change
+                sectionsContainer.addEventListener("change", function(e) {
+                    if (e.target.classList.contains("attribute-change")) {
+                        const section = e.target.closest(".section");
+                        const sectionId = section.dataset.section;
+                        const selectedAttribute = e.target.value;
+
+                        if (selectedAttribute) {
+                            fetch("{{ route('product.attributes.values') }}", {
+                                    method: "POST",
                                     headers: {
-                                        'Content-Type': 'application/json', // Send JSON data
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token for Laravel
+                                        "Content-Type": "application/json",
+                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
                                     },
                                     body: JSON.stringify({
-                                        attribute_id: selectedVal // Send the selected attribute ID
+                                        attribute_id: selectedAttribute
                                     })
                                 })
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error(`HTTP error! Status: ${response.status}`);
-                                    }
-                                    return response.json();
-                                })
-                                .then(res => {
-                                    attributeValuesDropdown.innerHTML = ''; // Clear existing options
-                                    res.data.forEach(function(item) {
-                                        const option = document.createElement('option');
-                                        option.value = item.id;
-                                        option.text = item.name;
-                                        attributeValuesDropdown.appendChild(option);
-                                    });
-                                    $(attributeValuesDropdown).select2({
+                                .then(response => response.json())
+                                .then(data => {
+                                    const valuesDropdown = section.querySelector(".attribute-values");
+                                    valuesDropdown.innerHTML = data.data.map(item =>
+                                        `<option value="${item.id}">${item.name}</option>`
+                                    ).join('');
+
+                                    // Reinitialize Select2
+                                    $(valuesDropdown).select2({
                                         placeholder: "Select Values",
                                         allowClear: true,
                                     });
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching data:', error);
+
+                                    // Handle value selection
+                                    $(valuesDropdown).on("change", function() {
+                                        selectedAttributes[sectionId] = Array.from(this
+                                            .selectedOptions).map(opt => opt.text);
+                                        generateCombinations();
+                                    });
                                 });
                         }
                     }
+                });
+
+                // Event: Remove Section
+                sectionsContainer.addEventListener("click", function(e) {
+                    if (e.target.classList.contains("removeSection")) {
+                        const section = e.target.closest(".section");
+                        const sectionId = section.dataset.section;
+                        delete selectedAttributes[sectionId]; // Remove stored values
+                        section.remove();
+                        generateCombinations(); // Refresh combinations
+                    }
+                });
+
+                // Event: Remove Value Section
+                valuesContainer.addEventListener("click", function(e) {
+                    if (e.target.classList.contains("remove-value-section")) {
+                        const valueSection = e.target.closest(".value-section");
+                        const valueId = valueSection.dataset.valueId;
+
+                        // Remove the selected value from all dropdowns
+                        document.querySelectorAll(`.attribute-values option[value="${valueId}"]`).forEach(
+                        opt => {
+                            opt.selected = false;
+                        });
+
+                        // Remove the value from the state (selectedAttributes)
+                        Object.keys(selectedAttributes).forEach(sectionId => {
+                            selectedAttributes[sectionId] = selectedAttributes[sectionId].filter(
+                                value => !value.includes(valueId));
+
+                            // If no values left in the section, remove the section key
+                            if (selectedAttributes[sectionId].length === 0) {
+                                delete selectedAttributes[sectionId];
+                            }
+                        });
+
+                        // Remove the value section from the DOM
+                        valueSection.remove();
+
+                        // Regenerate combinations to reflect the removed value
+                        generateCombinations();
+                    }
+                });
+
+
+
+                // Add new attribute sections
+                addSectionButton.addEventListener("click", function() {
+                    const newSection = createNewSection();
+                    sectionsContainer.appendChild(newSection);
                 });
             });
         </script>

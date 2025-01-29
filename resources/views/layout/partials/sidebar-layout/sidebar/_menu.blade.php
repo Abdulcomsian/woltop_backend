@@ -98,12 +98,12 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('story.index') ? 'here show' : '' }}">
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('reel.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
-            <a class="menu-link {{ request()->routeIs('story.index') ? 'active' : '' }}" href="{{ route('story.index') }}">
+            <a class="menu-link {{ request()->routeIs('reel.index') ? 'active' : '' }}" href="{{ route('reel.index') }}">
                 <span class="menu-icon"><i class="fa-solid fa-film"></i></span>
-                <span class="menu-title">Manage Stories</span>
+                <span class="menu-title">Manage Reels</span>
             </a>
             <!--end:Menu link-->
         </div>

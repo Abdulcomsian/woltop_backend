@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             ParentCategorySeeder::class,
             CategorySeeder::class,
             TagSeeder::class,
-            StorySeeder::class,
+            ReelSeeder::class,
             ColorSeeder::class,
             AttributeSeeder::class,
             ProductSeeder::class,

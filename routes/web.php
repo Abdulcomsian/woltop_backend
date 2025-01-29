@@ -12,8 +12,8 @@ use App\Http\Controllers\WebControllers\{
     ParentCategoryController,
     ProductController,
     ProfileController,
+    ReelsController,
     ReviewController,
-    StoriesController,
     TeamController,
     ToolController,
     UserController,
@@ -97,10 +97,10 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::post('get-categories', 'getCategories')->name('get.categories');
         });
     
-    // Stories
-    Route::controller(StoriesController::class)
-        ->prefix('story')
-        ->as('story.')
+    // Reels
+    Route::controller(ReelsController::class)
+        ->prefix('reels')
+        ->as('reel.')
         ->group(function () {
             Route::get('', 'index')->name('index');
             Route::get('create', 'create')->name('create');

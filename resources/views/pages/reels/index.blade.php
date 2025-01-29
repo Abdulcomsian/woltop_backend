@@ -1,5 +1,5 @@
 <x-default-layout>
-    @section('page-title', 'Manage Story')
+    @section('page-title', 'Manage Reels')
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
@@ -7,7 +7,7 @@
             <div class="card-title">
                  <!--begin::Toolbar-->
                  <div data-kt-user-table-toolbar="base">
-                    <span>Stories</span>
+                    <span>Reels</span>
                 </div>
                 <!--end::Toolbar-->
             </div>
@@ -15,9 +15,9 @@
             <div class="card-toolbar">
                 <!--begin::Add user-->
                 <a href="#"> {{-- open model here --}}
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_story">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_reel">
                         <span><i class="fa fa-plus"></i></span>
-                        Add Story
+                        Add Reel
                     </button>
                 </a>
                 <!--end::Add user-->
@@ -37,20 +37,20 @@
         <!--end::Card body-->
     </div>
 
-    @include('partials.modals.stories.add')
-    @include('partials.modals.stories.edit')
-    @include('partials.modals.stories.delete')
+    @include('partials.modals.reels.add')
+    @include('partials.modals.reels.edit')
+    @include('partials.modals.reels.delete')
     @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
         function deleteProduct(id){
-            document.querySelector("#story_id_delete").value = id;
-            var deleteModal = new bootstrap.Modal(document.getElementById('delete_story'));
+            document.querySelector("#reel_id_delete").value = id;
+            var deleteModal = new bootstrap.Modal(document.getElementById('delete_reel'));
             deleteModal.show();
         }
 
         function editProduct(id){
-            let url = `{{ route('story.edit', ':id') }}`.replace(':id', id);
+            let url = `{{ route('reel.edit', ':id') }}`.replace(':id', id);
             fetch(url)
                 .then((response) => {
                     if (!response.ok) {
@@ -59,11 +59,11 @@
                     return response.json();
                 })
                 .then((res) => {
-                    let file_path = `{{ asset('assets/wolpin_media/stories/' . ':path') }}`.replace(":path", res.data.path);
-                    let iFrame = document.querySelector("#preview-story");
+                    let file_path = `{{ asset('assets/wolpin_media/reels/' . ':path') }}`.replace(":path", res.data.path);
+                    let iFrame = document.querySelector("#preview-reel");
                     iFrame.src = file_path;
-                    document.querySelector("#story_id").value = res.data.id;
-                    let modal = new bootstrap.Modal(document.getElementById('edit_story'));
+                    document.querySelector("#reel_id").value = res.data.id;
+                    let modal = new bootstrap.Modal(document.getElementById('edit_reel'));
                     modal.show();
                 })
                 .catch((error) => {

@@ -2,30 +2,30 @@
 
 namespace App\Http\Controllers\WebControllers;
 
-use App\DataTables\StoryDataTable;
+use App\DataTables\ReelDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoryRequest;
-use App\Services\StoryService;
+use App\Http\Requests\ReelRequest;
+use App\Services\ReelService;
 use Illuminate\Http\Request;
 
-class StoriesController extends Controller
+class ReelsController extends Controller
 {
     protected $service;
 
-    public function __construct(StoryService $service)
+    public function __construct(ReelService $service)
     {
         $this->service = $service;
     }
 
-    public function index(StoryDataTable $datatable)
+    public function index(ReelDataTable $datatable)
     {
-        return $datatable->render("pages.stories.index");
+        return $datatable->render("pages.reels.index");
     }
 
-    public function store(StoryRequest $request){
+    public function store(ReelRequest $request){
         try{
             $this->service->store($request->validated());
-            toastr()->success('Story Saved Successfully!');
+            toastr()->success('Reel Saved Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
@@ -42,10 +42,10 @@ class StoriesController extends Controller
         }
     }
 
-    public function update(StoryRequest $request){
+    public function update(ReelRequest $request){
         try{
             $data = $this->service->update($request->validated());
-            toastr()->success('Story Updated Successfully!');
+            toastr()->success('Reel Updated Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
             toastr()->error('Something went wrong!');
@@ -56,7 +56,7 @@ class StoriesController extends Controller
     public function delete(Request $request){
         try{
             $this->service->delete($request);
-            toastr()->success('Story Deleted Successfully!');
+            toastr()->success('Reel Deleted Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
             toastr()->error('Something went wrong!');

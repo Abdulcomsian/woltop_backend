@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoryRequest extends FormRequest
+class ReelRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +14,8 @@ class StoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "story_id" => "sometimes",
-            "story" => "required",
+            "reel_id" => "sometimes",
+            "reel" => "required",
         ];
     }
 }

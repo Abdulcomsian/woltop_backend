@@ -6,7 +6,7 @@ use App\Http\Controllers\ApiControllers\{
     BlogController,
     CategoryController,
     ProductController,
-    StoryController,
+    ReelController,
     ColorController,
     ReviewController,
     TagController,
@@ -62,7 +62,7 @@ Route::get('colors', [ColorController::class, 'getAllColors']);
 Route::get('tags', [TagController::class, 'getTags']);
 
 // Stories
-Route::get('stories', [StoryController::class, 'getStories']);
+Route::get('reels', [ReelController::class, 'getReels']);
 
 // Tools
 Route::get('tools', [ToolController::class, 'getTools']);

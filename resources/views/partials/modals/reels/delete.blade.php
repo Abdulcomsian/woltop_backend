@@ -1,16 +1,16 @@
-<div class="modal fade" id="delete_story" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+<div class="modal fade" id="delete_reel" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="{{route('story.delete')}}" method="POST">
+            <form action="{{route('reel.delete')}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <input type="hidden" name="story_id" id="story_id_delete" value="">
+                <input type="hidden" name="reel_id" id="reel_id_delete" value="">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteCategoryLabel">Delete Confirmation</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete this story?
+                    Are you sure you want to delete this reel?
                     <input type="hidden" id="deleteCategoryId" value="">
                 </div>
                 <div class="modal-footer">

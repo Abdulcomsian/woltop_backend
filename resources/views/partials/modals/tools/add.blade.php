@@ -28,13 +28,13 @@
                         data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
-                            <label class="d-block fw-semibold fs-6 mb-5">Tool Image</label>
-                            <input type="file" name="image" class="form-control form-control-solid" required>
+                            <label class="d-block fw-semibold fs-6 mb-5 required">Tool Image</label>
+                            <input type="file" name="image" class="form-control form-control-solid">
                             <!--end::Image input-->
                             <!--begin::Hint-->
                             <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
                             <!--end::Hint-->
-                            @error('tool_image')
+                            @error('image')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

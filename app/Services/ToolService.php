@@ -37,17 +37,27 @@ class ToolService
     }
 
     public function update($data){
+        $update = $this->model::find($data['id']);
         if(isset($data['image'])){
+            // removing old file from server folder
+            if($update && $update->image != null){
+                $oldPath = public_path("assets/wolpin_media/tools/" . $update->image);
+                if(file_exists($oldPath)){
+                    unlink($oldPath);
+                }
+            }
+            // adding new file
             $fileName = rand() . '.' . $data['image']->extension();
             $path = public_path("assets/wolpin_media/tools/");
             $data['image']->move($path, $fileName);
         }
 
-        $update = $this->model::find($data['id']);
         $update->name = $data['name'];
         $update->slug = Str::slug($data['name']);
         $update->description = $data['description'];
-        $update->image = $fileName ?? null;
+        if(isset($fileName) && $fileName != null){
+            $update->image = $fileName;
+        }
         $update->price = $data['price'];
         $update->sale_price = $data['sale_price'];
         $update->save();
@@ -55,7 +65,7 @@ class ToolService
     }
 
     public function delete($data){
-        $destroy = $this->model::findOrFail($data['reel_id']);
+        $destroy = $this->model::findOrFail($data['id']);
         $destroy->delete();
     }
     

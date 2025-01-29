@@ -1,9 +1,10 @@
-<div class="modal fade" id="delete_tool_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+<div class="modal fade" id="delete_modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="#" method="POST">
+            <form action="{{route('tool.delete')}}" method="POST">
                 @csrf
-                <input type="hidden" name="tool_id" id="tool_id_delete" value="">
+                @method("DELETE")
+                <input type="hidden" name="id" id="delete_id" value="">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteToolLabel">Delete Confirmation</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

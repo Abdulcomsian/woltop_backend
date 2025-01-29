@@ -13,13 +13,20 @@ class ToolRequest extends FormRequest
      */
     public function rules(): array
     {
+        if ($this->isMethod("DELETE")) {
+            return [
+                "id" => "required",
+            ];
+        }
+
         return [
             "id" => "sometimes",
             "name" => "required",
             "description" => "required",
             "price" => "required",
             "sale_price" => "required",
-            "image" => "required",
+            "image" => $this->isMethod("POST") ? "required" : "sometimes",
         ];
     }
+
 }

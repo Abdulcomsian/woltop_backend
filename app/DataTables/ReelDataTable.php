@@ -21,7 +21,7 @@ class ReelDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->editColumn('reel', function($query){
-                $reel = '<a href="'.asset('assets/wolpin_media/stories/' . $query->path).'" target="_blank">View Reel</a>';
+                $reel = '<a href="'.asset('assets/wolpin_media/reels/' . $query->path).'" target="_blank">View Reel</a>';
                 return $reel;
             })
             ->addColumn('action', function($query) {

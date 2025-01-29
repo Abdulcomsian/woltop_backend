@@ -31,65 +31,16 @@
                         data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="d-block fw-semibold fs-6 mb-5">Tool Image</label>
-                            <!--end::Label-->
-                            <!--begin::Image placeholder-->
-                            <style>
-                                .image-input-placeholder {
-                                    background-image: url('{{ image(' svg/files/blank-image.svg') }}');
-                                }
+                            <img src="#" height="200" id="existing_image" alt="">
+                        </div>
 
-                                [data-bs-theme="dark"] .image-input-placeholder {
-                                    background-image: url('{{ image(' svg/files/blank-image-dark.svg') }}');
-                                }
-                            </style>
-                            <!--end::Image placeholder-->
-                            <!--begin::Image input-->
-                            {{-- {{ $avatar || $saved_avatar ? '' : 'image-input-empty' }} --}}
-                            <div class="image-input image-input-outline image-input-placeholder"
-                                data-kt-image-input="true">
-                                <!--begin::Preview existing avatar-->
-                                {{-- @if ($avatar)
-                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $avatar ? $avatar->temporaryUrl() : '' }});">
-                            </div>
-                            @else
-                            <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $saved_avatar }});"></div>
-                            @endif --}}
-                                <div class="image-input-wrapper w-125px h-125px" id="tool_image"
-                                    style="background-image: url('{{ image('svg/files/blank-image.svg') }}');"></div>
-                                <!--end::Preview existing avatar-->
-                                <!--begin::Label-->
-                                <label
-                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                    {!! getIcon('pencil', 'fs-7') !!}
-                                    <!--begin::Inputs-->
-                                    <input type="file" name="image" id="edit_image" accept=".png, .jpg, .jpeg" />
-                                    <input type="hidden" name="avatar_remove" />
-                                    <!--end::Inputs-->
-                                </label>
-                                <!--end::Label-->
-                                <!--begin::Cancel-->
-                                <span
-                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-                                    {!! getIcon('cross', 'fs-2') !!}
-                                </span>
-                                <!--end::Cancel-->
-                                <!--begin::Remove-->
-                                <span
-                                    class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                    data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                    {!! getIcon('cross', 'fs-2') !!}
-                                </span>
-                                <!--end::Remove-->
-                            </div>
-                            <!--end::Image input-->
-                            <!--begin::Hint-->
-                            <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="d-block fw-semibold fs-6 mb-5">Replace Image</label>
+                            <!--end::Label-->
+                            <input type="file" name="image" class="form-control form-control-solid" accept=".png, .jpg, .jpeg" />
                             <!--end::Hint-->
-                            @error('tool_image')
+                            @error('image')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>

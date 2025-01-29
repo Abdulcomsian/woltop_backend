@@ -33,13 +33,20 @@ class ReelService
     }
 
     public function update($data){
+        $update = $this->model::find($data['reel_id']);
         if(isset($data['reel'])){
+            // removing old file from server folder
+            if($update && $update->path != null){
+                $oldPath = public_path("assets/wolpin_media/reels/" . $update->path);
+                if(file_exists($oldPath)){
+                    unlink($oldPath);
+                }
+            }
+            // adding new file
             $fileName = rand() . '.' . $data['reel']->extension();
             $path = public_path("assets/wolpin_media/reels/");
             $data['reel']->move($path, $fileName);
         }
-
-        $update = $this->model::find($data['reel_id']);
         $update->path = $fileName ?? null;
         $update->save();
         return $update;

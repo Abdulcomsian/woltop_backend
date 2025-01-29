@@ -25,7 +25,7 @@ class ToolController extends Controller
     public function store(ToolRequest $request){
         try{
             $this->service->store($request->validated());
-            toastr()->success('Reel Saved Successfully!');
+            toastr()->success('Tool Saved Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
@@ -36,7 +36,7 @@ class ToolController extends Controller
     public function update(ToolRequest $request){
         try{
             $this->service->update($request->validated());
-            toastr()->success('Reel Saved Successfully!');
+            toastr()->success('Tool Saved Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
@@ -50,6 +50,17 @@ class ToolController extends Controller
             return response()->json(['success' => true, "data" => $data], 200);
         }catch(\Exception $e){
             return response()->json(['success' => false, "msg" => "Something went wrong"], 400);
+        }
+    }
+
+    public function delete(ToolRequest $request){
+        try{
+            $this->service->delete($request->validated());
+            toastr()->success('Tool Deleted Successfully!');
+            return redirect()->back();
+        }catch(\Exception $e){
+            toastr()->error("Something went wrong");
+            return redirect()->back();
         }
     }
 

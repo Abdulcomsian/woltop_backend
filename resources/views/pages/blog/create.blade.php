@@ -19,13 +19,11 @@
             <div class="card-body py-4">
                 {{-- add form content here  --}}
                 <!--begin::Form-->
-                <form action="{{ route('store.category') }}" id="add_categoy_form" method="POST"
-                    enctype="multipart/form-data">
+                <form action="{{ route('blog.store') }}" id="submitForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!--begin::Scroll-->
-                    <div class="d-flex flex-column  " id="kt_modal_add_user_scroll" 
-                        data-kt-scroll-activate="true" data-kt-scroll-max-height="auto"
-                        data-kt-scroll-dependencies="#kt_modal_add_user_header"
+                    <div class="d-flex flex-column" id="kt_modal_add_user_scroll" data-kt-scroll-activate="true"
+                        data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header"
                         data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="row">
@@ -36,12 +34,13 @@
                                     <label class="required fw-semibold fs-6 mb-2">Image</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="file" name="image" id="category_image_add"
-                                        class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Image" />
-                                    <span class="text-danger" id="add_category_image_err" style="display: none;">Image
-                                        is required</span>
+                                    <input type="file" name="image" class="form-control mb-3 mb-lg-0"
+                                        placeholder="Image" />
                                     <!--end::Input-->
                                 </div>
+                                @error("image")
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
 
                             <!-- Title Field -->
@@ -51,35 +50,40 @@
                                     <label class="required fw-semibold fs-6 mb-2">Title</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" name="name" id="category_title_add"
-                                        class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Name" />
-                                    <span class="text-danger" id="add_category_title_err" style="display: none;">Title
-                                        is required</span>
+                                    <input type="text" name="title" class="form-control mb-3 mb-lg-0"
+                                        placeholder="Name" />
                                     <!--end::Input-->
                                 </div>
+                                @error("title")
+                                    <span class="text-danger">{{$message}}</span>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fw-semibold fs-6 mb-2">Short Description</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <!-- <input type="textarea" name="bio" id="bio_add"
-                        class="form-control form-control-solid mb-3 mb-lg-0" placeholder="bio" /> -->
-                            <textarea class="form-control " id="exampleFormControlTextarea1" rows="3"></textarea>
-                            <span class="text-danger" id="add_category_name_err" style="display: none;">Short
-                                Description
-                                is required</span>
-                            <!--end::Input-->
-
-                            <span class="text-danger"></span>
+                            <textarea class="form-control" name="short_description" rows="3" placeholder="Short Description"></textarea>
                         </div>
+                        @error("short_description")
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
                         <!--end::Input group-->
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea id="description" name="description"></textarea>
+                        <div class="fv-row mb-3">
+                            <label for="description" class="required fw-semibold fs-6 mb-2">Description</label>
+                            <textarea id="description" name="description" placeholder="Type some content here!"></textarea>
+                        </div>
+                        @error("description")
+                            <span class="text-danger">{{$message}}</span>
+                        @enderror
+
+                        <div class="fv-row mb-3">
+                            <div class="d-flex justify-content-end mt-5 mb-5">
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <!--end::Scroll-->
@@ -88,21 +92,7 @@
                 <!--end::Form-->
             </div>
         </div>
-        <div>
-            <!--begin::Actions-->
-            <div class="d-flex justify-content-end mt-5 mb-5">
-                <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal"
-                    aria-label="Close">Discard</button>
-                <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                    <span class="indicator-label">Submit</span>
-                    <span class="indicator-progress">
-                        Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-            </div>
-            <!--end::Actions-->
-        </div>
+    </div>
         @push('scripts')
             <script>
                 // Existing Dropzone initialization
@@ -114,6 +104,51 @@
                     .catch(error => {
                         console.error(error);
                     });
+
+                // Validations
+                function validateForm(form, isEdit = false) {
+                    let fields = [{
+                            selector: "input[name='image']",
+                            type: "input"
+                        },
+                        {
+                            selector: "input[name='title']",
+                            type: "input"
+                        },
+                        {
+                            selector: "textarea[name='short_description']",
+                            type: "textarea"
+                        },
+                        {
+                            selector: "textarea[name='description']",
+                            type: "textarea"
+                        },
+                    ];
+
+                    form.querySelectorAll(".text-danger").forEach(el => el.remove());
+                    let isValid = true;
+                    fields.forEach(field => {
+                        let element = form.querySelector(field.selector);
+                        if (element && (element.value.trim() === "")) {
+                            isValid = false;
+                            let errorSpan = document.createElement("span");
+                            errorSpan.classList.add("text-danger");
+                            errorSpan.innerText = "This field is required";
+                            if (!element.parentNode.querySelector(".text-danger")) {
+                                element.parentNode.appendChild(errorSpan);
+                            }
+                        }
+                    });
+
+                    return isValid;
+                }
+
+                document.querySelector("#submitForm").addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    if (validateForm(this)) {
+                        this.submit();
+                    }
+                });
             </script>
         @endpush
 </x-default-layout>

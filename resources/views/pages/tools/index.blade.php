@@ -44,8 +44,8 @@
     {{ $dataTable->scripts() }}
     <script>
         function deleteItem(id){
-            document.querySelector("#tool_id_delete").value = id;
-            var deleteModal = new bootstrap.Modal(document.getElementById('delete_tool_modal'));
+            document.querySelector("#delete_id").value = id;
+            var deleteModal = new bootstrap.Modal(document.getElementById('delete_modal'));
             deleteModal.show();
         }
 
@@ -69,8 +69,7 @@
                     if(data.data.image != ""){
                         let imageName = data.data.image;
                         let url = `{{asset("assets/wolpin_media/tools/" . ':imageurl')}}`.replace(":imageurl", imageName);
-                        document.querySelector("#tool_image").style.backgroundImage = `url('${url}')`
-                        document.querySelector("input[name='avatar_remove']").value = 0; // means there is picture
+                        document.querySelector("#existing_image").src = url
                     }
                     var editModal = new bootstrap.Modal(document.getElementById('edit_modal'));
                     editModal.show();
@@ -98,7 +97,7 @@
             let isValid = true;
             fields.forEach(field => {
                 let element = form.querySelector(field.selector);
-                if (element && (element.value.trim() === "" || element.value.trim() == 1)) {
+                if (element && (element.value.trim() === "")) {
                     isValid = false;
                     let errorSpan = document.createElement("span");
                     errorSpan.classList.add("text-danger");

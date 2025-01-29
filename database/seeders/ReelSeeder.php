@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Story;
+use App\Models\Reel;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class StorySeeder extends Seeder
+class ReelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $stories = [
+        $reels = [
             ["path" => "default.mov"],
             ["path" => "default.mov"],
             ["path" => "default.mov"],
@@ -21,8 +21,8 @@ class StorySeeder extends Seeder
             ["path" => "default.mov"],
         ];
 
-        foreach($stories as $story){
-            Story::create($story);
+        foreach($reels as $reel){
+            Reel::create($reel);
         }
     }
 }

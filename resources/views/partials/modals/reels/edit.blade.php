@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit_story" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="edit_reel" tabindex="-1" aria-hidden="true">
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <!--begin::Modal content-->
@@ -6,7 +6,7 @@
             <!--begin::Modal header-->
             <div class="modal-header" id="kt_modal_add_user_header">
                 <!--begin::Modal title-->
-                <h2 class="fw-bold">Update Story</h2>
+                <h2 class="fw-bold">Update Reel</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
@@ -18,26 +18,26 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form action="{{route('story.update')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('reel.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method("PATCH")
                     <!--begin::Scroll-->
-                    <input type="hidden" id="story_id" name="story_id" value="">
+                    <input type="hidden" id="reel_id" name="reel_id" value="">
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="row">
-                            <video id="preview-story" width="560" height="315" controls>
+                            <video id="preview-reel" width="560" height="315" controls>
                                 Your browser does not support the video tag.
                             </video>
                         </div>
                         <div class="fv-row mb-7 mt-4">
                             <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">Update Story</label>
+                            <label class="required fw-semibold fs-6 mb-2">Update Reel</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="file" name="story" id="story" class="form-control form-control-solid mb-3 mb-lg-0" accept="video/*" required/>
+                            <input type="file" name="reel" id="reel" class="form-control form-control-solid mb-3 mb-lg-0" accept="video/*" required/>
                             <!--end::Input-->
-                            @error('story')
+                            @error('reel')
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->

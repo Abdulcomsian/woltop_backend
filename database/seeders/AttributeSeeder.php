@@ -23,8 +23,8 @@ class AttributeSeeder extends Seeder
         }
 
         $attribute_value_data = [
-            ["attribute_id" => 1, "name" => "53CM x 6M", "price" => 1630, "sale_price" => 799, "discount" => 49, "sku" => "134qwe"],
-            ["attribute_id" => 1, "name" => "53CM x 9.5M", "price" => 462, "sale_price" => 1149, "discount" => 51, "sku" => "2345wwr"]
+            ["attribute_id" => 1, "name" => "53CM x 6M"],
+            ["attribute_id" => 1, "name" => "53CM x 9.5M"]
         ];
 
         foreach($attribute_value_data as $attr){

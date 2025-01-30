@@ -1153,30 +1153,42 @@
             });
             const attributes = @json($attributes);
 
-
-
             document.addEventListener("DOMContentLoaded", function() {
-                const attributes = @json($attributes);
-                const addSectionButton = document.getElementById("addSection");
-                const sectionsContainer = document.getElementById("sectionsContainer");
-                const valuesContainer = document.getElementById("valuesContainer");
-                let sectionCounter = 0;
+    const attributes = @json($attributes); // Assuming this is your array of attributes
+    const addSectionButton = document.getElementById("addSection");
+    const sectionsContainer = document.getElementById("sectionsContainer");
+    const valuesContainer = document.getElementById("valuesContainer");
+    let sectionCounter = 0;
 
-                // Store selected values per section
-                let selectedAttributes = {}; // { sectionId: [selectedValues] }
+    // Set to track selected attribute IDs
+    let selectedAttributeIds = new Set();
+    let selectedAttributes = {};
 
-                $(".attribute-values").select2({
-                    placeholder: "Select Values",
-                    allowClear: true,
-                });
+    $(".attribute-values").select2({
+        placeholder: "Select Values",
+        allowClear: true,
+    });
 
-                // Function to create a new section
-                function createNewSection() {
-                    sectionCounter++;
-                    const newSection = document.createElement("div");
-                    newSection.className = "card mb-3 section";
-                    newSection.dataset.section = sectionCounter;
-                    newSection.innerHTML = `
+    // Function to check if there are any available attributes left
+    function updateAddSectionButtonState() {
+        const availableAttributesCount = attributes.filter(attr => !selectedAttributeIds.has(String(attr.id))).length;
+        addSectionButton.disabled = availableAttributesCount === 0;
+    }
+
+    // Function to create a new section
+    function createNewSection() {
+        sectionCounter++;
+
+        // Filter out selected attributes for the new section before creating it
+        const availableAttributes = attributes.filter(attr => !selectedAttributeIds.has(String(attr.id)));
+        console.log("Available attributes for new section:", availableAttributes); // Debugging log
+
+        const newSection = document.createElement("div");
+        newSection.className = "card mb-3 section";
+        newSection.dataset.section = sectionCounter;
+
+        // Create the HTML for the new section
+        newSection.innerHTML = `
             <div class="card-body py-4">
                 <div class="row w-100 relative">
                     <div class="col-3">
@@ -1186,7 +1198,7 @@
                                     name="variations[${sectionCounter}][attribute_id]"
                                     data-section="${sectionCounter}">
                                 <option value="">Select...</option>
-                                ${attributes.map(attr => 
+                                ${availableAttributes.map(attr => 
                                     `<option value="${attr.id}">${attr.name}</option>`
                                 ).join('')}
                             </select>
@@ -1204,58 +1216,58 @@
                     </div>
                 </div>
                 <span class="text-danger removeSection cursor-pointer position-absolute p-2" 
-                    style="top: 0; right: 10px;">
+                      style="top: 0; right: 10px;">
                     Remove
                 </span>
             </div>
         `;
 
-                    // Initialize Select2 for the new select
-                    $(newSection).find(".attribute-values").select2({
-                        placeholder: "Select Values",
-                        allowClear: true,
-                    });
+        // Initialize Select2 for the new select
+        $(newSection).find(".attribute-values").select2({
+            placeholder: "Select Values",
+            allowClear: true,
+        });
 
-                    return newSection;
-                }
+        return newSection;
+    }
 
-                // Generate all combinations of selected values
-                function generateCombinations() {
-                    valuesContainer.innerHTML = ""; // Clear existing values
+    // Generate all combinations of selected values
+    function generateCombinations() {
+        valuesContainer.innerHTML = ""; // Clear existing values
 
-                    let sections = Object.values(selectedAttributes);
-                    if (sections.length === 0) return;
+        let sections = Object.values(selectedAttributes);
+        if (sections.length === 0) return;
 
-                    function getCombinations(arr, prefix = []) {
-                        if (arr.length === 0) return [prefix];
-                        let result = [];
-                        let firstSet = arr[0];
-                        let remainingSets = arr.slice(1);
-                        firstSet.forEach(value => {
-                            result = result.concat(getCombinations(remainingSets, prefix.concat(value)));
-                        });
-                        return result;
-                    }
+        function getCombinations(arr, prefix = []) {
+            if (arr.length === 0) return [prefix];
+            let result = [];
+            let firstSet = arr[0];
+            let remainingSets = arr.slice(1);
+            firstSet.forEach(value => {
+                result = result.concat(getCombinations(remainingSets, prefix.concat(value)));
+            });
+            return result;
+        }
 
-                    let combinations = getCombinations(sections);
+        let combinations = getCombinations(sections);
 
-                    combinations.forEach(comb => {
-                        const valueName = comb.join(" / ");
-                        const valueId = comb.join("-");
+        combinations.forEach(comb => {
+            const valueName = comb.join(" / ");
+            const valueId = comb.join("-");
 
-                        if (!document.querySelector(`[data-value-id="${valueId}"]`)) {
-                            const valueSection = createValueSection(valueId, valueName);
-                            valuesContainer.appendChild(valueSection);
-                        }
-                    });
-                }
+            if (!document.querySelector(`[data-value-id="${valueId}"]`)) {
+                const valueSection = createValueSection(valueId, valueName);
+                valuesContainer.appendChild(valueSection);
+            }
+        });
+    }
 
-                // Create a value section
-                function createValueSection(valueId, valueName) {
-                    const div = document.createElement("div");
-                    div.className = "card mb-3 value-section";
-                    div.dataset.valueId = valueId;
-                    div.innerHTML = `
+    // Create a value section
+    function createValueSection(valueId, valueName) {
+        const div = document.createElement("div");
+        div.className = "card mb-3 value-section";
+        div.dataset.valueId = valueId;
+        div.innerHTML = `
             <div class="card-body">
                 <h5 class="mb-3">${valueName}</h5>
                 <div class="row">
@@ -1281,107 +1293,88 @@
                             placeholder="Enter SKU">
                     </div>
                 </div>
-                <button type="button" 
-                        class="btn btn-sm btn-danger remove-value-section mt-2">
-                    Remove
-                </button>
             </div>
         `;
-                    return div;
-                }
+        return div;
+    }
 
-                // Event: Attribute selection change
-                sectionsContainer.addEventListener("change", function(e) {
-                    if (e.target.classList.contains("attribute-change")) {
-                        const section = e.target.closest(".section");
-                        const sectionId = section.dataset.section;
-                        const selectedAttribute = e.target.value;
+    // Event: Attribute selection change
+    sectionsContainer.addEventListener("change", function(e) {
+        if (e.target.classList.contains("attribute-change")) {
+            const section = e.target.closest(".section");
+            const sectionId = section.dataset.section;
+            const selectedAttribute = e.target.value;
 
-                        if (selectedAttribute) {
-                            fetch("{{ route('product.attributes.values') }}", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                                    },
-                                    body: JSON.stringify({
-                                        attribute_id: selectedAttribute
-                                    })
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    const valuesDropdown = section.querySelector(".attribute-values");
-                                    valuesDropdown.innerHTML = data.data.map(item =>
-                                        `<option value="${item.id}">${item.name}</option>`
-                                    ).join('');
+            if (selectedAttribute) {
+                // Mark this attribute as selected
+                selectedAttributeIds.add(String(selectedAttribute));
+                console.log("Updated selectedAttributeIds after selection:", selectedAttributeIds);
+                updateAddSectionButtonState(); // Update the button state
 
-                                    // Reinitialize Select2
-                                    $(valuesDropdown).select2({
-                                        placeholder: "Select Values",
-                                        allowClear: true,
-                                    });
+                fetch("{{ route('product.attributes.values') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            attribute_id: selectedAttribute
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const valuesDropdown = section.querySelector(".attribute-values");
+                        valuesDropdown.innerHTML = data.data.map(item =>
+                            `<option value="${item.id}">${item.name}</option>`
+                        ).join('');
 
-                                    // Handle value selection
-                                    $(valuesDropdown).on("change", function() {
-                                        selectedAttributes[sectionId] = Array.from(this
-                                            .selectedOptions).map(opt => opt.text);
-                                        generateCombinations();
-                                    });
-                                });
-                        }
-                    }
-                });
-
-                // Event: Remove Section
-                sectionsContainer.addEventListener("click", function(e) {
-                    if (e.target.classList.contains("removeSection")) {
-                        const section = e.target.closest(".section");
-                        const sectionId = section.dataset.section;
-                        delete selectedAttributes[sectionId]; // Remove stored values
-                        section.remove();
-                        generateCombinations(); // Refresh combinations
-                    }
-                });
-
-                // Event: Remove Value Section
-                valuesContainer.addEventListener("click", function(e) {
-                    if (e.target.classList.contains("remove-value-section")) {
-                        const valueSection = e.target.closest(".value-section");
-                        const valueId = valueSection.dataset.valueId;
-
-                        // Remove the selected value from all dropdowns
-                        document.querySelectorAll(`.attribute-values option[value="${valueId}"]`).forEach(
-                        opt => {
-                            opt.selected = false;
+                        // Reinitialize Select2
+                        $(valuesDropdown).select2({
+                            placeholder: "Select Values",
+                            allowClear: true,
                         });
 
-                        // Remove the value from the state (selectedAttributes)
-                        Object.keys(selectedAttributes).forEach(sectionId => {
-                            selectedAttributes[sectionId] = selectedAttributes[sectionId].filter(
-                                value => !value.includes(valueId));
-
-                            // If no values left in the section, remove the section key
-                            if (selectedAttributes[sectionId].length === 0) {
-                                delete selectedAttributes[sectionId];
-                            }
+                        // Handle value selection
+                        $(valuesDropdown).on("change", function() {
+                            selectedAttributes[sectionId] = Array.from(this.selectedOptions).map(opt => opt.text);
+                            generateCombinations();
                         });
+                    });
+            }
+        }
+    });
 
-                        // Remove the value section from the DOM
-                        valueSection.remove();
+    // Event: Remove Section
+    sectionsContainer.addEventListener("click", function(e) {
+        if (e.target.classList.contains("removeSection")) {
+            const section = e.target.closest(".section");
+            const sectionId = section.dataset.section;
+            const attributeId = section.querySelector(".attributeName").value;
 
-                        // Regenerate combinations to reflect the removed value
-                        generateCombinations();
-                    }
-                });
+            // Remove this attribute from the set when the section is removed
+            if (attributeId) {
+                selectedAttributeIds.delete(attributeId);
+                console.log("Updated selectedAttributeIds after removal:", selectedAttributeIds);
+                updateAddSectionButtonState(); // Update the button state
+            }
 
+            delete selectedAttributes[sectionId]; // Remove stored values
+            section.remove();
+            generateCombinations(); // Refresh combinations
+        }
+    });
 
+    // Add new attribute sections
+    addSectionButton.addEventListener("click", function() {
+        const newSection = createNewSection();
+        sectionsContainer.appendChild(newSection);
+        updateAddSectionButtonState(); // Update the button state
+    });
 
-                // Add new attribute sections
-                addSectionButton.addEventListener("click", function() {
-                    const newSection = createNewSection();
-                    sectionsContainer.appendChild(newSection);
-                });
-            });
+    // Initialize the button state on page load
+    updateAddSectionButtonState();
+});
+
         </script>
     @endpush
 </x-default-layout>

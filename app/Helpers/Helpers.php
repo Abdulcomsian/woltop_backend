@@ -445,7 +445,8 @@ if (!function_exists('calculateDiscount')) {
     function calculateDiscount($price, $sale_price)
     {
         if ($price == 0) return 0;
-        return (($price - $sale_price) / $price) * 100;
+        $result = (($price - $sale_price) / $price) * 100;
+        return (int) $result;
     }
 }
 
@@ -469,5 +470,27 @@ if (!function_exists('generateUniqueSlug')) {
         }
 
         return $slug;
+    }
+}
+
+if (!function_exists('generateUniqueSku')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function generateUniqueSku($sku, $model, $column)
+    {
+        $originalSku = $sku;
+        $count = 1;
+
+        while (DB::table((new $model)->getTable())->where($column, $sku)->exists()) {
+            $sku = "{$originalSku}{$count}";
+            $count++;
+        }
+
+        return $sku;
     }
 }

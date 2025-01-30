@@ -14,7 +14,6 @@ use App\Http\Controllers\WebControllers\{
     ProfileController,
     ReelsController,
     TeamController,
-    ToolController,
     UserController,
 };
 use App\Models\AttributeValue;
@@ -100,19 +99,6 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
     Route::controller(ReelsController::class)
         ->prefix('reels')
         ->as('reel.')
-        ->group(function () {
-            Route::get('', 'index')->name('index');
-            Route::get('create', 'create')->name('create');
-            Route::post('store', 'store')->name('store');
-            Route::delete('delete', 'delete')->name('delete');
-            Route::get('edit/{id}', 'edit')->name('edit');
-            Route::patch('update', 'update')->name('update');
-        });
-
-    // Tools
-    Route::controller(ToolController::class)
-        ->prefix('tools')
-        ->as('tool.')
         ->group(function () {
             Route::get('', 'index')->name('index');
             Route::get('create', 'create')->name('create');

@@ -10,7 +10,6 @@ use App\Http\Controllers\ApiControllers\{
     ColorController,
     ReviewController,
     TagController,
-    ToolController,
     CartController,
     FaqController,
     TeamController,
@@ -63,9 +62,6 @@ Route::get('tags', [TagController::class, 'getTags']);
 
 // Stories
 Route::get('reels', [ReelController::class, 'getReels']);
-
-// Tools
-Route::get('tools', [ToolController::class, 'getTools']);
 
 // Blog
 Route::get('get-blogs', [BlogController::class, 'getBlogs']);

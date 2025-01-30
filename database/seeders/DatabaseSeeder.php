@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
             ColorSeeder::class,
             AttributeSeeder::class,
             ProductSeeder::class,
-            ToolsSeeder::class,
             DeliveryDetailSeeder::class,
             DoSeeder::class,
             ApplicationGuideSeeder::class,

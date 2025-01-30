@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\Faq;
+use App\Models\DeliveryDetail;
 use Illuminate\Support\Facades\Auth;
 
-class FaqService
+class DeliveryService
 {
     protected $model;
 
-    public function __construct(Faq $model)
+    public function __construct(DeliveryDetail $model)
     {
         $this->model = $model;
     }
@@ -20,12 +20,11 @@ class FaqService
     }
 
     public function store($data){
-        if(isset($data['faqs']) && count($data['faqs']) > 0){
-            foreach($data['faqs'] as $faq){
+        if(isset($data['deliveries']) && count($data['deliveries']) > 0){
+            foreach($data['deliveries'] as $item){
                 $save = new $this->model;
-                $save->user_id = Auth::user()->id;
-                $save->question = $faq['question'];
-                $save->answer = $faq['answer'];
+                $save->city_details = $item['city'];
+                $save->days = $item['days'];
                 $save->save();
             }
         }
@@ -38,9 +37,8 @@ class FaqService
 
     public function update($data){
         $update = $this->model::find($data['id']);
-        $update->user_id = Auth::user()->id;
-        $update->question = $data['question'];
-        $update->answer = $data['answer'];
+        $update->city_details = $data['city'];
+        $update->days = $data['day'];
         $update->save();
         return $update;
     }

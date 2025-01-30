@@ -32,7 +32,7 @@ class BlogDataTable extends DataTable
                 return $img; // how do I render HTML here
             })
             ->addColumn('action', function($query){
-                return view('pages.categories.columns.action', compact("query"));
+                return view('pages.blog.columns.action', compact("query"));
             })
             ->rawColumns(['action', 'image'])
             ->setRowId('id');
@@ -57,7 +57,7 @@ class BlogDataTable extends DataTable
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([3, "desc"]);
+                    ->orderBy([1, "desc"]);
     }
 
     /**

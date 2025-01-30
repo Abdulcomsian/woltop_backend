@@ -2,35 +2,35 @@
 
 namespace App\Http\Controllers\WebControllers;
 
-use App\DataTables\FaqDataTable;
+use App\DataTables\DeliveryDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FaqRequest;
-use App\Services\FaqService;
+use App\Http\Requests\DeliveryRequest;
+use App\Services\DeliveryService;
 use Illuminate\Http\Request;
 
-class FaqController extends Controller
+class DeliveryDetailController extends Controller
 {
     protected $service;
 
-    public function __construct(FaqService $service)
+    public function __construct(DeliveryService $service)
     {
         $this->service = $service;
     }
 
-    public function index(FaqDataTable $product)
+    public function index(DeliveryDataTable $product)
     {
-        return $product->render("pages.faq.index");
+        return $product->render("pages.delivery.index");
     }
 
     public function create(){
-        return view('pages.faq.create');
+        return view('pages.delivery.create');
     }
-    
-    public function store(FaqRequest $request){
+
+    public function store(DeliveryRequest $request){
         try{
             $this->service->store($request->validated());
-            toastr()->success('Faqs Saved Successfully!');
-            return redirect()->route('faq.index');
+            toastr()->success('Delivery Details Saved Successfully!');
+            return redirect()->route('delivery.index');
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
             return redirect()->back();
@@ -46,10 +46,10 @@ class FaqController extends Controller
         }
     }
 
-    public function update(FaqRequest $request){
+    public function update(DeliveryRequest $request){
         try{
             $this->service->update($request->validated());
-            toastr()->success('Faq Updated Successfully!');
+            toastr()->success('Delivery Updated Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
@@ -57,10 +57,10 @@ class FaqController extends Controller
         }
     }
 
-    public function delete(FaqRequest $request){
+    public function delete(DeliveryRequest $request){
         try{
             $this->service->delete($request->validated());
-            toastr()->success('Faq Deleted Successfully!');
+            toastr()->success('Delivery Deleted Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
             toastr()->error("Something went wrong");

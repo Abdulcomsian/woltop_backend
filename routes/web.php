@@ -8,6 +8,7 @@ use App\Http\Controllers\WebControllers\{
     BlogController,
     CategoryController,
     DashboardController,
+    DeliveryDetailController,
     FaqController,
     ParentCategoryController,
     ProductController,
@@ -93,6 +94,19 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::patch('update', 'update')->name('update');
             Route::post('fetch-attributes-values', 'fetchAttributesValues')->name('attributes.values');
             Route::post('get-categories', 'getCategories')->name('get.categories');
+        });
+
+    // Delivery Detail
+    Route::controller(DeliveryDetailController::class)
+        ->prefix('delivery')
+        ->as('delivery.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
         });
     
     // Reels

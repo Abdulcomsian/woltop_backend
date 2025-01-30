@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BlogRequest extends FormRequest
+class DeliveryRequest extends FormRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -14,18 +13,24 @@ class BlogRequest extends FormRequest
      */
     public function rules(): array
     {
+        if($this->isMethod("PATCH")){
+            return [
+                "id" => "required",
+                "city" => "required",
+                "day" => "required",
+            ];
+        }
+
         if($this->isMethod("DELETE")){
             return [
-                "id" => "sometimes",
+                "id" => "required",
             ];
         }
         
         return [
-            "id" => "sometimes",
-            "image" => $this->isMethod("post") ? "required" : "sometimes",
-            "title" => "required",
-            "short_description" => "required",
-            "description" => "required",
+            "deliveries" => "required|array",
+            "deliveries.*.city" => "required",
+            "deliveries.*.days" => "required",
         ];
     }
 }

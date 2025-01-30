@@ -1,5 +1,5 @@
 <x-default-layout>
-    @section('page-title', 'Add Blog')
+    @section('page-title', 'Edit Blog')
     <div class="row">
         {{-- add form content here  --}}
         <div class="card" style="">
@@ -19,23 +19,30 @@
             <div class="card-body py-4">
                 {{-- add form content here  --}}
                 <!--begin::Form-->
-                <form action="{{ route('blog.store') }}" id="submitForm" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('blog.update') }}" id="submitForm" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method("PATCH")
                     <!--begin::Scroll-->
+                    <input type="hidden" name="id" value="{{$data->id}}">
                     <div class="d-flex flex-column" id="kt_modal_add_user_scroll" data-kt-scroll-activate="true"
                         data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header"
                         data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <img src="{{asset('assets/wolpin_media/blogs/' . $data->image)}}" alt="Blog Image" height="200">
+                            </div>
+                        </div>
                         <div class="row">
                             <!-- Image Field -->
                             <div class="col-md-6">
                                 <div class="fv-row mb-7">
                                     <!--begin::Label-->
-                                    <label class="required fw-semibold fs-6 mb-2">Image</label>
+                                    <label class="fw-semibold fs-6 mb-2">Replace Image</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="file" name="image" class="form-control mb-3 mb-lg-0"
-                                        placeholder="Image" accept="blog/*"/>
+                                        placeholder="Image" accept="image/*"/>
                                     <!--end::Input-->
                                 </div>
                                 @error("image")
@@ -51,7 +58,7 @@
                                     <!--end::Label-->
                                     <!--begin::Input-->
                                     <input type="text" name="title" class="form-control mb-3 mb-lg-0"
-                                        placeholder="Name" />
+                                        placeholder="Name" value="{{$data->title}}"/>
                                     <!--end::Input-->
                                 </div>
                                 @error("title")
@@ -63,7 +70,7 @@
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fw-semibold fs-6 mb-2">Short Description</label>
-                            <textarea class="form-control" name="short_description" rows="3" placeholder="Short Description"></textarea>
+                            <textarea class="form-control" name="short_description" rows="3" placeholder="Short Description">{{$data->short_description}}</textarea>
                         </div>
                         @error("short_description")
                             <span class="text-danger">{{$message}}</span>
@@ -72,7 +79,7 @@
 
                         <div class="fv-row mb-3">
                             <label for="description" class="required fw-semibold fs-6 mb-2">Description</label>
-                            <textarea id="description" name="description" placeholder="Type some content here!"></textarea>
+                            <textarea id="description" name="description" placeholder="Type some content here!">{!!$data->description!!}</textarea>
                         </div>
                         @error("description")
                             <span class="text-danger">{{$message}}</span>
@@ -107,10 +114,7 @@
 
                 // Validations
                 function validateForm(form, isEdit = false) {
-                    let fields = [{
-                            selector: "input[name='image']",
-                            type: "input"
-                        },
+                    let fields = [
                         {
                             selector: "input[name='title']",
                             type: "input"

@@ -13,10 +13,8 @@ return new class extends Migration
     {
         Schema::create('delivery_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
             $table->string('city_details')->nullable();
             $table->string('days')->nullable();
-            $table->foreign("product_id")->on("products")->references("id");
             $table->timestamps();
         });
     }

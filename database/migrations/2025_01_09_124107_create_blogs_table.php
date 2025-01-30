@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("image")->nullable();
             $table->foreign("user_id")->on("users")->references("id");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

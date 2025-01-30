@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 if (!function_exists('theme')) {
     function theme()
@@ -444,5 +446,28 @@ if (!function_exists('calculateDiscount')) {
     {
         if ($price == 0) return 0;
         return (($price - $sale_price) / $price) * 100;
+    }
+}
+
+if (!function_exists('generateUniqueSlug')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function generateUniqueSlug($title, $model, $column)
+    {
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $count = 1;
+
+        while (DB::table((new $model)->getTable())->where($column, $slug)->exists()) {
+            $slug = "{$originalSlug}-{$count}";
+            $count++;
+        }
+
+        return $slug;
     }
 }

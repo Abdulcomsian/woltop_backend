@@ -41,8 +41,8 @@ class BlogController extends Controller
     public function update(BlogRequest $request){
         try{
             $this->service->update($request->validated());
-            toastr()->success('Tool Saved Successfully!');
-            return redirect()->back();
+            toastr()->success('Blog Updated Successfully!');
+            return redirect()->route('blog.index');
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
             return redirect()->back();
@@ -52,7 +52,7 @@ class BlogController extends Controller
     public function edit($id){
         try{
             $data = $this->service->edit($id);
-            return response()->json(['success' => true, "data" => $data], 200);
+            return view("pages.blog.edit", compact("data"));
         }catch(\Exception $e){
             return response()->json(['success' => false, "msg" => "Something went wrong"], 400);
         }
@@ -61,7 +61,7 @@ class BlogController extends Controller
     public function delete(BlogRequest $request){
         try{
             $this->service->delete($request->validated());
-            toastr()->success('Tool Deleted Successfully!');
+            toastr()->success('Blog Deleted Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
             toastr()->error("Something went wrong");

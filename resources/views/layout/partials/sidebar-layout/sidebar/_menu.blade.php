@@ -98,6 +98,19 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('delivery.index') ? 'here show' : '' }}">
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link {{ request()->routeIs('delivery.index') ? 'active' : '' }}" href="{{ route('delivery.index') }}">
+                <span class="menu-icon"><i class="fas fa-shipping-fast"></i></span>
+                <span class="menu-title">Delivery Details</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+    </div>
+    <!--end:Menu item-->
+
+    <!--begin:Menu item-->
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('reel.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->

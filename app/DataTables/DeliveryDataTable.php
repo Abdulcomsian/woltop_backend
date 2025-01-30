@@ -4,7 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Blog;
 use App\Models\Category;
-use App\Models\Faq;
+use App\Models\DeliveryDetail;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -14,7 +14,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class FaqDataTable extends DataTable
+class DeliveryDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -29,16 +29,16 @@ class FaqDataTable extends DataTable
                 return date("Y-m-d", strtotime($query->created_at));
             })
             ->addColumn('action', function($query){
-                return view('pages.faq.columns.action', compact("query"));
+                return view('pages.delivery.columns.action', compact("query"));
             })
-            ->rawColumns(['action', 'image'])
+            ->rawColumns(['action'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Faq $model): QueryBuilder
+    public function query(DeliveryDetail $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -49,12 +49,12 @@ class FaqDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('faq-table')
+                    ->setTableId('delivery-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([3, "desc"]);
+                    ->orderBy([1, "desc"]);
     }
 
     /**
@@ -70,8 +70,8 @@ class FaqDataTable extends DataTable
               ->width(30)
               ->addClass('text-center'),
             // Column::make('id'),
-            Column::make('question'),
-            Column::make('answer'),
+            Column::make('city_details'),
+            Column::make('days'),
             Column::make('created_at'),
             Column::computed('action')
                   ->exportable(false)
@@ -86,6 +86,6 @@ class FaqDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Categories_' . date('YmdHis');
+        return 'Delivery_' . date('YmdHis');
     }
 }

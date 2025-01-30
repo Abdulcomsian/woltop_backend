@@ -34,7 +34,7 @@ class BlogService
         $save = new $this->model;
         $save->user_id = Auth::user()->id;
         $save->title = $data['title'];
-        $save->slug = Str::slug($data['title']);
+        $save->slug = generateUniqueSlug($data['title'], Blog::class, "slug");
         $save->short_description = $data['short_description'];
         $save->description = $data['description'];
         $save->image = $fileName ?? null;
@@ -52,25 +52,25 @@ class BlogService
         if(isset($data['image'])){
             // removing old file from server folder
             if($update && $update->image != null){
-                $oldPath = public_path("assets/wolpin_media/tools/" . $update->image);
+                $oldPath = public_path("assets/wolpin_media/blogs/" . $update->image);
                 if(file_exists($oldPath)){
                     unlink($oldPath);
                 }
             }
             // adding new file
             $fileName = rand() . '.' . $data['image']->extension();
-            $path = public_path("assets/wolpin_media/tools/");
+            $path = public_path("assets/wolpin_media/blogs/");
             $data['image']->move($path, $fileName);
         }
 
-        $update->name = $data['name'];
-        $update->slug = Str::slug($data['name']);
+        $update->user_id = Auth::user()->id;
+        $update->title = $data['title'];
+        $update->slug = generateUniqueSlug($data['title'], Blog::class, "slug");
+        $update->short_description = $data['short_description'];
         $update->description = $data['description'];
         if(isset($fileName) && $fileName != null){
             $update->image = $fileName;
         }
-        $update->price = $data['price'];
-        $update->sale_price = $data['sale_price'];
         $update->save();
         return $update;
     }

@@ -28,7 +28,6 @@ class ReelsController extends Controller
             toastr()->success('Reel Saved Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
-            dd($e->getMessage(), $e->getLine());
             toastr()->error("Something went wrong");
             return redirect()->back();
         }
@@ -49,7 +48,6 @@ class ReelsController extends Controller
             toastr()->success('Reel Updated Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
-            dd($e->getMessage(), $e->getLine());
             toastr()->error('Something went wrong!');
             return redirect()->back();
         }
@@ -61,7 +59,6 @@ class ReelsController extends Controller
             toastr()->success('Reel Deleted Successfully!');
             return redirect()->back();
         }catch(\Exception $e){
-            dd($e->getMessage(), $e->getLine());
             toastr()->error('Something went wrong!');
             return redirect()->back();
         }

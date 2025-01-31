@@ -43,13 +43,13 @@
     @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
-        function deleteProduct(id){
+        function deleteItem(id){
             document.querySelector("#reel_id_delete").value = id;
             var deleteModal = new bootstrap.Modal(document.getElementById('delete_reel'));
             deleteModal.show();
         }
 
-        function editProduct(id){
+        function editItem(id){
             let url = `{{ route('reel.edit', ':id') }}`.replace(':id', id);
             fetch(url)
                 .then((response) => {

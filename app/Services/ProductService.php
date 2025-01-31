@@ -15,7 +15,6 @@ use App\Models\ProductTag;
 use App\Models\ProductVariable;
 use App\Models\StorageUsage;
 use App\Models\VariationOption;
-use Illuminate\Support\Str;
 
 class ProductService
 {
@@ -277,10 +276,9 @@ class ProductService
 
     public function update($data)
     {
-        $update = $this->model::findOrFail($data['parent_category_id']);
+        $update = $this->model::findOrFail($data['id']);
         $update->name = $data['name'];
         $update->save();
-
         return $update;
     }
 

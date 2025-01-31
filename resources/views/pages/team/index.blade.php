@@ -36,9 +36,6 @@
         </div>
         <!--end::Card body-->
     </div>
-
-    @include('partials.modals.product.add')
-    @include('partials.modals.product.edit')
     @include('partials.modals.product.delete')
     @push('scripts')
     {{ $dataTable->scripts() }}

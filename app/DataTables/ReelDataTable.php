@@ -20,14 +20,17 @@ class ReelDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
-            ->editColumn('reel', function($query){
+            ->editColumn('path', function($query){
                 $reel = '<a href="'.asset('assets/wolpin_media/reels/' . $query->path).'" target="_blank">View Reel</a>';
                 return $reel;
+            })
+            ->editColumn('created_at', function ($query) {
+                return $query->created_at->format('Y-m-d');
             })
             ->addColumn('action', function($query) {
                 return view('pages.reels.columns.action', compact("query"));
             })
-            ->rawColumns(['reel'])
+            ->rawColumns(['path'])
             ->setRowId('id');
     }
 
@@ -50,7 +53,7 @@ class ReelDataTable extends DataTable
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([0, "desc"]);
+                    ->orderBy([2, "desc"]);
     }
 
     /**
@@ -65,7 +68,8 @@ class ReelDataTable extends DataTable
               ->orderable(false)
               ->width(30)
               ->addClass('text-center'),
-            Column::make('reel'),
+            Column::make('path')->title('Reel'),
+            Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

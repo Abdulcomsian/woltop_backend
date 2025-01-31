@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("pattern_match")->nullable();
             $table->string("application_guide")->nullable();
             $table->foreign("product_id")->on("products")->references("id");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

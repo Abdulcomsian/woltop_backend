@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger("product_id");
             $table->foreign("attribute_value_id")->on("attribute_values")->references("id");
             $table->foreign("product_id")->on("products")->references("id");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

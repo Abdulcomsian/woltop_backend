@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use PDO;
 
 class Product extends Model
 {
@@ -30,10 +31,18 @@ class Product extends Model
         return $this->belongsToMany(Category::class, 'products_categories', 'product_id', 'category_id');
     }
 
+    public function productCategories(){
+        return $this->hasMany(CategoryProduct::class, "product_id");
+    }
+
     // Define the many-to-many relationship with the Tag model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'products_tags');
+    }
+
+    public function productTags(){
+        return $this->hasMany(ProductTag::class, 'product_id');
     }
 
     // Use the categories relationship to access parent category via the Category model
@@ -44,7 +53,7 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany(ProductImage::class, 'product_id')->withTrashed();
+        return $this->hasMany(ProductImage::class, 'product_id');
     }
 
     public function reviews(){
@@ -70,6 +79,14 @@ class Product extends Model
     public function variables()
     {
         return $this->hasMany(VariationOption::class, "product_id");
+    }
+
+    public function productVariables(){
+        return $this->hasMany(ProductVariable::class, 'product_id');
+    }
+
+    public function productOrder(){
+        return $this->hasMany(ProductOrder::class, 'product_id');
     }
 
     public function installationSteps(){

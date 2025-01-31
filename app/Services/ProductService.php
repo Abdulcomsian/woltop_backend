@@ -255,32 +255,18 @@ class ProductService
 
     public function delete($data)
     {
-        // Find the product by ID
-        $product = $this->model->findOrFail($data['product_id']);
-
-        // Detach related categories from the pivot table
-        $product->categories()->detach();
-
-        // Detach related tags from the pivot table
-        $product->tags()->detach();
-
-        // Delete related product tags if they exist
-        if ($product->productTag()->exists()) {
-            $product->productTag()->delete();
-        }
-
-        // Delete related images
-        if ($product->images()->exists()) {
-            foreach ($product->images as $image) {
-                // Optionally delete the physical file from storage
-                if (file_exists(public_path($image->image_path))) {
-                    unlink(public_path($image->image_path));
-                }
-                $image->delete();
-            }
-        }
-
-        // Now delete the product
+        $product = $this->model->findOrFail($data['id']);
+        $product->images()->delete();
+        $product->productCategories()->delete();
+        $product->productTags()->delete();
+        $product->doDont()->delete();
+        $product->installationSteps()->delete();
+        $product->productsFeatures()->delete();
+        $product->variables()->delete();
+        $product->productVariables()->delete();
+        $product->designApplicationGuide()->delete();
+        $product->storageUsage()->delete();
+        $product->productOrder()->delete();
         return $product->delete();
     }
 

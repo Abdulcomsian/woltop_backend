@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger("product_id");
             $table->longText("name")->nullable();
             $table->foreign("product_id")->on("products")->references("id");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

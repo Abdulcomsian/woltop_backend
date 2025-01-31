@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("sku")->nullable()->unique();
             $table->longText("options")->nullable();
             $table->foreign("product_id")->on("products")->references("id");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

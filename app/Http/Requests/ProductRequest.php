@@ -13,6 +13,12 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        if($this->isMethod("DELETE")){
+            return [
+                "id" => "sometimes",
+            ];
+        }
+        
         return [
             "product_name" => "required",
             "short_description" => "sometimes",

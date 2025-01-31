@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("image_path")->nullable();
             $table->foreign('product_id')->on("products")->references("id");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

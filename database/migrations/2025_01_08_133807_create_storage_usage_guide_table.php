@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("net_weight")->nullable();
             $table->string("coverage")->nullable();
             $table->foreign("product_id")->on("products")->references("id");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

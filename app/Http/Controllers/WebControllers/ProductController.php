@@ -42,7 +42,7 @@ class ProductController extends Controller
         try {
             $this->productService->store($request->validated());
             toastr()->success('Product Saved Successfully!');
-            return redirect()->back();
+            return redirect()->route('product.index');
         } catch(\Exception $e) {
             toastr()->error($e->getMessage());
             return redirect()->back();
@@ -54,7 +54,7 @@ class ProductController extends Controller
         try {
             $this->productService->delete($productRequest);
             toastr()->success('Product Deleted Successfully!');
-                return redirect()->back();
+            return redirect()->back();
         } catch(\Exception $e) {
             toastr()->error($e->getMessage());
             return redirect()->back();
@@ -64,10 +64,16 @@ class ProductController extends Controller
     public function edit($id)
     {
         try{
-            $parentCategory = $this->productService->edit($id);
-            return response()->json(['data' => $parentCategory]);
+            $data = $this->productService->edit($id);
+            $parent_categories = ParentCategory::get();
+            $categories = Category::get();
+            $tags = Tag::get();
+            $attributes = ModelsAttribute::get();
+            $colors = Color::get();
+            return view('pages.product.edit', compact("data", "parent_categories", "categories", "tags", "attributes", "colors"));
         }catch(\Exception $e){
-            return response()->json(['error' => $e->getMessage()], 400);
+            toastr()->error($e->getMessage());
+            return redirect()->back();
         }
     }
 
@@ -86,7 +92,6 @@ class ProductController extends Controller
     public function fetchAttributesValues(Request $request){
         try{
             $data = $this->productService->fetchAttributeValues($request);
-            // $html = view('partials.components.attributes-values', compact("data"))->render();
             return response()->json(["data" => $data], 200);
         }catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 400);

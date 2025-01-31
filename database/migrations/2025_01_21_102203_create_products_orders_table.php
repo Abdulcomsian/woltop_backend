@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("quantity")->nullable();
             $table->foreign("product_id")->on("products")->references("id");
             $table->foreign("order_id")->on("orders")->references("id");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

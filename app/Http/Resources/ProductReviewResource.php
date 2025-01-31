@@ -41,25 +41,35 @@ class ProductReviewResource extends JsonResource
                     "image_path" => asset("assets/wolpin_media/products/gallery_images/" . $data->image_path),
                 ];
             }),
-            "delivery_detail" => $this->deliveryDetail,
             "other_related_products" => $this->getRelatedProducts(),
             "dos_dont" => $this->doDont()->select('id', "product_id", "name")->get(),
             "design_application_details" => $this->designApplicationGuide,
             "storage_usage_details" => $this->storageUsage,
-            "variables" => $this->variables()->select('variables_products.id', 'name', 'price', 'sale_price', 'discount', 'sku')->get(),
-            "installation_steps" => $this->installationSteps->map(function($data){
+            "variables" => $this->variables->map(function($item){
                 return [
-                    "id" => $data->id,
-                    "name" => $data->name,
-                    "description" => $data->description,
-                    "image" => asset("assets/wolpin_media/installation_steps/" . $data->image),
+                    "id" => $item->id,
+                    "title" => $item->title,
+                    "price" => $item->price,
+                    "sale_price" => $item->sale_price,
+                    "discount" => $item->discount,
+                    "options" => collect(json_decode($item->options, true))->mapWithKeys(function ($option) {
+                        return [$option['name'] => $option['value']];
+                    }),
                 ];
             }),
-            "products_features" => $this->productsFeatures->map(function($data){
+            "installation_steps" => $this->installationSteps->map(function($step){
                 return [
-                    "id" => $data->id,
-                    "name" => $data->name,
-                    "image" => asset("assets/wolpin_media/products/features/" . $data->image),
+                    "id" => $step->id,
+                    "name" => $step->name,
+                    "description" => $step->description,
+                    "image" => asset("assets/wolpin_media/installation_steps/" . $step->image),
+                ];
+            }),
+            "products_features" => $this->productsFeatures->map(function($feature){
+                return [
+                    "id" => $feature->id,
+                    "name" => $feature->name,
+                    "image" => asset("assets/wolpin_media/products/features/" . $feature->image),
                 ];
             }),
         ];

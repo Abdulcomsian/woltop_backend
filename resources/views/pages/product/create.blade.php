@@ -477,45 +477,6 @@
                                         </div>
                                         <div id="sectionsContainer">
                                             <!-- Initial section matching dynamic structure -->
-                                            <div class="card mb-3 section" data-section="0">
-                                                <div class="card-body py-4">
-                                                    <div class="row w-100 relative">
-                                                        <div class="col-3">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Attribute Name</label>
-                                                                <select
-                                                                    class="form-select attributeName attribute-change"
-                                                                    name="variations[0][attribute_id]"
-                                                                    data-section="0">
-                                                                    <option value="">Select...</option>
-                                                                    @isset($attributes)
-                                                                        @foreach ($attributes as $attribute)
-                                                                            <option value="{{ $attribute->id }}">
-                                                                                {{ $attribute->name }}</option>
-                                                                        @endforeach
-                                                                    @endisset
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Attribute Values</label>
-                                                                <select class="form-select attribute-values"
-                                                                    name="variations[0][attribute_values][]"
-                                                                    data-section="0" multiple>
-                                                                    <option value="">Select Attribute Value
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <span
-                                                        class="text-danger removeSection cursor-pointer position-absolute p-2"
-                                                        style="top: 0; right: 10px;">
-                                                        Remove
-                                                    </span>
-                                                </div>
-                                            </div>
                                         </div>
 
                                         <!-- Moved value-container OUTSIDE sectionsContainer -->
@@ -523,8 +484,7 @@
                                             <!-- Selected attribute values will appear here dynamically -->
                                         </div>
 
-                                        <button id="addSection" type="button" class="btn btn-primary mt-3">Add New
-                                            Section</button>
+                                        <button id="addSection" type="button" class="btn btn-primary mt-3">Add Option</button>
                                     </div>
 
                                     <hr class="dotted-line my-4">
@@ -579,12 +539,6 @@
                                     <div class="col-md-8">
                                         <div id="dynamicFieldsContainer">
                                             <!-- Initial input field -->
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control"
-                                                    placeholder="Enter dos or dont" name="dos_dont[]" />
-                                                <button class="btn btn-danger remove-field"
-                                                    type="button">Remove</button>
-                                            </div>
                                         </div>
                                         <button id="addFieldButton" class="btn btn-primary mt-3" type="button">Add
                                             More</button>
@@ -689,39 +643,6 @@
                                         <!-- Dynamic fields container -->
                                         <div id="installationFieldsContainer">
                                             <!-- Initial card -->
-                                            <div class="card mb-3">
-                                                <div class="card-body py-4">
-                                                    <div class="mb-3">
-                                                        <label for="name" class="form-label">Name</label>
-                                                        <input type="text" id="name" class="form-control"
-                                                            name="installation_steps[0][installation_name]"
-                                                            placeholder="Enter name">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="description"
-                                                            class="form-label">Description</label>
-                                                        <input type="text" id="description" class="form-control"
-                                                            name="installation_steps[0][installation_description]"
-                                                            placeholder="Enter product description">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="image" class="form-label">Image</label>
-                                                        {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
-                                 id="gallery-upload" class="dropzone custom-page-dropzone">
-                                 <div class="dz-message text-gray-600">
-                                     <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                         Images</span>
-                                 </div>
-                             </form> --}}
-                                                        <input type="file"
-                                                            name="installation_steps[0][installation_image]"
-                                                            class="form-control">
-                                                    </div>
-                                                    <span
-                                                        class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                                        style="top: 0; right: 10px;">Remove</span>
-                                                </div>
-                                            </div>
                                         </div>
                                         <!-- Add More button -->
                                         <button id="addInstallationFieldButton" class="btn btn-primary mt-3"
@@ -772,31 +693,6 @@
                                         <!-- Dynamic fields container -->
                                         <div id="featuresFieldsContainer">
                                             <!-- Initial card -->
-                                            <div class="card mb-3">
-                                                <div class="card-body py-4">
-                                                    <div class="mb-3">
-                                                        <label for="name" class="form-label">Name</label>
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Enter product name"
-                                                            name="product_features[0][name]">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="image" class="form-label">Image</label>
-                                                        {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
-                                    class="dropzone custom-page-dropzone">
-                                    <div class="dz-message text-gray-600">
-                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                            Images</span>
-                                    </div>
-                                </form> --}}
-                                                        <input type="file" name="product_features[0][image]"
-                                                            class="form-control">
-                                                    </div>
-                                                    <span
-                                                        class="text-danger remove-field cursor-pointer position-absolute p-2"
-                                                        style="top: 0; right: 10px;">Remove</span>
-                                                </div>
-                                            </div>
                                         </div>
                                         <!-- Add More button -->
                                         <button id="addFeatureFieldButton" class="btn btn-primary mt-3"

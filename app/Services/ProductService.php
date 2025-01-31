@@ -265,7 +265,6 @@ class ProductService
         $product->productVariables()->delete();
         $product->designApplicationGuide()->delete();
         $product->storageUsage()->delete();
-        $product->productOrder()->delete();
         return $product->delete();
     }
 

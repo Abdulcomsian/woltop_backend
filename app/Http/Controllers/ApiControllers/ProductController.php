@@ -14,6 +14,7 @@ class ProductController extends Controller
             $popularProducts = Product::whereHas('productTag', function($query){
                 $query->where('tag_id', config('constants.POPULAR'));
             })
+            ->where('status', 'publish')
             ->latest()
             ->limit(8)
             ->get();
@@ -49,6 +50,7 @@ class ProductController extends Controller
             $products = Product::whereHas('productTag', function($query) use ($id){
                 $query->where('tag_id', $id);
             })
+            ->where('status', 'publish')
             ->limit(4)->get();
 
             if($products && count($products) > 0){
@@ -65,7 +67,7 @@ class ProductController extends Controller
 
     public function getProductById($id){
         try{
-            $product = Product::with('reviews')->where('id', $id)->first();
+            $product = Product::with('reviews')->where('id', $id)->where('status', 'publish')->first();
             if($product){
                 return (new ProductReviewResource($product))->additional(["status" => true]);
             }else{

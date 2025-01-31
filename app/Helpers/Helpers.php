@@ -494,3 +494,24 @@ if (!function_exists('generateUniqueSku')) {
         return $sku;
     }
 }
+
+
+if (!function_exists('calculateRange')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function calculateRange($variables)
+    {
+        if ($variables->isNotEmpty()) {
+            return [
+                'price' => $variables->min('price') . '-' . $variables->max('price'),
+                'sale_price' => $variables->min('sale_price') . '-' . $variables->max('sale_price'),
+                'discount' => $variables->min('discount') . '-' . $variables->max('discount'),
+            ];
+        }
+    }
+}

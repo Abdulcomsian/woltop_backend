@@ -44,7 +44,6 @@ class ProductController extends Controller
             toastr()->success('Product Saved Successfully!');
             return redirect()->back();
         } catch(\Exception $e) {
-            dd($e->getMessage(), $e->getLine());
             toastr()->error($e->getMessage());
             return redirect()->back();
         }

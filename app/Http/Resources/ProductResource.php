@@ -21,6 +21,7 @@ class ProductResource extends JsonResource
             "price" => $this->price,
             "sale_price" => $this->sale_price,
             "discount" => $this->discount,
+            "range" => calculateRange($this->variables),
             "variables" => $this->variables->map(function($item){
                 return [
                     "id" => $item->id,

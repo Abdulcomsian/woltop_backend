@@ -11,6 +11,7 @@ use App\Http\Controllers\ApiControllers\{
     ReviewController,
     TagController,
     CartController,
+    DeliveryController,
     FaqController,
     TeamController,
     WishlistController,
@@ -50,6 +51,9 @@ Route::get('popular-products', [ProductController::class, 'popularProducts']);
 Route::get('products-by-color/{id}', [ProductController::class, 'getProductsByColor']);
 Route::get('products-by-tag/{id}', [ProductController::class, 'getProductsByTag']);
 Route::get('get-product-by-id/{id}', [ProductController::class, 'getProductById']);
+
+// Delivery
+Route::get('delivery-details', [DeliveryController::class, 'deliveryDetails']);
 
 // Review
 Route::get('get-review-by-product/{id}', [ReviewController::class, "getReviewByProduct"]);

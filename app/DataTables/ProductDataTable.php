@@ -30,6 +30,22 @@ class ProductDataTable extends DataTable
             ->editColumn('category', function ($query) {
                 return $query->categories->pluck('name')->implode(', ');
             })
+            ->editColumn('price', function ($query) {
+                if($query->product_type == "variable"){
+                    $ranges = calculateRange($query->variables);
+                    return $ranges['price'] ?? '';
+                }else{
+                    return $query->price;
+                }
+            })
+            ->editColumn('sale_price', function ($query) {
+                if($query->product_type == "variable"){
+                    $ranges = calculateRange($query->variables);
+                    return $ranges['sale_price'] ?? '';
+                }else{
+                    return $query->price;
+                }
+            })
             ->editColumn('status', function ($query) {
                 $statusLabels = [
                     'draft' => ['label' => 'Draft', 'class' => 'badge-light-warning'],
@@ -56,7 +72,7 @@ class ProductDataTable extends DataTable
     public function query(Product $model): QueryBuilder
     {
         return $model->newQuery()
-            ->with(['color', 'categories.parentCategory', 'tags']); // Eager load categories and their parentCategory
+            ->with(['color', 'categories.parentCategory', 'tags', 'variables']); // Eager load categories and their parentCategory
     }
 
     /**

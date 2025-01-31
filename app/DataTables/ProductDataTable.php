@@ -20,6 +20,10 @@ class ProductDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addIndexColumn()
+            ->editColumn("featured_image", function($query){
+                $img = '<img src="'.asset('assets/wolpin_media/products/featured_images/' . $query->featured_image).'" alt="Featured Image" height="50">';
+                return $img;
+            })
             ->editColumn('product_type', function ($query) {
                 return $query->product_type == "simple" ? "Simple" : "Variable";
             })
@@ -34,8 +38,6 @@ class ProductDataTable extends DataTable
                 $status = $query->status;
                 $statusLabel = $statusLabels[$status]['label'] ?? 'Unknown';
                 $badgeClass = $statusLabels[$status]['class'] ?? 'badge-light-secondary';
-        
-                // Return the badge HTML
                 return '<span class="badge ' . $badgeClass . '">' . $statusLabel . '</span>';
             })
             ->editColumn('created_at', function ($query) {
@@ -44,7 +46,7 @@ class ProductDataTable extends DataTable
             ->addColumn('action', function($query) {
                 return view('pages.product.columns.action', compact("query"));
             })
-            ->rawColumns(['status'])
+            ->rawColumns(['status', 'featured_image'])
             ->setRowId('id');
     }
 
@@ -68,7 +70,7 @@ class ProductDataTable extends DataTable
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([0, "desc"]);
+                    ->orderBy([9, "desc"]);
     }
 
     /**
@@ -83,6 +85,8 @@ class ProductDataTable extends DataTable
               ->orderable(false)
               ->width(30)
               ->addClass('text-center'),
+            Column::make('featured_image'),
+            Column::make('sku'),
             Column::make('title'),
             Column::make('product_type')->title("Product Type"),
             Column::make('category')->title('Categories'),

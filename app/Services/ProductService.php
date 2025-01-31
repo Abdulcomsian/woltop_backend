@@ -221,23 +221,34 @@ class ProductService
                 
             }
 
-            // Storing design application
-            $application = new $this->applicationDetailModel;
-            $application->product_id = $product->id;
-            $application->room_type = $data['room_type'] ?? null;
-            $application->finish_type = $data['finish_type'] ?? null;
-            $application->pattern_repeat = $data['pattern_repeat'] ?? null;
-            $application->pattern_match = $data['pattern_match'] ?? null;
-            $application->application_guide = $data['application_guide'] ?? null;
-            $application->save();
+            $applicationData = [
+                'room_type' => $data['room_type'] ?? null,
+                'finish_type' => $data['finish_type'] ?? null,
+                'pattern_repeat' => $data['pattern_repeat'] ?? null,
+                'pattern_match' => $data['pattern_match'] ?? null,
+                'application_guide' => $data['application_guide'] ?? null,
+            ];
+            
+            if (!empty(array_filter($applicationData))) {
+                $application = new $this->applicationDetailModel;
+                $application->product_id = $product->id;
+                $application->fill($applicationData);
+                $application->save(); 
+            }
+            
+            $storageData = [
+                "storage" => $data['storage'] ?? null,
+                "net_weight" => $data['net_weight'] ?? null,
+                "coverage" => $data['coverage'] ?? null,
+            ];
 
-            // Storing Storage Detail
-            $st = new $this->storageDetailModel;
-            $st->product_id = $product->id;
-            $st->storage = $data['storage'] ?? null;
-            $st->net_weight = $data['net_weight'] ?? null;
-            $st->coverage = $data['coverage'] ?? null;
-            $st->save();
+            if(!empty(array_filter($storageData))){
+                $st = new $this->storageDetailModel;
+                $st->product_id = $product->id;
+                $st->fill($storageData);
+                $st->save();
+            }
+            
         }
         return $product;
     }

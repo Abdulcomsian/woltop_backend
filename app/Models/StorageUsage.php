@@ -9,4 +9,10 @@ class StorageUsage extends Model
 {
     use HasFactory;
     protected $table = "storage_usage_guide";
+
+    protected $fillable = [
+        "storage",
+        "net_weight",
+        "coverage",
+    ];
 }

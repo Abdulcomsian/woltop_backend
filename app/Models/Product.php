@@ -69,12 +69,7 @@ class Product extends Model
 
     public function variables()
     {
-        return $this->belongsToMany(
-            AttributeValue::class,
-            'variables_products',  // Pivot table
-            'product_id',         // Foreign key on variables_products
-            'attribute_value_id'  // Foreign key on attribute_values
-        );
+        return $this->hasMany(VariationOption::class, "product_id");
     }
 
     public function installationSteps(){

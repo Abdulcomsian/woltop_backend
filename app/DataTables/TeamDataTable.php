@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -21,11 +22,14 @@ class TeamDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addIndexColumn()
             ->editColumn('image', function ($query) {
-                $img = '<img src="'.asset('assets/wolpin_media/team/' . $query->image).'" alt="Avatar" height="100">';
-                return $img; // how do I render HTML here
+                $img = '<img src="'.asset('assets/wolpin_media/team/' . $query->image).'" alt="Avatar" height="50">';
+                return $img;
+            })
+            ->editColumn('created_at', function ($query) {
+                return $query->created_at->format('Y-m-d');
             })
             ->addColumn('action', function($query) {
-                return view('pages.product.columns.action', compact("query"));
+                return view('pages.team.columns.action', compact("query"));
             })
             ->rawColumns(['image'])
             ->setRowId('id');
@@ -34,12 +38,9 @@ class TeamDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(User $model): QueryBuilder
+    public function query(Team $model): QueryBuilder
     {
-        return $model->newQuery()
-            ->whereHas('roles', function($query){
-                $query->where('name', 'staff');
-            });
+        return $model->newQuery();
     }
 
     /**
@@ -53,7 +54,7 @@ class TeamDataTable extends DataTable
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([0, "desc"]);
+                    ->orderBy([5, "desc"]);
     }
 
     /**
@@ -72,6 +73,7 @@ class TeamDataTable extends DataTable
             Column::make('name'),
             Column::make('designation'),
             Column::make('bio'),
+            Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

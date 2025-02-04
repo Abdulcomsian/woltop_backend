@@ -36,40 +36,14 @@
         </div>
         <!--end::Card body-->
     </div>
-    @include('partials.modals.product.delete')
+    @include('partials.modals.team.delete')
     @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
-        function deleteProduct(id){
-            document.querySelector("#product_id_delete").value = id;
-            var deleteModal = new bootstrap.Modal(document.getElementById('delete_product_modal'));
+        function deleteItem(id){
+            document.querySelector("#delete_id").value = id;
+            var deleteModal = new bootstrap.Modal(document.getElementById('delete_modal'));
             deleteModal.show();
-        }
-
-        function editProduct(id){
-            let product_id = id;
-            let url = `{{ route('product.edit', ':product_id') }}`.replace(':product_id', id);
-            fetch(url)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    document.querySelector("#product_name_edit").value = data.data.name;
-                    document.querySelector("#product_id").value = data.data.id;
-                    if(data.data.image != ""){
-                        let imageUrl = data.data.image;
-                        let url = `${imageUrl}`;
-                        document.querySelector("#product_image_style").style.backgroundImage = `url('${url}')`;
-                    }
-                    var editModal = new bootstrap.Modal(document.getElementById('edit_product_modal'));
-                    editModal.show();
-                })
-                .catch((error) => {
-                    console.error('Error fetching product:', error);
-                });
         }
     </script>
     @endpush

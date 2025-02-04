@@ -75,6 +75,7 @@
     <div class="row g-4">
         <form action="{{ route('product.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
             <!-- Parent Tabs Navigation -->
             <div class="nav-tabs-container">
                 <ul class="nav nav-tabs mb-4 text-white" id="parent-tabs" role="tablist">
@@ -137,7 +138,7 @@
                                 </button>
                             </div>
                         </div>
-
+                        {{-- @dd($data) --}}
                         <!-- Child Tab Content -->
                         <div class="col-md-9">
                             <div class="tab-content" id="ps1-child-tabs-content">
@@ -157,19 +158,19 @@
                                                 <div class="mb-3">
                                                     <label for="name" class="required form-label">Name</label>
                                                     <input type="text" id="name" name="product_name"
-                                                        class="form-control" placeholder="Enter product name">
+                                                        class="form-control" placeholder="Enter product name"
+                                                        value="{{ $data->title }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="name" class="form-label">Short Description</label>
-                                                    <textarea class="form-control"
-                                                        name="short_description"
-                                                        placeholder="Enter short description"></textarea>
+                                                    <textarea class="form-control" name="short_description" placeholder="Enter short description">{{ $data->short_description }}</textarea>
                                                 </div>
 
                                                 <!-- Description Textarea -->
                                                 <div class="mb-3">
-                                                    <label for="description" class="required form-label">Description</label>
-                                                    <textarea id="description" name="description"></textarea>
+                                                    <label for="description"
+                                                        class="required form-label">Description</label>
+                                                    <textarea id="description" name="description">{{ $data->description }}</textarea>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -177,14 +178,16 @@
                                                     <!-- Published Radio Button -->
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="status"
-                                                            id="published" value="publish">
+                                                            id="published" value="publish"
+                                                            @if ($data->status == 'publish') checked @endif>
                                                         <label class="form-check-label"
                                                             for="published">Published</label>
                                                     </div>
                                                     <!-- Draft Radio Button -->
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio" name="status"
-                                                            id="draft" value="draft" checked>
+                                                            id="draft" value="draft"
+                                                            @if ($data->status == 'draft') checked @endif>
                                                         <label class="form-check-label" for="draft">Draft</label>
                                                     </div>
                                                 </div>
@@ -198,7 +201,7 @@
                                 <div class="tab-pane fade" id="featured" role="tabpanel"
                                     aria-labelledby="featured-tab" style="flex-wrap: nowrap;">
                                     <div class="col-md-4">
-                                        <label for="featured-image" class="required form-label fw-semibold">Featured
+                                        <label for="featured-image" class="form-label fw-semibold">Featured
                                             Image</label>
                                         <small class="text-muted d-block mb-2">
                                             Upload your product featured image here.<br>
@@ -219,8 +222,10 @@
                                                         <h5 class="drop-zone__prompt2" style="color:black;">Upload Featured Image</h5>
                                                     </div>
                                                 </div> --}}
+                                                <img src="{{ asset('assets/wolpin_media/products/featured_images/' . $data->featured_image) }}"
+                                                    alt="featured Image" height="300">
                                                 <input type="file" name="featured_image"
-                                                    class="form-control form-control-solid" accept="image/*">
+                                                    class="form-control form-control-solid mt-4" accept="image/*">
                                             </div>
                                         </div>
                                     </div>
@@ -242,6 +247,12 @@
                                                             Video</span>
                                                     </div>
                                                 </form> --}}
+                                                <video controls class="mb-4" height="250">
+                                                    <source
+                                                        src="{{ asset('assets/wolpin_media/products/video/' . $data->video) }}"
+                                                        type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
                                                 <input type="file" name="video"
                                                     class="form-control form-control-solid" accept="video/*">
                                             </div>
@@ -254,7 +265,8 @@
                                 <div class="tab-pane fade" id="gallery" role="tabpanel"
                                     aria-labelledby="gallery-tab">
                                     <div class="col-md-4">
-                                        <label for="gallery-upload" class="required form-label fw-semibold">Gallery</label>
+                                        <label for="gallery-upload"
+                                            class="required form-label fw-semibold">Gallery</label>
                                         <small class="text-muted d-block mb-2">
                                             Upload your product image gallery here.<br>
                                             Image size should not be more than 2 MB.
@@ -276,60 +288,31 @@
                                                     class="form-control form-control-solid" accept="image/*" multiple>
 
                                                 <!-- Gallery Images Section -->
-                                                {{-- <div class="gallery-images mt-4">
+                                                <div class="gallery-images mt-4">
                                                     <div class="row">
-                                                        <!-- Example Image 1 -->
-                                                        <div class="col-md-4 mb-3 image-item" draggable="true">
-                                                            <div class="card">
-                                                                <img src="https://via.placeholder.com/150" class="card-img-top"
-                                                                    alt="Gallery Image 1">
-                                                                <div class="card-body d-flex justify-content-end">
-                                                                    <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </button>
-                                                                    <button class="btn btn-sm btn-secondary drag-handle"
-                                                                        title="Drag to Sort">
-                                                                        <i class="fas fa-arrows-alt"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                            <!-- Example Image 2 -->
-                                                            <div class="col-md-4 mb-3 image-item" draggable="true">
-                                                                <div class="card">
-                                                                    <img src="https://via.placeholder.com/150" class="card-img-top"
-                                                                        alt="Gallery Image 2">
-                                                                    <div class="card-body d-flex justify-content-end">
-                                                                        <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
-                                                                        <button class="btn btn-sm btn-secondary drag-handle"
-                                                                            title="Drag to Sort">
-                                                                            <i class="fas fa-arrows-alt"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                                <!-- Example Image 3 -->
-                                                                <div class="col-md-4 mb-3 image-item" draggable="true">
+                                                        @if (isset($data->images) && count($data->images) > 0)
+                                                            @foreach ($data->images as $image)
+                                                                <!-- Example Image 2 -->
+                                                                <div class="col-md-4 mb-3 image-item"
+                                                                    draggable="true">
                                                                     <div class="card">
-                                                                        <img src="https://via.placeholder.com/150" class="card-img-top"
-                                                                            alt="Gallery Image 3">
-                                                                        <div class="card-body d-flex justify-content-end">
-                                                                            <button class="btn btn-sm btn-danger me-2 delete-btn" title="Delete">
+                                                                        <img src="{{ asset('assets/wolpin_media/products/gallery_images/' . $image->image_path) }}"
+                                                                            class="card-img-top"
+                                                                            alt="Gallery Image 2">
+                                                                        <div class="card-body d-flex justify-content-end"
+                                                                            style="padding: 10px;">
+                                                                            <button type="button"
+                                                                                class="btn btn-sm btn-danger delete-btn"
+                                                                                id="image-delete-btn" title="Delete">
                                                                                 <i class="fas fa-trash"></i>
-                                                                            </button>
-                                                                            <button class="btn btn-sm btn-secondary drag-handle"
-                                                                                title="Drag to Sort">
-                                                                                <i class="fas fa-arrows-alt"></i>
                                                                             </button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div> --}}
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -373,7 +356,15 @@
                                                         multiple="multiple">
                                                         @isset($categories)
                                                             @foreach ($categories as $category)
-                                                                <option value="{{ $category->id }}">{{ $category->name }}
+                                                                <option value="{{ $category->id }}"
+                                                                    @isset($data->categories)
+                                                                    @foreach ($data->categories as $cat)
+                                                                        @if ($cat->id == $category->id)
+                                                                            selected
+                                                                        @endif
+                                                                    @endforeach
+                                                                    @endisset>
+                                                                    {{ $category->name }}
                                                                 </option>
                                                             @endforeach
                                                         @endisset
@@ -387,7 +378,15 @@
                                                         multiple="multiple">
                                                         @isset($tags)
                                                             @foreach ($tags as $tag)
-                                                                <option value="{{ $tag->id }}">{{ $tag->name }}
+                                                                <option value="{{ $tag->id }}"
+                                                                    @isset($data->tags)
+                                                                        @foreach ($data->tags as $item)
+                                                                            @if ($item->id == $tag->id)
+                                                                                selected
+                                                                            @endif 
+                                                                        @endforeach
+                                                                    @endisset>
+                                                                    {{ $tag->name }}
                                                                 </option>
                                                             @endforeach
                                                         @endisset
@@ -401,7 +400,9 @@
                                                         <option value="">Select Color</option>
                                                         @isset($colors)
                                                             @foreach ($colors as $color)
-                                                                <option value="{{ $color->id }}">{{ $color->name }}
+                                                                <option value="{{ $color->id }}"
+                                                                    @if ($data->color->id == $color->id) selected @endif>
+                                                                    {{ $color->name }}
                                                                 </option>
                                                             @endforeach
                                                         @endisset
@@ -427,8 +428,12 @@
                                                 <div class="mb-3">
                                                     <label for="productType" class="form-label">Product Type</label>
                                                     <select id="productType" class="form-select" name="product_type">
-                                                        <option value="simple">Simple Product</option>
-                                                        <option value="variable">Variable Product</option>
+                                                        <option value="simple"
+                                                            @if ($data->product_type == 'simple') selected @endif>Simple
+                                                            Product</option>
+                                                        <option value="variable"
+                                                            @if ($data->product_type == 'variable') selected @endif>Variable
+                                                            Product</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -450,17 +455,21 @@
                                                 <div class="mb-3">
                                                     <label for="price" class="required form-label">Price</label>
                                                     <input type="number" id="price" name="simple_price"
-                                                        class="form-control" placeholder="Enter Price">
+                                                        class="form-control" placeholder="Enter Price"
+                                                        value="{{ $data->price ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="salePrice" class="required form-label">Sale Price</label>
+                                                    <label for="salePrice" class="required form-label">Sale
+                                                        Price</label>
                                                     <input type="number" id="salePrice" name="simple_sale_price"
-                                                        class="form-control" placeholder="Enter Sale Price">
+                                                        class="form-control" placeholder="Enter Sale Price"
+                                                        value="{{ $data->sale_price ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="SKU" class="required form-label">SKU</label>
-                                                    <input type="number" id="sku" name="simple_sku"
-                                                        class="form-control" placeholder="Enter SKU">
+                                                    <input type="text" id="sku" name="simple_sku"
+                                                        class="form-control" placeholder="Enter SKU"
+                                                        value="{{ $data->sku ?? '' }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -477,6 +486,50 @@
                                         </div>
                                         <div id="sectionsContainer">
                                             <!-- Initial section matching dynamic structure -->
+                                            <div class="card mb-3 section" data-section="1">
+                                                <div class="card-body py-4">
+                                                    <div class="row w-100 relative">
+                                                        <div class="col-3">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Attribute Name</label>
+                                                                <select
+                                                                    class="form-select attributeName attribute-change"
+                                                                    name="variations[][attribute_id]" data-section="">
+                                                                    <option value="">Select...</option>
+                                                                    @isset($attributes)
+                                                                        @foreach ($attributes as $attribute)
+                                                                            <option value="{{ $attribute->id }}"
+                                                                                @isset($data->productVariables)
+                                                                                    @foreach ($data->productVariables as $variable)
+                                                                                        @if ($variable->attributes->attribute->id == $attribute->id)
+                                                                                            selected 
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                @endisset>
+                                                                                {{ $attribute->name }}</option>
+                                                                        @endforeach
+                                                                    @endisset
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-9">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Attribute Values</label>
+                                                                <select class="form-select attribute-values"
+                                                                    name="variations[][attribute_values][]"
+                                                                    data-section="" multiple>
+                                                                    {{-- @isset($attribute) --}}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <span
+                                                        class="text-danger removeSection cursor-pointer position-absolute p-2"
+                                                        style="top: 0; right: 10px;">
+                                                        Remove
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <!-- Moved value-container OUTSIDE sectionsContainer -->
@@ -484,7 +537,8 @@
                                             <!-- Selected attribute values will appear here dynamically -->
                                         </div>
 
-                                        <button id="addSection" type="button" class="btn btn-primary mt-3">Add Option</button>
+                                        <button id="addSection" type="button" class="btn btn-primary mt-3">Add
+                                            Option</button>
                                     </div>
 
                                     <hr class="dotted-line my-4">
@@ -539,6 +593,17 @@
                                     <div class="col-md-8">
                                         <div id="dynamicFieldsContainer">
                                             <!-- Initial input field -->
+                                            @isset($data->doDont)
+                                                @foreach ($data->doDont as $item)
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Enter dos or dont" name="dos_dont[]"
+                                                            value="{{ $item->name }}" />
+                                                        <button class="btn btn-danger remove-field"
+                                                            type="button">Remove</button>
+                                                    </div>
+                                                @endforeach
+                                            @endisset
                                         </div>
                                         <button id="addFieldButton" class="btn btn-primary mt-3" type="button">Add
                                             More</button>
@@ -562,31 +627,36 @@
                                                 <div class="mb-3">
                                                     <label for="room_type" class="form-label">Room Type</label>
                                                     <input type="text" id="room_type" class="form-control"
-                                                        placeholder="Enter Room Type" name="room_type">
+                                                        placeholder="Enter Room Type" name="room_type"
+                                                        value="{{ $data->designApplicationGuide->room_type }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="finish_type" class="form-label">Finish Type</label>
                                                     <input type="text" id="finish_type" class="form-control"
-                                                        name="finish_type" placeholder="Enter Finish Type">
+                                                        name="finish_type" placeholder="Enter Finish Type"
+                                                        value="{{ $data->designApplicationGuide->finish_type }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="pattern_repeat" class="form-label">Pattern
                                                         Repeat</label>
                                                     <input type="text" id="pattern_repeat" class="form-control"
-                                                        name="pattern_repeat" placeholder="Enter Pattern Repeat">
+                                                        name="pattern_repeat" placeholder="Enter Pattern Repeat"
+                                                        value="{{ $data->designApplicationGuide->pattern_repeat }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="pattern_match" class="form-label">Pattern
                                                         Match</label>
                                                     <input type="text" id="pattern_match" class="form-control"
-                                                        name="pattern_match" placeholder="Enter Pattern Match">
+                                                        name="pattern_match" placeholder="Enter Pattern Match"
+                                                        value="{{ $data->designApplicationGuide->pattern_match }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="application_guide" class="form-label">Application
                                                         Guide</label>
                                                     <input type="text" id="application_guide" class="form-control"
                                                         name="application_guide"
-                                                        placeholder="Enter product Application Guide">
+                                                        placeholder="Enter product Application Guide"
+                                                        value="{{ $data->designApplicationGuide->application_guide }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -610,17 +680,20 @@
                                                 <div class="mb-3">
                                                     <label for="storage" class="form-label">Storage</label>
                                                     <input type="text" id="storage" class="form-control"
-                                                        name="storage" placeholder="Enter product Storage">
+                                                        name="storage" placeholder="Enter product Storage"
+                                                        value="{{ $data->storageUsage->storage }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="net_weight" class="form-label">Net Weight</label>
                                                     <input type="number" id="net_weight" class="form-control"
-                                                        name="net_weight" placeholder="Enter product net_weight">
+                                                        name="net_weight" placeholder="Enter product net_weight"
+                                                        value="{{ $data->storageUsage->net_weight }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="coverage" class="form-label">Coverage</label>
                                                     <input type="text" id="coverage" class="form-control"
-                                                        name="coverage" placeholder="Enter product coverage">
+                                                        name="coverage" placeholder="Enter product coverage"
+                                                        value="{{ $data->storageUsage->coverage }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -643,6 +716,43 @@
                                         <!-- Dynamic fields container -->
                                         <div id="installationFieldsContainer">
                                             <!-- Initial card -->
+                                            @isset($data->installationSteps)
+                                                @foreach ($data->installationSteps as $key => $step)
+                                                    <div class="card mb-3">
+                                                        <div class="card-body py-4">
+                                                            <div class="mb-3">
+                                                                <label for="name" class="form-label">Name</label>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter product name"
+                                                                    name="installation_steps[{{ $key }}][installation_name]"
+                                                                    value="{{ $step->name }}">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="description"
+                                                                    class="form-label">Description</label>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter product description"
+                                                                    name="installation_steps[{{ $key }}][installation_description]"
+                                                                    value="{{ $step->description }}">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="image" class="form-label">Replace
+                                                                    Image</label>
+                                                                <input type="file"
+                                                                    name="installation_steps[{{ $key }}][installation_image]"
+                                                                    class="form-control">
+                                                                @if($step->image != null)
+                                                                <img src="{{ asset('assets/wolpin_media/installation_steps/' . $step->image) }}"
+                                                                    class="mt-4" height="200" alt="Image">
+                                                                @endif
+                                                            </div>
+                                                            <span
+                                                                class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                                                style="top: 0; right: 10px;">Remove</span>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endisset
                                         </div>
                                         <!-- Add More button -->
                                         <button id="addInstallationFieldButton" class="btn btn-primary mt-3"
@@ -693,6 +803,33 @@
                                         <!-- Dynamic fields container -->
                                         <div id="featuresFieldsContainer">
                                             <!-- Initial card -->
+                                            @isset($data->productsFeatures)
+                                                @foreach($data->productsFeatures as $key => $feature)
+                                                    <div class="card mb-3">
+                                                        <div class="card-body py-4">
+                                                            <div class="mb-3">
+                                                                <label for="name" class="form-label">Name</label>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter product name"
+                                                                    name="product_features[{{$key}}][name]" value="{{$feature->name}}">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="image" class="form-label">Image</label>
+                                                                <input type="file"
+                                                                    name="product_features[{{$key}}][image]"
+                                                                    class="form-control">
+                                                                @if($feature->image != null)
+                                                                <img src="{{ asset('assets/wolpin_media/products/features/' . $feature->image) }}"
+                                                                    class="mt-4" height="200" alt="Image">
+                                                                @endif
+                                                            </div>
+                                                            <span
+                                                                class="text-danger remove-field cursor-pointer position-absolute p-2"
+                                                                style="top: 0; right: 10px;">Remove</span>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endisset
                                         </div>
                                         <!-- Add More button -->
                                         <button id="addFeatureFieldButton" class="btn btn-primary mt-3"
@@ -717,13 +854,13 @@
                                                 <div class="mb-3">
                                                     <label for="metaTitle" class="form-label">Meta Title </label>
                                                     <input type="text" id="metaTitle" class="form-control"
-                                                        name="meta_title" placeholder="Enter product Meta Title">
+                                                        name="meta_title" placeholder="Enter product Meta Title" value="{{$data->meta_title}}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="metaDesc" class="form-label">Meta Description</label>
                                                     <input type="text" id="metaDesc" class="form-control"
                                                         name="meta_description"
-                                                        placeholder="Enter product Meta Description">
+                                                        placeholder="Enter product Meta Description" value="{{$data->meta_description}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -747,11 +884,11 @@
 
     @include('partials.modals.product.delete')
     @push('scripts')
-    <script>
-        var attributes = {!! json_encode($attributes) !!};
-        var get_attribute_route = "{{ route('product.attributes.values') }}";
-        var category_route = "{{ route('product.get.categories') }}";
-    </script>
-    <script src="{{ asset('assets/js/product.js') }}"></script>
+        <script>
+            var attributes = {!! json_encode($attributes) !!};
+            var get_attribute_route = "{{ route('product.attributes.values') }}";
+            var category_route = "{{ route('product.get.categories') }}";
+        </script>
+        <script src="{{ asset('assets/js/product.js') }}"></script>
     @endpush
 </x-default-layout>

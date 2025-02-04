@@ -69,11 +69,11 @@ class Product extends Model
     }
 
     public function designApplicationGuide(){
-        return $this->hasMany(ApplicationGuide::class, "product_id");
+        return $this->hasOne(ApplicationGuide::class, "product_id");
     }
 
     public function storageUsage(){
-        return $this->hasMany(StorageUsage::class, "product_id");
+        return $this->hasOne(StorageUsage::class, "product_id");
     }
 
     public function variables()

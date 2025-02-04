@@ -171,7 +171,7 @@ class ProductService
                     // Storing file
                     if(isset($item['image']) && !empty($item['image'])){
                         $featureImage = rand() . '.' . $item['image']->extension();
-                        $path = public_path("assets/wolpin_media/products/featured_images");
+                        $path = public_path("assets/wolpin_media/products/features");
                         $item['image']->move($path, $featureImage);
                         $feature->image = $featureImage;
                     }

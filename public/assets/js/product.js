@@ -479,4 +479,9 @@
 
         // Initialize the button state on page load
         updateAddSectionButtonState();
+
+        // Deleting Gallery Image
+        document.querySelector("#image-delete-btn").addEventListener("click", function(e){
+            // alert(123);
+        })
     });

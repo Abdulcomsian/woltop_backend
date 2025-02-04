@@ -13,6 +13,10 @@ class TeamService
     {
         $this->model = $model;
     }
+
+    public function index(){
+        return $this->model::get();
+    }
     
     public function store($data){
         if(isset($data['image'])){

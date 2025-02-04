@@ -50,15 +50,12 @@
                         </div>
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="fw-semibold fs-6 mb-2">Image</label>
+                            <label class="fw-semibold fs-6 mb-2">Replace Image</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="file" name="image" class="form-control form-control-solid mb-3 mb-lg-0"
                                 placeholder="Image" />
                             <!--end::Input-->
-                            @error("image")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
                         </div>
                         <!--end::Input group-->
                         <div class="fv-row mb-7">

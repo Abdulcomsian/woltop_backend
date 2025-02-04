@@ -13,13 +13,7 @@ class TeamService
     {
         $this->model = $model;
     }
-
-    public function index(){
-        return $this->model::whereHas('roles', function($query){
-            $query->where('name', 'staff');
-        })->get();
-    }
-
+    
     public function store($data){
         if(isset($data['image'])){
             $fileName = rand() . '.' . $data['image']->extension();

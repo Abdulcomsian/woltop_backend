@@ -18,6 +18,20 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
+    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('order.index') ? 'here show' : '' }}">
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link {{ request()->routeIs('order.index') ? 'active' : '' }}" href="{{ route('order.index') }}">
+                <span class="menu-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </span>
+                <span class="menu-title">Orders</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+    </div>
+    <!--end:Menu item-->
+
+    <!--begin:Menu item-->
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('parent-category.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
@@ -174,7 +188,7 @@
     </div>
     <!--end:Menu item-->
 
-    <!--begin:Menu item-->
+    {{-- <!--begin:Menu item-->
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('dashboard') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
@@ -185,7 +199,7 @@
             <!--end:Menu link-->
         </div>
     </div>
-    <!--end:Menu item-->
+    <!--end:Menu item--> --}}
 </div>
 		<!--end::Menu-->
 	</div>

@@ -1,90 +1,75 @@
 <x-default-layout>
-
-    @section('title')
-        Dashboard
-    @endsection
-
-    {{-- <!--begin::Row-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+    @section('page-title', 'Dashboard')
+    <!--begin::Row-->
+    <div class="row g-xl-10 mb-5 mb-xl-10">
         <!--begin::Col-->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-            @include('partials/widgets/cards/_widget-20')
-
-            @include('partials/widgets/cards/_widget-7')
+        <div class="col-md-4">
+            <!--begin::Card widget 20-->
+            <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end h-md-100 mb-5 mb-xl-10"
+                style="background-color: #F1416C;background-image:url('assets/media/patterns/vector-1.png')">
+                <!--begin::Header-->
+                <div class="card-header pt-5">
+                    <!--begin::Title-->
+                    <div class="card-title d-flex flex-column">
+                        <!--begin::Amount-->
+                        <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{$products}}</span>
+                        <!--end::Amount-->
+                        <!--begin::Subtitle-->
+                        <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Total Products</span>
+                        <!--end::Subtitle-->
+                    </div>
+                    <!--end::Title-->
+                </div>
+                <!--end::Header-->
+            </div>
+            <!--end::Card widget 20-->
         </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-            @include('partials/widgets/cards/_widget-17')
 
-            @include('partials/widgets/lists/_widget-26')
+        <div class="col-md-4">
+            <!--begin::Card widget 7-->
+            <div class="card card-flush mb-5 mb-xl-10 h-md-100">
+                <!--begin::Header-->
+                <div class="card-header pt-5">
+                    <!--begin::Title-->
+                    <div class="card-title d-flex flex-column">
+                        <!--begin::Amount-->
+                        <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{$users}}</span>
+                        <!--end::Amount-->
+                        <!--begin::Subtitle-->
+                        <span class="text-gray-400 pt-1 fw-semibold fs-6">Users</span>
+                        <!--end::Subtitle-->
+                    </div>
+                    <!--end::Title-->
+                </div>
+                <!--end::Header-->
+            </div>
+            <!--end::Card widget 7-->
         </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xxl-6">
-            @include('partials/widgets/engage/_widget-10')
+        <div class="col-md-4">
+            <!--begin::Card widget 17-->
+            <div class="card card-flush h-md-100 mb-5 mb-xl-10">
+                <!--begin::Header-->
+                <div class="card-header pt-5">
+                    <!--begin::Title-->
+                    <div class="card-title d-flex flex-column">
+                        <!--begin::Info-->
+                        <div class="d-flex align-items-center">
+                            <!--begin::Amount-->
+                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{$orders}}</span>
+                            <!--end::Amount-->
+                        </div>
+                        <!--end::Info-->
+                        <!--begin::Subtitle-->
+                        <span class="text-gray-400 pt-1 fw-semibold fs-6">Orders</span>
+                        <!--end::Subtitle-->
+                    </div>
+                    <!--end::Title-->
+                </div>
+                <!--end::Header-->
+            </div>
+            <!--end::Card widget 17-->
         </div>
         <!--end::Col-->
     </div>
     <!--end::Row-->
-
-    <!--begin::Row-->
-    <div class="row gx-5 gx-xl-10">
-        <!--begin::Col-->
-        <div class="col-xxl-6 mb-5 mb-xl-10">
-            @include('partials/widgets/charts/_widget-8')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-6 mb-5 mb-xl-10">
-            @include('partials/widgets/tables/_widget-16')
-        </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row-->
-
-    <!--begin::Row-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-        <!--begin::Col-->
-        <div class="col-xxl-6">
-            @include('partials/widgets/cards/_widget-18')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-6">
-            @include('partials/widgets/charts/_widget-36')
-        </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row-->
-
-    <!--begin::Row-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-        <!--begin::Col-->
-        <div class="col-xl-4">
-            @include('partials/widgets/charts/_widget-35')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-8">
-            @include('partials/widgets/tables/_widget-14')
-        </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row-->
-
-    <!--begin::Row-->
-    <div class="row gx-5 gx-xl-10">
-        <!--begin::Col-->
-        <div class="col-xl-4">
-            @include('partials/widgets/charts/_widget-31')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-8">
-            @include('partials/widgets/charts/_widget-24')
-        </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row--> --}}
 </x-default-layout>

@@ -217,4 +217,21 @@ class UserService
             ];
         }
     }
+
+    public function edit($id){
+        return $this->model::findOrFail($id);
+    }
+
+    public function update($data){
+        $update = $this->model::find($data['id']);
+        $update->name = $data['name'];
+        $update->email = $data['email'];
+        $update->save();
+        return $update;
+    }
+
+    public function delete($data){
+        $destroy = $this->model::findOrFail($data['id']);
+        $destroy->delete();
+    }
 }

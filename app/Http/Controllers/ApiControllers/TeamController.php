@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TeamResource;
 use App\Services\TeamService;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class TeamController extends Controller
         try{
             $team = $this->teamService->index();
             if($team && count($team) > 0){
-                return response()->json(['status' => true, "data" => $team], 200);
+                return TeamResource::collection($team)->additional(['status' => true]);
             }else{
                 return response()->json(['status' => false, "data" => "No team member found"], 400);
             }

@@ -106,4 +106,19 @@ class ProductController extends Controller
             return response()->json(["status" => false, 'error' => $e->getMessage()], 400);
         }
     }
+
+    public function deleteImage(Request $request){
+        $request->validate([
+            "image_id" => "required",
+        ]);
+
+        try{
+            $this->productService->deleteImage($request);
+            toastr()->success('Image Deleted Successfully!');
+            return redirect()->back();
+        }catch(\Exception $e){
+            toastr()->error($e->getMessage());
+            return redirect()->back();
+        }
+    }
 }

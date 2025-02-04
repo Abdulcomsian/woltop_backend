@@ -481,7 +481,12 @@
         updateAddSectionButtonState();
 
         // Deleting Gallery Image
-        document.querySelector("#image-delete-btn").addEventListener("click", function(e){
-            // alert(123);
+        document.querySelectorAll("#image-delete-btn").forEach((el) => {
+            el.addEventListener("click", function(e){
+                let image_id = this.dataset.id;
+                document.querySelector("#delete_id_image").value = image_id;
+                var deleteModal = new bootstrap.Modal(document.getElementById('delete_image_modal'));
+                deleteModal.show();
+            })
         })
     });

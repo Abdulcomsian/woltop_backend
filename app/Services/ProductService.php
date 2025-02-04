@@ -297,4 +297,15 @@ class ProductService
 
         return $query->get();
     }
+
+    public function deleteImage($data){
+        $delete = $this->productImagesModel::findOrFail($data->image_id);
+        if($delete && $delete->image_path != null){
+            $oldPath = public_path("assets/wolpin_media/products/gallery_images" . $delete->image_path);
+            if(file_exists($oldPath)){
+                unlink($oldPath);
+            }
+        }
+        return $delete->delete();
+    }
 }

@@ -101,6 +101,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('create', 'create')->name('create');
             Route::post('store', 'store')->name('store');
             Route::delete('delete', 'delete')->name('delete');
+            Route::delete('delete/image', 'deleteImage')->name('delete.image');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
             Route::post('fetch-attributes-values', 'fetchAttributesValues')->name('attributes.values');

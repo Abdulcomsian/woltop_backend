@@ -3,7 +3,7 @@
         /* navigation style start.. */
         .nav-tabs .nav-link {
             color: black;
-            width: 120px;
+            width: 320px;
         }
 
         .nav-tabs .nav-link:hover {
@@ -82,19 +82,19 @@
                         <button class="nav-link active" id="ps1-tab" data-bs-toggle="tab"
                             data-bs-target="#ps1-content" type="button" role="tab" aria-controls="ps1-content"
                             aria-selected="true">
-                            PS1
+                            Basic Information
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" id="ps2-tab" data-bs-toggle="tab" data-bs-target="#ps2-content"
                             type="button" role="tab" aria-controls="ps2-content" aria-selected="false">
-                            PS2
+                            Advanced Information
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" id="ps3-tab" data-bs-toggle="tab" data-bs-target="#ps3-content"
                             type="button" role="tab" aria-controls="ps3-content" aria-selected="false">
-                            PS3
+                            SEO Details
                         </button>
                     </li>
                 </ul>

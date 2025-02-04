@@ -3,7 +3,7 @@
         /* navigation style start.. */
         .nav-tabs .nav-link {
             color: black;
-            width: 120px;
+            width: 320px;
         }
 
         .nav-tabs .nav-link:hover {
@@ -83,19 +83,19 @@
                         <button class="nav-link active" id="ps1-tab" data-bs-toggle="tab"
                             data-bs-target="#ps1-content" type="button" role="tab" aria-controls="ps1-content"
                             aria-selected="true">
-                            PS1
+                            Basic Information
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" id="ps2-tab" data-bs-toggle="tab" data-bs-target="#ps2-content"
                             type="button" role="tab" aria-controls="ps2-content" aria-selected="false">
-                            PS2
+                            Advanced Information
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" id="ps3-tab" data-bs-toggle="tab" data-bs-target="#ps3-content"
                             type="button" role="tab" aria-controls="ps3-content" aria-selected="false">
-                            PS3
+                            SEO Details
                         </button>
                     </li>
                 </ul>
@@ -251,7 +251,7 @@
                                                     <source
                                                         src="{{ asset('assets/wolpin_media/products/video/' . $data->video) }}"
                                                         type="video/mp4">
-                                                    Your browser does not support the video tag.
+                                                        Your browser does not support the video tag.
                                                 </video>
                                                 <input type="file" name="video"
                                                     class="form-control form-control-solid" accept="video/*">
@@ -301,7 +301,7 @@
                                                                             alt="Gallery Image 2">
                                                                         <div class="card-body d-flex justify-content-end"
                                                                             style="padding: 10px;">
-                                                                            <button type="button"
+                                                                            <button type="button" data-id="{{$image->id}}"
                                                                                 class="btn btn-sm btn-danger delete-btn"
                                                                                 id="image-delete-btn" title="Delete">
                                                                                 <i class="fas fa-trash"></i>
@@ -883,6 +883,7 @@
     </div>
 
     @include('partials.modals.product.delete')
+    @include('partials.modals.product.delete_image')
     @push('scripts')
         <script>
             var attributes = {!! json_encode($attributes) !!};

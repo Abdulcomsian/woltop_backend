@@ -515,3 +515,22 @@ if (!function_exists('calculateRange')) {
         }
     }
 }
+
+if (!function_exists('formatString')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function formatString($input) {
+        $position = strrpos($input, "/");
+        if ($position !== false) {
+            return substr_replace($input, "-", $position, 1);
+        }
+        return $input;
+    }
+}
+
+

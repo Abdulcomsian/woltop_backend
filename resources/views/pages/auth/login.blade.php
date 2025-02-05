@@ -20,7 +20,7 @@
 
             <!--begin::Subtitle-->
             <div class="text-gray-500 fw-semibold fs-6">
-                Your Social Campaigns
+                Beyond Plain Walls
             </div>
             <!--end::Subtitle--->
         </div>
@@ -79,7 +79,8 @@
             <div></div>
 
             <!--begin::Link-->
-            <a href="{{ route('password.request') }}" class="link-primary">
+            <a href="{{ route('password.request') }}" style="color: #000000;">
+             <!-- Wolpin Start <a href="{{ route('password.request') }}" class="link-primary"> Wolpin End -->
                 Forgot Password ?
             </a>
             <!--end::Link-->
@@ -88,7 +89,8 @@
 
         <!--begin::Submit button-->
         <div class="d-grid mb-10">
-            <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+            <button type="submit" id="kt_sign_in_submit" class="btn" style="background-color: #000000; color: white;">
+            <!-- Wolpin Start <button type="submit" id="kt_sign_in_submit" class="btn btn-primary"> Wolpin End -->
                 @include('partials/general/_button-indicator', ['label' => 'Sign In'])
             </button>
         </div>

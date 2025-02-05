@@ -628,27 +628,27 @@
                                                     <label for="room_type" class="form-label">Room Type</label>
                                                     <input type="text" id="room_type" class="form-control"
                                                         placeholder="Enter Room Type" name="room_type"
-                                                        value="{{ $data->designApplicationGuide->room_type }}">
+                                                        value="{{ $data->designApplicationGuide->room_type ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="finish_type" class="form-label">Finish Type</label>
                                                     <input type="text" id="finish_type" class="form-control"
                                                         name="finish_type" placeholder="Enter Finish Type"
-                                                        value="{{ $data->designApplicationGuide->finish_type }}">
+                                                        value="{{ $data->designApplicationGuide->finish_type ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="pattern_repeat" class="form-label">Pattern
                                                         Repeat</label>
                                                     <input type="text" id="pattern_repeat" class="form-control"
                                                         name="pattern_repeat" placeholder="Enter Pattern Repeat"
-                                                        value="{{ $data->designApplicationGuide->pattern_repeat }}">
+                                                        value="{{ $data->designApplicationGuide->pattern_repeat ?? ''}}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="pattern_match" class="form-label">Pattern
                                                         Match</label>
                                                     <input type="text" id="pattern_match" class="form-control"
                                                         name="pattern_match" placeholder="Enter Pattern Match"
-                                                        value="{{ $data->designApplicationGuide->pattern_match }}">
+                                                        value="{{ $data->designApplicationGuide->pattern_match ?? ''}}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="application_guide" class="form-label">Application
@@ -656,7 +656,7 @@
                                                     <input type="text" id="application_guide" class="form-control"
                                                         name="application_guide"
                                                         placeholder="Enter product Application Guide"
-                                                        value="{{ $data->designApplicationGuide->application_guide }}">
+                                                        value="{{ $data->designApplicationGuide->application_guide ?? ''}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -681,19 +681,19 @@
                                                     <label for="storage" class="form-label">Storage</label>
                                                     <input type="text" id="storage" class="form-control"
                                                         name="storage" placeholder="Enter product Storage"
-                                                        value="{{ $data->storageUsage->storage }}">
+                                                        value="{{ $data->storageUsage->storage ?? ''}}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="net_weight" class="form-label">Net Weight</label>
                                                     <input type="number" id="net_weight" class="form-control"
                                                         name="net_weight" placeholder="Enter product net_weight"
-                                                        value="{{ $data->storageUsage->net_weight }}">
+                                                        value="{{ $data->storageUsage->net_weight ?? ''}}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="coverage" class="form-label">Coverage</label>
                                                     <input type="text" id="coverage" class="form-control"
                                                         name="coverage" placeholder="Enter product coverage"
-                                                        value="{{ $data->storageUsage->coverage }}">
+                                                        value="{{ $data->storageUsage->coverage ?? ''}}">
                                                 </div>
                                             </div>
                                         </div>

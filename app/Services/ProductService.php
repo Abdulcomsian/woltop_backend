@@ -86,13 +86,13 @@ class ProductService
         $product->slug = generateUniqueSlug($data['product_name'], $this->model::class, "slug");
         $product->short_description = $data['short_description'];
         $product->description = $data['description'];
-        $product->video = $videoFileName;
+        $product->video = $videoFileName ?? null;
         if($data['product_type'] == "simple"){
             $product->price = $data['simple_price'];
             $product->sale_price = $data['simple_sale_price'];
             $product->sku = generateUniqueSku($data['simple_sku'], $this->model::class, 'sku');
         }
-        $product->featured_image = $featureFileName;
+        $product->featured_image = $featureFileName ?? null;
         $product->product_type = $data['product_type'];
         $product->status = $data['status'];
         $product->meta_title = $data['meta_title'];
@@ -275,10 +275,253 @@ class ProductService
 
     public function update($data)
     {
-        $update = $this->model::findOrFail($data['id']);
-        $update->name = $data['name'];
-        $update->save();
-        return $update;
+        $product = $this->model::findOrFail($data['id']);
+        // Storing Featured Image
+        if(isset($data['featured_image'])){
+            // removing old file from server folder
+            if($product && $product->featured_image != null){
+                $oldPath = public_path("assets/wolpin_media/products/featured_images" . $product->featured_image);
+                if(file_exists($oldPath)){
+                    unlink($oldPath);
+                }
+            }
+
+            $featureFileName = rand() . '.' . $data['featured_image']->extension();
+            $path = public_path("assets/wolpin_media/products/featured_images");
+            $data['featured_image']->move($path, $featureFileName);
+        }
+
+        // Storing Video
+        if(isset($data['video'])){
+            if($product && $product->video != null){
+                $oldPath = public_path("assets/wolpin_media/products/video" . $product->video);
+                if(file_exists($oldPath)){
+                    unlink($oldPath);
+                }
+            }
+            $videoFileName = rand() . '.' . $data['video']->extension();
+            $path = public_path("assets/wolpin_media/products/video");
+            $data['video']->move($path, $videoFileName);
+        }
+
+        $product->title = $data['product_name'];
+        $product->color_id = $data['color'];
+        $product->slug = generateUniqueSlug($data['product_name'], $this->model::class, "slug");
+        $product->short_description = $data['short_description'];
+        $product->description = $data['description'];
+        if(isset($data['video'])){
+            $product->video = $videoFileName ?? null;
+        }
+        if($data['product_type'] == "simple"){
+            // deleting variables against this product if any case Admin Switch from variable to simple
+            $this->variableProductModel::where('product_id', $data['id'])->forceDelete();
+            $this->variationOptionModel::where('product_id', $data['id'])->forceDelete();
+
+            $product->price = $data['simple_price'];
+            $product->sale_price = $data['simple_sale_price'];
+            $product->sku = generateUniqueSku($data['simple_sku'], $this->model::class, 'sku');
+        }elseif($data['product_type'] == "variable"){
+            $product->price = null;
+            $product->sale_price = null;
+            $product->sku = null;
+        }
+
+        if(isset($data['featured_image'])){
+            $product->featured_image = $featureFileName ?? null;
+        }
+        $product->product_type = $data['product_type'];
+        $product->status = $data['status'];
+        $product->meta_title = $data['meta_title'] ?? null;
+        $product->meta_description = $data['meta_description'] ?? null;
+        if($data['product_type'] == "simple"){
+            $product->discount = calculateDiscount($data['simple_price'], $data['simple_sale_price']);
+        }
+        if($product->save()){
+            // Storing Gallery Images
+            if(isset($data['gallery_images']) && count($data['gallery_images']) > 0){
+                foreach($data['gallery_images'] as $image){
+                    $fileName = rand() . '.' . $image->extension();
+                    $path = public_path("assets/wolpin_media/products/gallery_images");
+                    $image->move($path, $fileName);
+                    $img = new $this->productImagesModel;
+                    $img->product_id = $product->id;
+                    $img->image_path = $fileName;
+                    $img->save();
+                }
+            }
+
+            // Storing Categories
+            if(isset($data['categories']) && count($data['categories']) > 0){
+                $this->productCategoryModel::where('product_id', $product->id)->forceDelete();
+                foreach($data['categories'] as $category){
+                    $cat = new $this->productCategoryModel;
+                    $cat->product_id = $product->id;
+                    $cat->category_id = $category;
+                    $cat->save();
+                }
+            }
+
+            // Storing tags
+            if(isset($data['tags']) && count($data['tags']) > 0){
+                $this->productTagModel::where('product_id', $product->id)->forceDelete();
+                foreach($data['tags'] as $tag){
+                    $pTag = new $this->productTagModel;
+                    $pTag->product_id = $product->id;
+                    $pTag->tag_id = $tag;
+                    $pTag->save();
+                }
+            }
+
+            // Storing Dos and Donts
+            if(isset($data['dos_dont']) && count($data['dos_dont']) > 0){
+                $this->dosProductModel::where('product_id', $product->id)->forceDelete();
+                foreach($data['dos_dont'] as $item){
+                    $dos = new $this->dosProductModel;
+                    $dos->product_id = $product->id;
+                    $dos->name = $item;
+                    $dos->save();
+                }
+            }
+
+            
+            // Storing Installation Steps
+            if(isset($data['installation_steps']) && count($data['installation_steps']) > 0){
+                // Delete old installation steps and images
+                $oldInstallationSteps = $this->installationStepsModel::where('product_id', $product->id)->get();
+
+                foreach ($oldInstallationSteps as $step) {
+                    if (!empty($step->image)) {
+                        $oldPath = public_path("assets/wolpin_media/installation_steps/" . $step->image);
+                        if (is_file($oldPath)) {
+                            @unlink($oldPath);
+                        }
+                    }
+                    $step->forceDelete();
+                }
+
+                foreach($data['installation_steps'] as $item){
+                    $step = new $this->installationStepsModel;
+                    $step->product_id = $product->id;
+                    $step->name = $item['installation_name'];
+                    $step->description = $item['installation_description'];
+                    // Storing file
+                    if(isset($item['installation_image']) && !empty($item['installation_image'])){
+                        $imageName = rand() . '.' . $item['installation_image']->extension();
+                        $path = public_path("assets/wolpin_media/installation_steps");
+                        $item['installation_image']->move($path, $imageName);
+                        $step->image = $imageName;
+                    }
+                    $step->save();
+                }
+            }
+            // Storing Product Features
+            if(isset($data['product_features']) && count($data['product_features']) > 0){
+                // deleting old feature and image from the server
+                $oldProductFeature = $this->productFeatureModel::where('product_id', $product->id)->get();
+                if($oldProductFeature && count($oldProductFeature) > 0){
+                    foreach($oldProductFeature as $feature){
+                        if($feature && $feature->image != null){
+                            $oldPath = public_path("assets/wolpin_media/products/features" . $feature->image);
+                            if(file_exists($oldPath)){
+                                unlink($oldPath);
+                            }
+                        }
+
+                        $feature->forceDelete();
+                    }
+                }
+
+
+                foreach($data['product_features'] as $item){
+                    $feature = new $this->productFeatureModel;
+                    $feature->product_id = $product->id;
+                    $feature->name = $item['name'];
+                    // Storing file
+                    if(isset($item['image']) && !empty($item['image'])){
+                        $featureImage = rand() . '.' . $item['image']->extension();
+                        $path = public_path("assets/wolpin_media/products/features");
+                        $item['image']->move($path, $featureImage);
+                        $feature->image = $featureImage;
+                    }
+                    $feature->save();
+                }
+            }
+
+            // Storing Variable Data
+            if($data['product_type'] == "variable"){
+                 // Storing Variable Products
+                if(isset($data['variations']) && count($data['variations']) > 0){
+                    $this->variableProductModel::where('product_id', $product->id)->forceDelete();
+                    foreach($data['variations'] as $item){
+                        if(isset($item['attribute_values']) && count($item['attribute_values']) > 0){
+                            foreach($item['attribute_values'] as $subItem){
+                                $attr = new $this->variableProductModel;
+                                $attr->attribute_value_id = $subItem;
+                                $attr->product_id = $product->id;
+                                $attr->save();
+                            }
+                        }
+                    }
+                }
+
+                if(isset($data['variation_options']) && count($data['variation_options']) > 0){
+                    $this->variationOptionModel::where('product_id', $product->id)->forceDelete();
+                    foreach($data['variation_options'] as $item){
+                        $names = explode('/', $item['name']);
+                        $attribute_values = $this->attributeModel::with('attribute')->whereIn("name", $names)->get()
+                        ->map(function($item){
+                            return [
+                                "name" => $item->attribute->name,
+                                "value" => $item->name,
+                            ];
+                        })
+                        ->toArray();
+                        $variation = new $this->variationOptionModel;
+                        $variation->product_id = $product->id;
+                        $variation->title = $item['name'];
+                        $variation->price = $item['price'];
+                        $variation->sale_price = $item['sale_price'];
+                        $variation->options = !empty($attribute_values) ? json_encode($attribute_values) : null;
+                        $variation->discount = calculateDiscount($item['price'], $item['sale_price']);
+                        $variation->sku = generateUniqueSku($item['sku'], $this->variationOptionModel::class, 'sku');;
+                        $variation->save();
+                    }
+                }
+                
+            }
+
+            $applicationData = [
+                'room_type' => $data['room_type'] ?? null,
+                'finish_type' => $data['finish_type'] ?? null,
+                'pattern_repeat' => $data['pattern_repeat'] ?? null,
+                'pattern_match' => $data['pattern_match'] ?? null,
+                'application_guide' => $data['application_guide'] ?? null,
+            ];
+            
+            if (!empty(array_filter($applicationData))) {
+                $this->applicationDetailModel::where('product_id', $product->id)->forceDelete();
+                $application = new $this->applicationDetailModel;
+                $application->product_id = $product->id;
+                $application->fill($applicationData);
+                $application->save(); 
+            }
+            
+            $storageData = [
+                "storage" => $data['storage'] ?? null,
+                "net_weight" => $data['net_weight'] ?? null,
+                "coverage" => $data['coverage'] ?? null,
+            ];
+
+            if(!empty(array_filter($storageData))){
+                $this->storageDetailModel::where('product_id', $product->id)->forceDelete();
+                $st = new $this->storageDetailModel;
+                $st->product_id = $product->id;
+                $st->fill($storageData);
+                $st->save();
+            }
+            
+        }
+        return $product;
     }
 
     public function fetchAttributeValues($data){

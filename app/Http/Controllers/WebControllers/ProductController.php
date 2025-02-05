@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\ParentCategory;
 use App\Models\Tag;
+use App\Models\VariationOption;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
@@ -70,7 +71,28 @@ class ProductController extends Controller
             $tags = Tag::get();
             $attributes = ModelsAttribute::get();
             $colors = Color::get();
-            return view('pages.product.edit', compact("data", "parent_categories", "categories", "tags", "attributes", "colors"));
+            $groupedVariables = [];
+            foreach ($data->productVariables as $variable) {
+                $attributeId = $variable->attributes->attribute->id;
+                $attributeName = $variable->attributes->attribute->name;
+                $attributeValueId = $variable->attributes->id;
+                $attributeValueName = $variable->attributes->name;
+
+                if (!isset($groupedVariables[$attributeId])) {
+                    $groupedVariables[$attributeId] = [
+                        'attribute_id' => $attributeId,
+                        'attribute_name' => $attributeName,
+                        'values' => [],
+                    ];
+                }
+
+                $groupedVariables[$attributeId]['values'][$attributeValueId] = $attributeValueName;
+            }
+
+            $groupedVariables = array_values($groupedVariables);
+            $selectedAttributes = $data->productVariables->pluck('attributes.attribute.id')->toArray();
+            $productVariations = VariationOption::where('product_id', $id)->get();
+            return view('pages.product.edit', compact("data", "parent_categories", "categories", "tags", "attributes", "colors", "groupedVariables", "selectedAttributes", "productVariations"));
         }catch(\Exception $e){
             toastr()->error($e->getMessage());
             return redirect()->back();
@@ -80,7 +102,7 @@ class ProductController extends Controller
     public function update(ProductRequest $productRequest)
     {
         try {
-            $this->productService->update($productRequest);
+            $this->productService->update($productRequest->validated());
             toastr()->success('Product Updated Successfully!');
                 return redirect()->back();
         } catch(\Exception $e) {

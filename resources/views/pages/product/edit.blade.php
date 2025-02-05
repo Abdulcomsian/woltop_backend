@@ -77,6 +77,7 @@
             @csrf
             @method('PATCH')
             <!-- Parent Tabs Navigation -->
+            <input type="hidden" name="id" value="{{ $data->id }}">
             <div class="nav-tabs-container">
                 <ul class="nav nav-tabs mb-4 text-white" id="parent-tabs" role="tablist">
                     <li class="nav-item">
@@ -212,18 +213,10 @@
                                         <div class="card">
                                             <div class="card-body py-4">
                                                 <!-- Featured Image Dropzone -->
-                                                {{-- <div class="featured-image-dropzone dropzone custom-page-dropzone">
-                                                    <div class="dz-message">
-                                                        <div>
-                                                            <img class="drop-img"
-                                                                src="{{ asset('images/dropbox.png') }}"
-                                                                alt="">
-                                                        </div>
-                                                        <h5 class="drop-zone__prompt2" style="color:black;">Upload Featured Image</h5>
-                                                    </div>
-                                                </div> --}}
-                                                <img src="{{ asset('assets/wolpin_media/products/featured_images/' . $data->featured_image) }}"
-                                                    alt="featured Image" height="300">
+                                                @if ($data->featured_image != null)
+                                                    <img src="{{ asset('assets/wolpin_media/products/featured_images/' . $data->featured_image) }}"
+                                                        alt="featured Image" height="300">
+                                                @endif
                                                 <input type="file" name="featured_image"
                                                     class="form-control form-control-solid mt-4" accept="image/*">
                                             </div>
@@ -240,18 +233,11 @@
                                         <div class="card">
                                             <div class="card-body py-4">
                                                 <!-- Featured Image Dropzone -->
-                                                {{-- <form action="/upload" method="POST" enctype="multipart/form-data"
-                                                    id="featured-image-upload" class="dropzone custom-page-dropzone">
-                                                    <div class="dz-message text-gray-600">
-                                                        <span class="block text-lg font-semibold">Drag & Drop or Click to Upload
-                                                            Video</span>
-                                                    </div>
-                                                </form> --}}
                                                 <video controls class="mb-4" height="250">
                                                     <source
                                                         src="{{ asset('assets/wolpin_media/products/video/' . $data->video) }}"
                                                         type="video/mp4">
-                                                        Your browser does not support the video tag.
+                                                    Your browser does not support the video tag.
                                                 </video>
                                                 <input type="file" name="video"
                                                     class="form-control form-control-solid" accept="video/*">
@@ -301,7 +287,8 @@
                                                                             alt="Gallery Image 2">
                                                                         <div class="card-body d-flex justify-content-end"
                                                                             style="padding: 10px;">
-                                                                            <button type="button" data-id="{{$image->id}}"
+                                                                            <button type="button"
+                                                                                data-id="{{ $image->id }}"
                                                                                 class="btn btn-sm btn-danger delete-btn"
                                                                                 id="image-delete-btn" title="Delete">
                                                                                 <i class="fas fa-trash"></i>
@@ -401,7 +388,7 @@
                                                         @isset($colors)
                                                             @foreach ($colors as $color)
                                                                 <option value="{{ $color->id }}"
-                                                                    @if ($data->color->id == $color->id) selected @endif>
+                                                                    @if (!empty($data->color) && $data->color->id == $color->id) selected @endif>
                                                                     {{ $color->name }}
                                                                 </option>
                                                             @endforeach
@@ -486,55 +473,106 @@
                                         </div>
                                         <div id="sectionsContainer">
                                             <!-- Initial section matching dynamic structure -->
-                                            <div class="card mb-3 section" data-section="1">
-                                                <div class="card-body py-4">
-                                                    <div class="row w-100 relative">
-                                                        <div class="col-3">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Attribute Name</label>
-                                                                <select
-                                                                    class="form-select attributeName attribute-change"
-                                                                    name="variations[][attribute_id]" data-section="">
-                                                                    <option value="">Select...</option>
-                                                                    @isset($attributes)
-                                                                        @foreach ($attributes as $attribute)
-                                                                            <option value="{{ $attribute->id }}"
-                                                                                @isset($data->productVariables)
-                                                                                    @foreach ($data->productVariables as $variable)
-                                                                                        @if ($variable->attributes->attribute->id == $attribute->id)
-                                                                                            selected 
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                @endisset>
-                                                                                {{ $attribute->name }}</option>
-                                                                        @endforeach
-                                                                    @endisset
-                                                                </select>
+                                            @isset($groupedVariables)
+                                                @php
+                                                    $selectedAttributesValues = [];
+                                                @endphp
+                                                @foreach ($groupedVariables as $key => $variable)
+                                                    <div class="card mb-3 section" data-section="{{ $key }}"
+                                                        data-selected-attribute-id="{{ $variable['attribute_id'] }}">
+                                                        <div class="card-body py-4">
+                                                            <div class="row w-100 relative">
+                                                                <div class="col-3">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Attribute Name</label>
+                                                                        <select
+                                                                            class="form-select attributeName attribute-change"
+                                                                            name="variations[{{ $key }}][attribute_id]"
+                                                                            data-section="">
+                                                                            <option value="">Select...</option>
+                                                                            @isset($attributes)
+                                                                                @foreach ($attributes as $attribute)
+                                                                                    @if (!in_array($attribute->id, $selectedAttributes) || $variable['attribute_id'] == $attribute->id)
+                                                                                        <option value="{{ $attribute->id }}"
+                                                                                            @if ($variable['attribute_id'] == $attribute->id) selected @endif>
+                                                                                            {{ $attribute->name }}
+                                                                                        </option>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            @endisset
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Attribute Values</label>
+                                                                        <select class="form-select attribute-values"
+                                                                            name="variations[{{ $key }}][attribute_values][]"
+                                                                            multiple>
+                                                                            @foreach ($variable['values'] as $valueId => $valueName)
+                                                                            @php
+                                                                                $selectedAttributesValues[$key][] = $valueName;
+                                                                            @endphp
+                                                                                <option value="{{ $valueId }}"
+                                                                                    selected>{{ $valueName }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-9">
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Attribute Values</label>
-                                                                <select class="form-select attribute-values"
-                                                                    name="variations[][attribute_values][]"
-                                                                    data-section="" multiple>
-                                                                    {{-- @isset($attribute) --}}
-                                                                </select>
-                                                            </div>
+                                                            <span
+                                                                class="text-danger removeSection cursor-pointer position-absolute p-2"
+                                                                style="top: 0; right: 10px;">
+                                                                Remove
+                                                            </span>
                                                         </div>
                                                     </div>
-                                                    <span
-                                                        class="text-danger removeSection cursor-pointer position-absolute p-2"
-                                                        style="top: 0; right: 10px;">
-                                                        Remove
-                                                    </span>
-                                                </div>
-                                            </div>
+                                                @endforeach
+                                            @endisset
+
+
                                         </div>
 
                                         <!-- Moved value-container OUTSIDE sectionsContainer -->
                                         <div id="valuesContainer">
-                                            <!-- Selected attribute values will appear here dynamically -->
+                                            @isset($productVariations)
+                                                @foreach ($productVariations as $key => $variation)
+                                                    <div class="card mb-3 value-section"
+                                                        data-value-id="{{ formatString($variation->title) }}">
+                                                        <div class="card-body">
+                                                            <h5 class="mb-3">{{ $variation->title }}</h5>
+                                                            <input type="hidden"
+                                                                name="variation_options[{{ $key }}][name]"
+                                                                value="{{ $variation->title }}" />
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <label class="required form-label">Price</label>
+                                                                    <input type="number"
+                                                                        name="variation_options[{{ $key }}][price]"
+                                                                        class="form-control" placeholder="Enter Price"
+                                                                        value="{{ $variation->price }}">
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="required form-label">Sale Price</label>
+                                                                    <input type="number"
+                                                                        name="variation_options[{{ $key }}][sale_price]"
+                                                                        class="form-control"
+                                                                        placeholder="Enter Sale Price"
+                                                                        value="{{ $variation->sale_price }}">
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="required form-label">SKU</label>
+                                                                    <input type="text"
+                                                                        name="variation_options[{{ $key }}][sku]"
+                                                                        class="form-control" placeholder="Enter SKU"
+                                                                        value="{{ $variation->sku }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endisset
+
                                         </div>
 
                                         <button id="addSection" type="button" class="btn btn-primary mt-3">Add
@@ -641,14 +679,14 @@
                                                         Repeat</label>
                                                     <input type="text" id="pattern_repeat" class="form-control"
                                                         name="pattern_repeat" placeholder="Enter Pattern Repeat"
-                                                        value="{{ $data->designApplicationGuide->pattern_repeat ?? ''}}">
+                                                        value="{{ $data->designApplicationGuide->pattern_repeat ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="pattern_match" class="form-label">Pattern
                                                         Match</label>
                                                     <input type="text" id="pattern_match" class="form-control"
                                                         name="pattern_match" placeholder="Enter Pattern Match"
-                                                        value="{{ $data->designApplicationGuide->pattern_match ?? ''}}">
+                                                        value="{{ $data->designApplicationGuide->pattern_match ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="application_guide" class="form-label">Application
@@ -656,7 +694,7 @@
                                                     <input type="text" id="application_guide" class="form-control"
                                                         name="application_guide"
                                                         placeholder="Enter product Application Guide"
-                                                        value="{{ $data->designApplicationGuide->application_guide ?? ''}}">
+                                                        value="{{ $data->designApplicationGuide->application_guide ?? '' }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -681,19 +719,19 @@
                                                     <label for="storage" class="form-label">Storage</label>
                                                     <input type="text" id="storage" class="form-control"
                                                         name="storage" placeholder="Enter product Storage"
-                                                        value="{{ $data->storageUsage->storage ?? ''}}">
+                                                        value="{{ $data->storageUsage->storage ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="net_weight" class="form-label">Net Weight</label>
                                                     <input type="number" id="net_weight" class="form-control"
                                                         name="net_weight" placeholder="Enter product net_weight"
-                                                        value="{{ $data->storageUsage->net_weight ?? ''}}">
+                                                        value="{{ $data->storageUsage->net_weight ?? '' }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="coverage" class="form-label">Coverage</label>
                                                     <input type="text" id="coverage" class="form-control"
                                                         name="coverage" placeholder="Enter product coverage"
-                                                        value="{{ $data->storageUsage->coverage ?? ''}}">
+                                                        value="{{ $data->storageUsage->coverage ?? '' }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -741,9 +779,9 @@
                                                                 <input type="file"
                                                                     name="installation_steps[{{ $key }}][installation_image]"
                                                                     class="form-control">
-                                                                @if($step->image != null)
-                                                                <img src="{{ asset('assets/wolpin_media/installation_steps/' . $step->image) }}"
-                                                                    class="mt-4" height="200" alt="Image">
+                                                                @if ($step->image != null)
+                                                                    <img src="{{ asset('assets/wolpin_media/installation_steps/' . $step->image) }}"
+                                                                        class="mt-4" height="200" alt="Image">
                                                                 @endif
                                                             </div>
                                                             <span
@@ -804,23 +842,24 @@
                                         <div id="featuresFieldsContainer">
                                             <!-- Initial card -->
                                             @isset($data->productsFeatures)
-                                                @foreach($data->productsFeatures as $key => $feature)
+                                                @foreach ($data->productsFeatures as $key => $feature)
                                                     <div class="card mb-3">
                                                         <div class="card-body py-4">
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">Name</label>
                                                                 <input type="text" class="form-control"
                                                                     placeholder="Enter product name"
-                                                                    name="product_features[{{$key}}][name]" value="{{$feature->name}}">
+                                                                    name="product_features[{{ $key }}][name]"
+                                                                    value="{{ $feature->name }}">
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="image" class="form-label">Image</label>
                                                                 <input type="file"
-                                                                    name="product_features[{{$key}}][image]"
+                                                                    name="product_features[{{ $key }}][image]"
                                                                     class="form-control">
-                                                                @if($feature->image != null)
-                                                                <img src="{{ asset('assets/wolpin_media/products/features/' . $feature->image) }}"
-                                                                    class="mt-4" height="200" alt="Image">
+                                                                @if ($feature->image != null)
+                                                                    <img src="{{ asset('assets/wolpin_media/products/features/' . $feature->image) }}"
+                                                                        class="mt-4" height="200" alt="Image">
                                                                 @endif
                                                             </div>
                                                             <span
@@ -854,13 +893,15 @@
                                                 <div class="mb-3">
                                                     <label for="metaTitle" class="form-label">Meta Title </label>
                                                     <input type="text" id="metaTitle" class="form-control"
-                                                        name="meta_title" placeholder="Enter product Meta Title" value="{{$data->meta_title}}">
+                                                        name="meta_title" placeholder="Enter product Meta Title"
+                                                        value="{{ $data->meta_title }}">
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="metaDesc" class="form-label">Meta Description</label>
                                                     <input type="text" id="metaDesc" class="form-control"
                                                         name="meta_description"
-                                                        placeholder="Enter product Meta Description" value="{{$data->meta_description}}">
+                                                        placeholder="Enter product Meta Description"
+                                                        value="{{ $data->meta_description }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -881,15 +922,16 @@
             </div>
         </form>
     </div>
-
     @include('partials.modals.product.delete')
     @include('partials.modals.product.delete_image')
     @push('scripts')
         <script>
             var attributes = {!! json_encode($attributes) !!};
+            var selectedAttributesId = {!! json_encode($selectedAttributes) !!}
+            var selectedAttributesValues = {!! json_encode($selectedAttributesValues) !!}
             var get_attribute_route = "{{ route('product.attributes.values') }}";
             var category_route = "{{ route('product.get.categories') }}";
         </script>
-        <script src="{{ asset('assets/js/product.js') }}"></script>
+        <script src="{{ asset('assets/js/product-edit.js') }}"></script>
     @endpush
 </x-default-layout>

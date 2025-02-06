@@ -104,7 +104,7 @@ class ProductController extends Controller
         try {
             $this->productService->update($productRequest->validated());
             toastr()->success('Product Updated Successfully!');
-                return redirect()->back();
+            return redirect()->route("product.index");
         } catch(\Exception $e) {
             toastr()->error($e->getMessage());
             return redirect()->back();

@@ -169,8 +169,14 @@
         // Handle removing cards and prevent removing all
         installationContainer.addEventListener('click', function(e) {
             if (e.target.classList.contains('remove-field')) {
-                const cardToRemove = e.target.closest('.card'); // Only remove the clicked card
+                const cardToRemove = e.target.closest('.card');
                 if (cardToRemove) {
+                    let stepId = cardToRemove.dataset.id;
+                    if (stepId && stepId !== "") {
+                        let removedStepsField = $("#removed_steps_container");
+                        removedStepsField.append(`<input type="hidden" name="removed_steps[]" value="${stepId}">`);
+                    }
+        
                     cardToRemove.remove();
                 }
             }
@@ -212,6 +218,12 @@
             if (e.target.classList.contains('remove-field')) {
                 const cardToRemove = e.target.closest('.card'); // Only remove the clicked card
                 if (cardToRemove) {
+                    let featuredId = cardToRemove.dataset.id;
+                    if (featuredId && featuredId !== "") {
+                        let featureField = $("#removed_features_container");
+                        featureField.append(`<input type="hidden" name="removed_features[]" value="${featuredId}">`);
+                    }
+        
                     cardToRemove.remove();
                 }
             }

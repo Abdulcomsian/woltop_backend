@@ -78,6 +78,8 @@
             @method('PATCH')
             <!-- Parent Tabs Navigation -->
             <input type="hidden" name="id" value="{{ $data->id }}">
+            <div id="removed_steps_container"></div>
+            <div id="removed_features_container"></div>
             <div class="nav-tabs-container">
                 <ul class="nav nav-tabs mb-4 text-white" id="parent-tabs" role="tablist">
                     <li class="nav-item">
@@ -756,8 +758,10 @@
                                             <!-- Initial card -->
                                             @isset($data->installationSteps)
                                                 @foreach ($data->installationSteps as $key => $step)
-                                                    <div class="card mb-3">
+                                                    <div class="card mb-3" data-id="{{$step->id}}">
                                                         <div class="card-body py-4">
+                                                            <input type="hidden" name="installation_steps[{{ $key }}][type]" value="existing">
+                                                            <input type="hidden" name="installation_steps[{{ $key }}][id]" value="{{$step->id}}">
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">Name</label>
                                                                 <input type="text" class="form-control"
@@ -843,8 +847,10 @@
                                             <!-- Initial card -->
                                             @isset($data->productsFeatures)
                                                 @foreach ($data->productsFeatures as $key => $feature)
-                                                    <div class="card mb-3">
+                                                    <div class="card mb-3" data-id="{{$feature->id}}">
                                                         <div class="card-body py-4">
+                                                            <input type="hidden" name="product_features[{{ $key }}][type]" value="existing">
+                                                            <input type="hidden" name="product_features[{{ $key }}][id]" value="{{$feature->id}}">
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">Name</label>
                                                                 <input type="text" class="form-control"

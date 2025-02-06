@@ -387,63 +387,92 @@ class ProductService
             // Storing Installation Steps
             if(isset($data['installation_steps']) && count($data['installation_steps']) > 0){
                 // Delete old installation steps and images
-                $oldInstallationSteps = $this->installationStepsModel::where('product_id', $product->id)->get();
-
-                foreach ($oldInstallationSteps as $step) {
-                    if (!empty($step->image)) {
-                        $oldPath = public_path("assets/wolpin_media/installation_steps/" . $step->image);
-                        if (is_file($oldPath)) {
-                            @unlink($oldPath);
+                if(isset($data['removed_steps'])){
+                    $oldInstallationSteps = $this->installationStepsModel::whereIn('id', $data['removed_steps'])->get();
+                    foreach ($oldInstallationSteps as $step) {
+                        if (!empty($step->image)) {
+                            $oldPath = public_path("assets/wolpin_media/installation_steps/" . $step->image);
+                            if (is_file($oldPath)) {
+                                @unlink($oldPath);
+                            }
                         }
+                        $step->forceDelete();
                     }
-                    $step->forceDelete();
                 }
 
                 foreach($data['installation_steps'] as $item){
-                    $step = new $this->installationStepsModel;
-                    $step->product_id = $product->id;
-                    $step->name = $item['installation_name'];
-                    $step->description = $item['installation_description'];
-                    // Storing file
-                    if(isset($item['installation_image']) && !empty($item['installation_image'])){
-                        $imageName = rand() . '.' . $item['installation_image']->extension();
-                        $path = public_path("assets/wolpin_media/installation_steps");
-                        $item['installation_image']->move($path, $imageName);
-                        $step->image = $imageName;
+                    if(isset($item['type']) && $item['type'] == "existing"){
+                        $step = $this->installationStepsModel::findOrFail($item['id']);
+                        $step->product_id = $product->id;
+                        $step->name = $item['installation_name'];
+                        $step->description = $item['installation_description'];
+                        // Storing file
+                        if(isset($item['installation_image']) && !empty($item['installation_image'])){
+                            $imageName = rand() . '.' . $item['installation_image']->extension();
+                            $path = public_path("assets/wolpin_media/installation_steps");
+                            $item['installation_image']->move($path, $imageName);
+                            $step->image = $imageName;
+                        }
+                        $step->save();
+                    }else{
+                        $step = new $this->installationStepsModel;
+                        $step->product_id = $product->id;
+                        $step->name = $item['installation_name'];
+                        $step->description = $item['installation_description'];
+                        // Storing file
+                        if(isset($item['installation_image']) && !empty($item['installation_image'])){
+                            $imageName = rand() . '.' . $item['installation_image']->extension();
+                            $path = public_path("assets/wolpin_media/installation_steps");
+                            $item['installation_image']->move($path, $imageName);
+                            $step->image = $imageName;
+                        }
+                        $step->save();
                     }
-                    $step->save();
                 }
             }
             // Storing Product Features
             if(isset($data['product_features']) && count($data['product_features']) > 0){
                 // deleting old feature and image from the server
-                $oldProductFeature = $this->productFeatureModel::where('product_id', $product->id)->get();
-                if($oldProductFeature && count($oldProductFeature) > 0){
-                    foreach($oldProductFeature as $feature){
-                        if($feature && $feature->image != null){
+                if(isset($data['removed_features'])){
+                    $oldFeatures = $this->productFeatureModel::whereIn('id', $data['removed_features'])->get();
+                    foreach ($oldFeatures as $feature) {
+                        if (!empty($feature->image)) {
                             $oldPath = public_path("assets/wolpin_media/products/features" . $feature->image);
-                            if(file_exists($oldPath)){
-                                unlink($oldPath);
+                            if (is_file($oldPath)) {
+                                @unlink($oldPath);
                             }
                         }
-
                         $feature->forceDelete();
                     }
                 }
 
 
                 foreach($data['product_features'] as $item){
-                    $feature = new $this->productFeatureModel;
-                    $feature->product_id = $product->id;
-                    $feature->name = $item['name'];
-                    // Storing file
-                    if(isset($item['image']) && !empty($item['image'])){
-                        $featureImage = rand() . '.' . $item['image']->extension();
-                        $path = public_path("assets/wolpin_media/products/features");
-                        $item['image']->move($path, $featureImage);
-                        $feature->image = $featureImage;
+                    if(isset($item['type']) && $item['type'] == "existing"){
+                        $feature = $this->productFeatureModel::findOrFail($item['id']);
+                        $feature->product_id = $product->id;
+                        $feature->name = $item['name'];
+                        // Storing file
+                        if(isset($item['image']) && !empty($item['image'])){
+                            $featureImage = rand() . '.' . $item['image']->extension();
+                            $path = public_path("assets/wolpin_media/products/features");
+                            $item['image']->move($path, $featureImage);
+                            $feature->image = $featureImage;
+                        }
+                        $feature->save();
+                    }else{
+                        $feature = new $this->productFeatureModel;
+                        $feature->product_id = $product->id;
+                        $feature->name = $item['name'];
+                        // Storing file
+                        if(isset($item['image']) && !empty($item['image'])){
+                            $featureImage = rand() . '.' . $item['image']->extension();
+                            $path = public_path("assets/wolpin_media/products/features");
+                            $item['image']->move($path, $featureImage);
+                            $feature->image = $featureImage;
+                        }
+                        $feature->save();
                     }
-                    $feature->save();
                 }
             }
 

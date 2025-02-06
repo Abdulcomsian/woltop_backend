@@ -5,7 +5,7 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class RequiredIfStatusAndType implements ValidationRule
+class RequiredIfStatusAndTypeVariable implements ValidationRule
 {
     protected $status;
     protected $type;
@@ -18,7 +18,7 @@ class RequiredIfStatusAndType implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if ($this->status === 'publish' && $this->type === 'simple' && empty($value)) {
+        if ($this->status === 'publish' && $this->type === 'variable' && empty($value)) {
             $fail("The {$attribute} field is required when status is 'publish'.");
         }
     }

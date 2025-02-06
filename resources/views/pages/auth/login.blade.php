@@ -75,7 +75,7 @@
         <!--end::Input group--->
 
         <!--begin::Wrapper-->
-        <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+        {{-- <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
             <div></div>
 
             <!--begin::Link-->
@@ -84,11 +84,11 @@
                 Forgot Password ?
             </a>
             <!--end::Link-->
-        </div>
+        </div> --}}
         <!--end::Wrapper-->
 
         <!--begin::Submit button-->
-        <div class="d-grid mb-10">
+        <div class="d-grid mt-10">
             <button type="submit" id="kt_sign_in_submit" class="btn" style="background-color: #000000; color: white;">
             <!-- Wolpin Start <button type="submit" id="kt_sign_in_submit" class="btn btn-primary"> Wolpin End -->
                 @include('partials/general/_button-indicator', ['label' => 'Sign In'])

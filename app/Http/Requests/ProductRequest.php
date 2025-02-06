@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\RequiredIfStatusAndType;
+use App\Rules\RequiredIfStatusAndTypeVariable;
 class ProductRequest extends FormRequest
 {
     /**
@@ -40,14 +41,14 @@ class ProductRequest extends FormRequest
                 "simple_price" => ["sometimes", new RequiredIfStatusAndType($status, $productType)],
                 "simple_sale_price" => ["sometimes", new RequiredIfStatusAndType($status, $productType)],
                 "simple_sku" => ["sometimes", new RequiredIfStatusAndType($status, $productType)],
-                "variations" => ["required_if:product_type,variable", "array"],
-                "variations.*.attribute_id" => ["required_if:product_type,variable"],
-                "variations.*.attribute_values" => ["required_if:product_type,variable", "array"],
-                "variation_options" => ["required_if:product_type,variable", "array"],
-                "variation_options.*.name" => ["required_if:product_type,variable"],
-                "variation_options.*.price" => ["required_if:product_type,variable"],
-                "variation_options.*.sale_price" => ["required_if:product_type,variable"],
-                "variation_options.*.sku" => ["required_if:product_type,variable"],
+                "variations" => [new RequiredIfStatusAndTypeVariable($status, $productType), "array"],
+                "variations.*.attribute_id" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
+                "variations.*.attribute_values" => [new RequiredIfStatusAndTypeVariable($status, $productType), "array"],
+                "variation_options" => [new RequiredIfStatusAndTypeVariable($status, $productType), "array"],
+                "variation_options.*.name" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
+                "variation_options.*.price" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
+                "variation_options.*.sale_price" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
+                "variation_options.*.sku" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
                 "dos_dont" => "sometimes|array",
                 "room_type" => "sometimes",
                 "finish_type" => "sometimes",
@@ -91,14 +92,14 @@ class ProductRequest extends FormRequest
             "simple_price" => ["sometimes", new RequiredIfStatusAndType($status, $productType)],
             "simple_sale_price" => ["sometimes", new RequiredIfStatusAndType($status, $productType)],
             "simple_sku" => ["sometimes", new RequiredIfStatusAndType($status, $productType)],
-            "variations" => ["required_if:product_type,variable", "array"],
-            "variations.*.attribute_id" => ["required_if:product_type,variable"],
-            "variations.*.attribute_values" => ["required_if:product_type,variable", "array"],
-            "variation_options" => ["required_if:product_type,variable", "array"],
-            "variation_options.*.name" => ["required_if:product_type,variable"],
-            "variation_options.*.price" => ["required_if:product_type,variable"],
-            "variation_options.*.sale_price" => ["required_if:product_type,variable"],
-            "variation_options.*.sku" => ["required_if:product_type,variable"],
+            "variations" => [new RequiredIfStatusAndTypeVariable($status, $productType), "array"],
+            "variations.*.attribute_id" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
+            "variations.*.attribute_values" => [new RequiredIfStatusAndTypeVariable($status, $productType), "array"],
+            "variation_options" => [new RequiredIfStatusAndTypeVariable($status, $productType), "array"],
+            "variation_options.*.name" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
+            "variation_options.*.price" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
+            "variation_options.*.sale_price" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
+            "variation_options.*.sku" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
             "dos_dont" => "sometimes|array",
             "room_type" => "sometimes",
             "finish_type" => "sometimes",

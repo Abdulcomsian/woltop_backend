@@ -73,7 +73,7 @@
         </div>
     @endif
     <div class="row g-4">
-        <form action="{{ route('product.update') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('product.update') }}" class="submitForm" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <!-- Parent Tabs Navigation -->
@@ -939,5 +939,6 @@
             var category_route = "{{ route('product.get.categories') }}";
         </script>
         <script src="{{ asset('assets/js/product-edit.js') }}"></script>
+        <script src="{{ asset('assets/js/product-validations.js') }}"></script>
     @endpush
 </x-default-layout>

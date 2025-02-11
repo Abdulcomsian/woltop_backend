@@ -188,6 +188,46 @@
     </div>
     <!--end:Menu item-->
 
+     <!--begin:Menu item-->
+     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('preference.*') || request()->routeIs('attributevalue.*') ? 'here show' : '' }}">
+        <!--begin:Menu link-->
+        <span class="menu-link">
+            <span class="menu-icon">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+            </span>
+            <span class="menu-title">Settings</span>
+            <span class="menu-arrow"></span> <!-- Arrow for the submenu -->
+        </span>
+        <!--end:Menu link-->
+
+        <!--begin:Menu sub-->
+        <div class="menu-sub menu-sub-accordion">
+            <!--begin:Submenu item-->
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('#') ? 'active' : '' }}" href="#">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">General</span>
+                </a>
+            </div>
+            <!--end:Submenu item-->
+
+            <!--begin:Submenu item-->
+            <div class="menu-item">
+                <a class="menu-link {{ request()->routeIs('preference.index') ? 'active' : '' }}" href="{{route('preference.index')}}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Delivery Preferences</span>
+                </a>
+            </div>
+            <!--end:Submenu item-->
+        </div>
+        <!--end:Menu sub-->
+    </div>
+    <!--end:Menu item-->
+
     {{-- <!--begin:Menu item-->
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('dashboard') ? 'here show' : '' }}">
         <div class="menu-item">

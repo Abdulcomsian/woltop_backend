@@ -9,6 +9,7 @@ use App\Http\Controllers\WebControllers\{
     CategoryController,
     DashboardController,
     DeliveryDetailController,
+    DeliveryPreferenceController,
     FaqController,
     OrderController,
     ParentCategoryController,
@@ -19,6 +20,7 @@ use App\Http\Controllers\WebControllers\{
     UserController,
 };
 use App\Models\AttributeValue;
+use App\Models\DeliveryPreference;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -192,6 +194,19 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         ->as('profile.')
         ->group(function () {
             Route::get('', 'index')->name('index');
+            Route::delete('delete', 'delete')->name('delete');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
+    // Delivery Preferences
+    Route::controller(DeliveryPreferenceController::class)
+        ->prefix('preference')
+        ->as('preference.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
             Route::delete('delete', 'delete')->name('delete');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');

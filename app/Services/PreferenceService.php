@@ -2,24 +2,24 @@
 
 namespace App\Services;
 
-use App\Models\DeliveryDetail;
+use App\Models\DeliveryPreference;
 use Illuminate\Support\Facades\Auth;
 
-class DeliveryService
+class PreferenceService
 {
     protected $model;
 
-    public function __construct(DeliveryDetail $model)
+    public function __construct(DeliveryPreference $model)
     {
         $this->model = $model;
     }
 
     public function store($data){
-        if(isset($data['deliveries']) && count($data['deliveries']) > 0){
-            foreach($data['deliveries'] as $item){
+        if(isset($data['preferences']) && count($data['preferences']) > 0){
+            foreach($data['preferences'] as $item){
                 $save = new $this->model;
-                $save->city_details = $item['city'];
-                $save->days = $item['days'];
+                $save->name = $item['name'];
+                $save->time = $item['time'];
                 $save->save();
             }
         }
@@ -32,8 +32,8 @@ class DeliveryService
 
     public function update($data){
         $update = $this->model::find($data['id']);
-        $update->city_details = $data['city'];
-        $update->days = $data['day'];
+        $update->name = $data['name'];
+        $update->time = $data['time'];
         $update->save();
         return $update;
     }

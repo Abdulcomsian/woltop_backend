@@ -12,10 +12,12 @@ use App\Http\Controllers\ApiControllers\{
     TagController,
     CartController,
     DeliveryController,
+    DeliveryPreferenceController,
     FaqController,
     TeamController,
     WishlistController,
 };
+use App\Models\DeliveryPreference;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +81,7 @@ Route::get('get-team-member', [TeamController::class, "index"]);
 
 // Payment
 Route::post('store-address', [AddressController::class, 'store']);
+Route::get('delivery-preferences', [DeliveryPreferenceController::class, 'index']);
 // Route::post('place-order', [AddressController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function(){

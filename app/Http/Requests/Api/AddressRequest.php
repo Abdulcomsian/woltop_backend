@@ -23,7 +23,7 @@ class AddressRequest extends FormRequest
             "address" => "required",
             "locality" => "required",
             "landmark" => "sometimes",
-            "delivery_preference" => "required|in:home,work",
+            "delivery_preference_id" => "required",
         ];
     }
 }

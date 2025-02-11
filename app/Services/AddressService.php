@@ -35,6 +35,7 @@ class AddressService
             $new_user->save();
             $user_id  = $new_user->id;
         }
+
         $save = $this->model::updateOrCreate(
             [
                 "user_id" => $user_id,
@@ -48,7 +49,7 @@ class AddressService
                 "address" => $data['address'],
                 "locality" => $data['locality'],
                 "landmark" => $data['landmark'] ?? null,
-                "delivery_preference" => $data['delivery_preference'],
+                "delivery_preference_id" => $data['delivery_preference_id'],
             ]
         );
         return $save;

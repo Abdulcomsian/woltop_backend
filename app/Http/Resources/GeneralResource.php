@@ -23,6 +23,13 @@ class GeneralResource extends JsonResource
                 "button_link" => $this->link,
             ];
         }
+
+        if($this->type == "home_video"){
+            return [
+                "id" => $this->id,
+                "video" => asset('assets/wolpin_media/general/homepage/' . $this->link),
+            ];
+        }
         return parent::toArray($request);
     }
 }

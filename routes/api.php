@@ -88,6 +88,7 @@ Route::get('delivery-preferences', [DeliveryPreferenceController::class, 'index'
 
 // General 
 Route::get('get-home-banner', [GeneralController::class, 'getHomeBanner']);
+Route::get('get-video', [GeneralController::class, 'getVideo']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);

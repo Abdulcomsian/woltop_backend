@@ -15,8 +15,10 @@ class GeneralSeeder extends Seeder
     {
         $generals = [
             ["name" => "Luxe Designs", "main_image" => "banner.png", "image" => "logo.png","link" => "https://web.wolpin.in/", "type" => "home_banner"],
+            ["link" => "video.mov", "type" => "home_video"],
         ];
 
+        General::truncate();
         foreach($generals as $general){
             General::create($general);
         }

@@ -18,4 +18,8 @@ class GeneralService
     public function getHomeBanner(){
         return $this->model::where('type', 'home_banner')->first();
     }
+
+    public function getVideo(){
+        return $this->model::where('type', 'home_video')->first();
+    }
 }

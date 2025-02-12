@@ -53,6 +53,7 @@ Route::get('popular-products', [ProductController::class, 'popularProducts']);
 Route::get('products-by-color/{id}', [ProductController::class, 'getProductsByColor']);
 Route::get('products-by-tag/{id}', [ProductController::class, 'getProductsByTag']);
 Route::get('get-product-by-id/{id}', [ProductController::class, 'getProductById']);
+Route::get('all-products', [ProductController::class, 'allProducts']);
 
 // Delivery
 Route::get('delivery-details', [DeliveryController::class, 'deliveryDetails']);

@@ -30,6 +30,23 @@ class ProductController extends Controller
         }
     }
 
+    public function allProducts(){
+        try{
+            $products = Product::where('status', 'publish')
+            ->latest()
+            ->get();
+            if($products && count($products) > 0){ 
+                return ProductResource::collection($products)->additional([
+                    'status' => true,
+                ]);
+            }else{
+                return response()->json(['status' => false, "data" => "No Products Found"], 400);
+            }
+        }catch(\Exception $e){
+            return response()->json(['status' => false, "data" => "Something went wrong!"], 400);
+        }
+    }
+
     public function getProductsByColor($id){
         try{
             $products = Product::where('color_id', $id)->limit(4)->get();

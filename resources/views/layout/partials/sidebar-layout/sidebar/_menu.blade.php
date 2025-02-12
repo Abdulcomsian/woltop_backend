@@ -189,7 +189,7 @@
     <!--end:Menu item-->
 
      <!--begin:Menu item-->
-     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('preference.*') || request()->routeIs('attributevalue.*') ? 'here show' : '' }}">
+     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('preference.*') || request()->routeIs('general.*') ? 'here show' : '' }}">
         <!--begin:Menu link-->
         <span class="menu-link">
             <span class="menu-icon">
@@ -204,7 +204,7 @@
         <div class="menu-sub menu-sub-accordion">
             <!--begin:Submenu item-->
             <div class="menu-item">
-                <a class="menu-link {{ request()->routeIs('#') ? 'active' : '' }}" href="#">
+                <a class="menu-link {{ request()->routeIs('general.index') ? 'active' : '' }}" href="{{route('general.index')}}">
                     <span class="menu-bullet">
                         <span class="bullet bullet-dot"></span>
                     </span>

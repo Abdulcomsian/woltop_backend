@@ -14,6 +14,7 @@ use App\Http\Controllers\ApiControllers\{
     DeliveryController,
     DeliveryPreferenceController,
     FaqController,
+    GeneralController,
     TeamController,
     WishlistController,
 };
@@ -84,6 +85,9 @@ Route::get('get-team-member', [TeamController::class, "index"]);
 Route::post('store-address', [AddressController::class, 'store']);
 Route::get('delivery-preferences', [DeliveryPreferenceController::class, 'index']);
 // Route::post('place-order', [AddressController::class, 'store']);
+
+// General 
+Route::get('get-home-banner', [GeneralController::class, 'getHomeBanner']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);

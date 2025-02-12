@@ -14,7 +14,7 @@ class GeneralSeeder extends Seeder
     public function run(): void
     {
         $generals = [
-            ["name" => "Luxe Designs", "main_image" => "banner.png", "image" => "logo.png", "type" => "home_banner"],
+            ["name" => "Luxe Designs", "main_image" => "banner.png", "image" => "logo.png","link" => "https://web.wolpin.in/", "type" => "home_banner"],
         ];
 
         foreach($generals as $general){

@@ -244,6 +244,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('', 'index')->name('index');
             Route::patch('update-banner', 'updateBanner')->name('update.banner');
             Route::patch('update-video', 'updateVideo')->name('update.video');
+            Route::patch('update-charges', 'updateCharges')->name('update.charges');
         });
 });
 

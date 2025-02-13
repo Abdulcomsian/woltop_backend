@@ -20,6 +20,11 @@ use App\Http\Controllers\WebControllers\{
     TeamController,
     UserController,
 };
+use App\Http\Controllers\Admin\{
+    PermissionsController,
+    RolesController,
+};
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +41,26 @@ use Illuminate\Support\Facades\Route;
 Route::get('verify-email/{token}/{user}', [AuthController::class, "verifyEmail"])->name('verify.email.user');
 
 Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
+
+    // Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
+    // Route::resource('permissions', PermissionsController::class);
+    Route::controller(PermissionsController::class)
+        ->prefix('permissions')
+        ->as('permissions.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            // Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('destroy', 'massDestroy')->name('massDestroy');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
+
+    // Roles
+    Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
+    Route::resource('roles', RolesController::class);
+
+
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Parent Categories
@@ -121,7 +146,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
         });
-    
+
     // Reels
     Route::controller(ReelsController::class)
         ->prefix('reels')
@@ -160,7 +185,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
         });
-    
+
     // FAQs
     Route::controller(FaqController::class)
         ->prefix('faqs')
@@ -173,7 +198,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
         });
-    
+
     // Users
     Route::controller(UserController::class)
         ->prefix('users')
@@ -186,7 +211,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
         });
-    
+
     // Profile
     Route::controller(ProfileController::class)
         ->prefix('profile')
@@ -210,7 +235,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
         });
-    
+
 
     Route::controller(GeneralController::class)
         ->prefix('general')

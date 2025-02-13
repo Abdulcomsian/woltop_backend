@@ -1,41 +1,28 @@
 <x-default-layout>
-    @section('page-title', 'Manage Users')
+    @section('page-title', 'Manage Permissions')
     <div class="card">
-        <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
-            <!--begin::Card title-->
             <div class="card-title">
-                 <!--begin::Toolbar-->
                  <div data-kt-user-table-toolbar="base">
-                    <span>Users</span>
+                    <span>Permissions</span>
                 </div>
-                <!--end::Toolbar-->
             </div>
-            {{-- <!--begin::Card toolbar-->
             <div class="card-toolbar">
-                <!--begin::Add user-->
-                <a href="{{route('blog.create')}}" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#category_modal_id">
                     <span><i class="fa fa-plus"></i></span>
                     Add
-                </a>
-                <!--end::Add user-->
+                </button>
             </div>
-            <!--end::Card toolbar--> --}}
         </div>
-        <!--end::Card header-->
-
-        <!--begin::Card body-->
         <div class="card-body py-4">
-            <!--begin::Table-->
             <div class="table-responsive">
                {{$dataTable->table()}}
             </div>
-            <!--end::Table-->
         </div>
-        <!--end::Card body-->
     </div>
-    @include('partials.modals.users.edit')
-    @include('partials.modals.users.delete')
+    @include('partials.modals.permissions.add')
+    @include('partials.modals.permissions.edit')
+    @include('partials.modals.permissions.delete')
     @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
@@ -46,7 +33,7 @@
         }
 
         function editItem(id){
-            let url = `{{ route('user.edit', ':id') }}`.replace(':id', id);
+            let url = `{{ route('permissions.edit', ':id') }}`.replace(':id', id);
             fetch(url)
                 .then((response) => {
                     if (!response.ok) {
@@ -56,8 +43,7 @@
                 })
                 .then((res) => {
                     document.querySelector("#edit_id").value = res.data.id;
-                    document.querySelector("input[name='name']").value = res.data.name;
-                    document.querySelector("input[name='email']").value = res.data.email;
+                    document.querySelector("input[name='name']").value = res.data.title;
                     let modal = new bootstrap.Modal(document.getElementById('edit_modal'));
                     modal.show();
                 })

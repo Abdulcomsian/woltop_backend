@@ -189,7 +189,7 @@
     <!--end:Menu item-->
 
     <!--begin:Menu item-->
-    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user.index') ? 'here show' : '' }}">
+    {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
             <a class="menu-link {{ request()->routeIs('user.index') ? 'active' : '' }}" href="{{ route('user.index') }}">
@@ -198,8 +198,48 @@
             </a>
             <!--end:Menu link-->
         </div>
+    </div> --}}
+
+    <div class="menu-item menu-accordion mb-1 {{ request()->is('users') || request()->is('users/*') || request()->is('roles') || request()->is('roles/*') || request()->is('permissions') || request()->is('permissions/*') ? 'hover show' : '' }}"
+        data-kt-menu-trigger="click">
+        <span class="menu-link">
+            <span class="menu-icon">
+                <i class="fas fa-users-cog"></i>
+            </span>
+            <span class="menu-title">User Management</span>
+            <span class="menu-arrow"></span>
+        </span>
+        <div class="menu-sub menu-sub-accordion"
+            style="{{ request()->is('user') || request()->is('user/*') || request()->is('role') || request()->is('role/*') || request()->is('permission') || request()->is('permission/*') ? 'display: block;' : 'display: none;' }}">
+            <div class="menu-item">
+                <a href="{{ route('user.index') }}"
+                    class="menu-link {{ request()->is('user') || request()->is('user/*') ? 'active' : '' }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Users</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="{{ route('roles.index') }}"
+                    class="menu-link {{ request()->is('roles') || request()->is('roles/*') ? 'active' : '' }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Roles</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="{{ route('permissions.index') }}"
+                    class="menu-link {{ request()->is('permissions') || request()->is('permissions/*') ? 'active' : '' }}">
+                    <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                    </span>
+                    <span class="menu-title">Permissions</span>
+                </a>
+            </div>
+        </div>
     </div>
-    <!--end:Menu item-->
 
      <!--begin:Menu item-->
      <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('preference.*') || request()->routeIs('general.*') ? 'here show' : '' }}">

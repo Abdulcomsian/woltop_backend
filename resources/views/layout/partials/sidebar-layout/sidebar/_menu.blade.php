@@ -175,7 +175,7 @@
     </div>
     <!--end:Menu item-->
 
-     <!--begin:Menu item-->
+     {{-- <!--begin:Menu item-->
      <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('faq.index') ? 'here show' : '' }}">
         <div class="menu-item">
             <!--begin:Menu link-->
@@ -186,7 +186,7 @@
             <!--end:Menu link-->
         </div>
     </div>
-    <!--end:Menu item-->
+    <!--end:Menu item--> --}}
 
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user.index') ? 'here show' : '' }}">

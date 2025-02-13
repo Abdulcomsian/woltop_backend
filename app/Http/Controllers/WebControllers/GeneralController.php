@@ -21,7 +21,8 @@ class GeneralController extends Controller
         try{
             $banner = General::where('type', 'home_banner')->first();
             $video = General::where('type', 'home_video')->first();
-            return view('pages.general.index', compact("banner", "video"));
+            $charges = General::where('type', 'charges')->first();
+            return view('pages.general.index', compact("banner", "video", "charges"));
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
             return redirect()->back();
@@ -49,6 +50,25 @@ class GeneralController extends Controller
             toastr()->success("Data updated successfully");
             return redirect()->back();
         }catch(\Exception $e){
+            toastr()->error("Something went wrong");
+            return redirect()->back();
+        }
+    }
+
+    public function updateCharges(Request $request){
+        $request->validate([
+            "id" => "nullable",
+            "installation_charges" => "required",
+            "cash_on_delivery_charges" => "required",
+            "threshold_charges" => "required",
+            "shipping_charges" => "required",
+        ]);
+        try{
+            $this->service->updateCharges($request->all());
+            toastr()->success("Data updated successfully");
+            return redirect()->back();
+        }catch(\Exception $e){
+            dd($e->getMessage());
             toastr()->error("Something went wrong");
             return redirect()->back();
         }

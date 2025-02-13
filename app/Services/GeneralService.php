@@ -79,4 +79,20 @@ class GeneralService
         }
         return $update->save();
     }
+
+
+    public function updateCharges($data){
+        $update = $this->model::updateOrCreate([
+            "id" => $data['id']
+        ],
+        [
+            "installation_charges" => $data['installation_charges'],
+            "cash_on_delivery_charges" => $data['cash_on_delivery_charges'],
+            "shipping_charges" => $data['shipping_charges'],
+            "threshold_charges" => $data['threshold_charges'],
+            "type" => "charges",
+            "unit" => "INR",
+        ]);
+        return $update->save();
+    }
 }

@@ -59,4 +59,24 @@ class GeneralService
 
         return $updateBanner->save();
     }
+
+
+    public function updateVideo($data){
+        $update = $this->model::findOrFail($data['id']);
+        if(isset($data['video'])){
+            // removing old file from server folder
+            if($update && $update->link != null){
+                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $update->link);
+                if(file_exists($oldPath)){
+                    unlink($oldPath);
+                }
+            }
+
+            $fileName = rand() . '.' . $data['video']->getClientOriginalExtension();
+            $path = public_path("assets/wolpin_media/general/homepage");
+            $data['video']->move($path, $fileName);
+            $update->link = $fileName;
+        }
+        return $update->save();
+    }
 }

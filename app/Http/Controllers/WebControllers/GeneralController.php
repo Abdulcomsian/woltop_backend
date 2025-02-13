@@ -20,7 +20,8 @@ class GeneralController extends Controller
     {
         try{
             $banner = General::where('type', 'home_banner')->first();
-            return view('pages.general.index', compact("banner"));
+            $video = General::where('type', 'home_video')->first();
+            return view('pages.general.index', compact("banner", "video"));
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
             return redirect()->back();
@@ -30,7 +31,21 @@ class GeneralController extends Controller
     public function updateBanner(GeneralRequest $request){
         try{
             $this->service->updateBanner($request->validated());
+            toastr()->success("Data updated successfully");
+            return redirect()->back();
+        }catch(\Exception $e){
+            toastr()->error("Something went wrong");
+            return redirect()->back();
+        }
+    }
 
+    public function updateVideo(Request $request){
+        $request->validate([
+            "id" => "required",
+            "video" => "sometimes",
+        ]);
+        try{
+            $this->service->updateVideo($request->all());
             toastr()->success("Data updated successfully");
             return redirect()->back();
         }catch(\Exception $e){

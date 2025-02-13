@@ -222,6 +222,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::delete('delete', 'delete')->name('delete');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update-banner', 'updateBanner')->name('update.banner');
+            Route::patch('update-video', 'updateVideo')->name('update.video');
         });
 });
 

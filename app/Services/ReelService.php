@@ -16,7 +16,7 @@ class ReelService
 
     public function store($data){
         if(isset($data['reel'])){
-            $fileName = rand() . '.' . $data['reel']->extension();
+            $fileName = rand() . '.' . $data['reel']->getClientOriginalExtension();
             $path = public_path("assets/wolpin_media/reels/");
             $data['reel']->move($path, $fileName);
         }
@@ -43,7 +43,7 @@ class ReelService
                 }
             }
             // adding new file
-            $fileName = rand() . '.' . $data['reel']->extension();
+            $fileName = rand() . '.' . $data['reel']->getClientOriginalExtension();
             $path = public_path("assets/wolpin_media/reels/");
             $data['reel']->move($path, $fileName);
         }

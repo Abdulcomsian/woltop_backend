@@ -75,7 +75,7 @@ class ProductService
 
         // Storing Video
         if(isset($data['video'])){
-            $videoFileName = rand() . '.' . $data['video']->extension();
+            $videoFileName = rand() . '.' . $data['video']->getClientOriginalExtension();
             $path = public_path("assets/wolpin_media/products/video");
             $data['video']->move($path, $videoFileName);
         }
@@ -299,7 +299,7 @@ class ProductService
                     unlink($oldPath);
                 }
             }
-            $videoFileName = rand() . '.' . $data['video']->extension();
+            $videoFileName = rand() . '.' . $data['video']->getClientOriginalExtension();
             $path = public_path("assets/wolpin_media/products/video");
             $data['video']->move($path, $videoFileName);
         }

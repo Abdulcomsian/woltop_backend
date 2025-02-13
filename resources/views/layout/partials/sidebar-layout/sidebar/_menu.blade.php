@@ -175,6 +175,19 @@
     </div>
     <!--end:Menu item-->
 
+     <!--begin:Menu item-->
+     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('faq.index') ? 'here show' : '' }}">
+        <div class="menu-item">
+            <!--begin:Menu link-->
+            <a class="menu-link {{ request()->routeIs('faq.index') ? 'active' : '' }}" href="{{ route('faq.index') }}">
+                <span class="menu-icon"><i class="fa fa-gift" aria-hidden="true"></i></span>
+                <span class="menu-title">Manage Coupons</span>
+            </a>
+            <!--end:Menu link-->
+        </div>
+    </div>
+    <!--end:Menu item-->
+
     <!--begin:Menu item-->
     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user.index') ? 'here show' : '' }}">
         <div class="menu-item">

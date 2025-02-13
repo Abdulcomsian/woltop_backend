@@ -61,6 +61,7 @@ Route::get('delivery-details', [DeliveryController::class, 'deliveryDetails']);
 
 // Review
 Route::get('get-review-by-product/{id}', [ReviewController::class, "getReviewByProduct"]);
+Route::get('get-reviews', [ReviewController::class, "getReviews"]);
 
 // Color
 Route::get('colors', [ColorController::class, 'getAllColors']);

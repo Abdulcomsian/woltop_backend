@@ -217,10 +217,6 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         ->as('general.')
         ->group(function () {
             Route::get('', 'index')->name('index');
-            Route::get('create', 'create')->name('create');
-            Route::post('store', 'store')->name('store');
-            Route::delete('delete', 'delete')->name('delete');
-            Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update-banner', 'updateBanner')->name('update.banner');
             Route::patch('update-video', 'updateVideo')->name('update.video');
         });

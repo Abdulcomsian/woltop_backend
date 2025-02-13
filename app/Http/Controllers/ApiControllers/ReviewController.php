@@ -40,4 +40,17 @@ class ReviewController extends Controller
             return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400); 
         }
     }
+
+    public function getReviews(){
+        try{
+            $data = $this->reviewService->getReviews();
+            if($data && count($data) > 0){
+                return ReviewResource::collection($data)->additional(["status" => true]);
+            }else{
+                return response()->json(['status' => false, "data" => "No review found"], 400);
+            }
+        }catch(\Exception $e){
+            return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400); 
+        }
+    }
 }

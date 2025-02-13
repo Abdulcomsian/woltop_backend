@@ -37,4 +37,8 @@ class ReviewService
         $reviews = $this->model::with('user')->where('product_id', $id)->paginate(5);
         return $reviews;
     }
+
+    public function getReviews(){
+        return $this->model::get();
+    }
 }

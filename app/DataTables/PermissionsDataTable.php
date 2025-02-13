@@ -19,18 +19,12 @@ class PermissionsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('name', function (Permission $permission) {
-                return ucwords($permission->name);
+            ->addIndexColumn()
+            ->editColumn('created_at', function ($query) {
+                return $query->created_at->format('d M Y, h:i a');
             })
-            ->addColumn('assigned_to', function (Permission $permission) {
-                $roles = $permission->roles;
-                return view('pages.apps.user-management.permissions.columns._assign-to', compact('roles'));
-            })
-            ->editColumn('created_at', function (Permission $permission) {
-                return $permission->created_at->format('d M Y, h:i a');
-            })
-            ->addColumn('actions', function (Permission $permission) {
-                return view('pages.apps.user-management.permissions.columns._actions', compact('permission'));
+            ->addColumn('actions', function ($query) {
+                return view('pages.permissions.columns.action', compact("query"));
             })
             ->setRowId('id');
     }
@@ -52,11 +46,9 @@ class PermissionsDataTable extends DataTable
             ->setTableId('permissions-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>",)
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-            ->orderBy(0)
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/permissions/columns/_draw-scripts.js')) . "}");
+            ->orderBy([2, "desc"]);
     }
 
     /**
@@ -65,11 +57,15 @@ class PermissionsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('name'),
-            Column::make('assigned_to'),
-            Column::make('created_at')->addClass('text-nowrap'),
+            Column::computed('DT_RowIndex') // Serial Number Column
+              ->title('#') // Column Title
+              ->searchable(false)
+              ->orderable(false)
+              ->width(30)
+              ->addClass('text-center'),
+            Column::make('title'),
+            Column::make('created_at'),
             Column::computed('actions')
-                ->addClass('text-end text-nowrap')
                 ->exportable(false)
                 ->printable(false),
         ];

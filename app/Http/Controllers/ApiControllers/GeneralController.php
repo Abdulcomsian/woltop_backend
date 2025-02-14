@@ -40,4 +40,17 @@ class GeneralController extends Controller
             return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400);
         }
     }
+
+    public function priceCharges(){
+        try{
+            $data = $this->service->priceCharges();
+            if($data){
+                return (new GeneralResource($data))->additional(["status" => true]);
+            }else{
+                return response()->json(['status' => false, "msg" => "No Data found"], 400);
+            }
+        }catch(\Exception $e){
+            return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400);
+        }
+    }
 }

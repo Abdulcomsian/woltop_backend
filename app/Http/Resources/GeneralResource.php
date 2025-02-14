@@ -30,6 +30,17 @@ class GeneralResource extends JsonResource
                 "video" => asset('assets/wolpin_media/general/homepage/' . $this->link),
             ];
         }
+
+        if($this->type == "charges"){
+            return [
+                "id" => $this->id,
+                "installation_charges" => $this->installation_charges,
+                "cod_charges" => $this->cash_on_delivery_charges,
+                "shipping_charges" => $this->shipping_charges,
+                "threshold_charges" => $this->threshold_charges,
+                "price_unit" => $this->unit,
+            ];
+        }
         return parent::toArray($request);
     }
 }

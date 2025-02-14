@@ -23,6 +23,10 @@ class GeneralService
         return $this->model::where('type', 'home_video')->first();
     }
 
+    public function priceCharges(){
+        return $this->model::where('type', 'charges')->first();
+    }
+
     public function updateBanner($data){
         $updateBanner = $this->model::findOrFail($data['id']);
         $updateBanner->name = $data['banner_text'];

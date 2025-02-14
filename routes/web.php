@@ -57,8 +57,17 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         });
 
     // Roles
-    Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
-    Route::resource('roles', RolesController::class);
+    Route::controller(RolesController::class)
+        ->prefix('roles')
+        ->as('roles.')
+        ->group(function () {
+            Route::get('', 'index')->name('index');
+            // Route::get('create', 'create')->name('create');
+            Route::post('store', 'store')->name('store');
+            Route::delete('destroy', 'massDestroy')->name('massDestroy');
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::patch('update', 'update')->name('update');
+        });
 
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -127,5 +128,13 @@ class Product extends Model
             "threshold_charges" => $charges->threshold_charges,
             "price_unit" => $charges->unit,
         ];
+    }
+
+    public function getToolkit(){
+        $toolkit = Product::where("is_installable", "false")->where("status", "publish")->first();
+
+        if($toolkit){
+            return new ProductResource($toolkit);
+        }
     }
 }

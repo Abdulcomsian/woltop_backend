@@ -74,6 +74,7 @@ class ProductReviewResource extends JsonResource
                 ];
             }),
             "charges" => $this->getProductCharges(),
+            "toolkit" => $this->getToolkit(),
         ];
     }
 }

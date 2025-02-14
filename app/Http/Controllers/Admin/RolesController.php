@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\RolesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyRoleRequest;
 use App\Http\Requests\StoreRoleRequest;
@@ -13,47 +14,44 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RolesController extends Controller
 {
-    public function index()
+    public function index(RolesDataTable $datatable)
     {
-        abort_if(Gate::denies('role_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $roles = Role::with(['permissions'])->get();
-
-        return view('admin.roles.index', compact('roles'));
+        // dd($datatable);
+        return $datatable->render("pages.roles.index");
     }
 
     public function create()
     {
-        abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('role_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $permissions = Permission::pluck('title', 'id');
+        $roles = Permission::pluck('title', 'id');
 
-        return view('admin.roles.create', compact('permissions'));
+        return view('admin.roles.create', compact('roles'));
     }
 
     public function store(StoreRoleRequest $request)
     {
         $role = Role::create($request->all());
-        $role->permissions()->sync($request->input('permissions', []));
+        $role->roles()->sync($request->input('roles', []));
 
         return redirect()->route('roles.index');
     }
 
     public function edit(Role $role)
     {
-        abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('role_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $permissions = Permission::pluck('title', 'id');
+        $roles = Permission::pluck('title', 'id');
 
-        $role->load('permissions');
+        $role->load('roles');
 
-        return view('admin.roles.edit', compact('permissions', 'role'));
+        return view('admin.roles.edit', compact('roles', 'role'));
     }
 
     public function update(UpdateRoleRequest $request, Role $role)
     {
         $role->update($request->all());
-        $role->permissions()->sync($request->input('permissions', []));
+        $role->roles()->sync($request->input('roles', []));
 
         return redirect()->route('roles.index');
     }
@@ -62,7 +60,7 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $role->load('permissions');
+        $role->load('roles');
 
         return view('admin.roles.show', compact('role'));
     }

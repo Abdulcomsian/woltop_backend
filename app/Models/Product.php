@@ -116,4 +116,16 @@ class Product extends Model
         });
         return $final;
     }
+
+    public function getProductCharges(){
+        $charges = General::where('type', 'charges')->first();
+        return [
+            "id" => $charges->id,
+            "installation_charges" => $charges->installation_charges,
+            "cod_charges" => $charges->cash_on_delivery_charges,
+            "shipping_charges" => $charges->shipping_charges,
+            "threshold_charges" => $charges->threshold_charges,
+            "price_unit" => $charges->unit,
+        ];
+    }
 }

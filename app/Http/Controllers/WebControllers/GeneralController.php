@@ -35,7 +35,7 @@ class GeneralController extends Controller
             toastr()->success("Data updated successfully");
             return redirect()->back();
         }catch(\Exception $e){
-            toastr()->error("Something went wrong");
+            toastr()->error($e->getMessage());
             return redirect()->back();
         }
     }
@@ -50,7 +50,7 @@ class GeneralController extends Controller
             toastr()->success("Data updated successfully");
             return redirect()->back();
         }catch(\Exception $e){
-            toastr()->error("Something went wrong");
+            toastr()->error($e->getMessage());
             return redirect()->back();
         }
     }

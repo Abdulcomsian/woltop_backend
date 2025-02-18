@@ -19,41 +19,15 @@ class GeneralController extends Controller
     public function index()
     {
         try{
-            $banner = General::where('type', 'home_banner')->first();
-            $video = General::where('type', 'home_video')->first();
             $charges = General::where('type', 'charges')->first();
-            return view('pages.general.index', compact("banner", "video", "charges"));
+            $footer_information = General::where('type', 'footer_information')->first();
+            return view('pages.general.index', compact("charges", "footer_information"));
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
             return redirect()->back();
         }
     }
 
-    public function updateBanner(GeneralRequest $request){
-        try{
-            $this->service->updateBanner($request->validated());
-            toastr()->success("Data updated successfully");
-            return redirect()->back();
-        }catch(\Exception $e){
-            toastr()->error($e->getMessage());
-            return redirect()->back();
-        }
-    }
-
-    public function updateVideo(Request $request){
-        $request->validate([
-            "id" => "required",
-            "video" => "sometimes",
-        ]);
-        try{
-            $this->service->updateVideo($request->all());
-            toastr()->success("Data updated successfully");
-            return redirect()->back();
-        }catch(\Exception $e){
-            toastr()->error($e->getMessage());
-            return redirect()->back();
-        }
-    }
 
     public function updateCharges(Request $request){
         $request->validate([
@@ -68,7 +42,24 @@ class GeneralController extends Controller
             toastr()->success("Data updated successfully");
             return redirect()->back();
         }catch(\Exception $e){
-            dd($e->getMessage());
+            toastr()->error("Something went wrong");
+            return redirect()->back();
+        }
+    }
+
+    public function updateInfo(Request $request){
+        $request->validate([
+            "id" => "nullable",
+            "contact_number" => "required",
+            "email" => "required",
+            "address" => "required",
+        ]);
+        
+        try{
+            $this->service->updateInfo($request->all());
+            toastr()->success("Data updated successfully");
+            return redirect()->back();
+        }catch(\Exception $e){
             toastr()->error("Something went wrong");
             return redirect()->back();
         }

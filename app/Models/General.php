@@ -10,16 +10,17 @@ class General extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name",
-        "description",
-        "main_image",
-        "image",
-        "link",
         "type",
         "installation_charges",
         "cash_on_delivery_charges",
         "shipping_charges",
         "threshold_charges",
         "unit",
+        "contact_no",
+        "address",
+        "email",
+        "facebook_link",
+        "twitter_link",
+        "instagram_link",
     ];
 }

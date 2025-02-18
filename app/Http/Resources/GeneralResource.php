@@ -14,22 +14,6 @@ class GeneralResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if($this->type == "home_banner"){
-            return [
-                "id" => $this->id,
-                "text" => $this->name,
-                "banner" => asset('assets/wolpin_media/general/homepage/' . $this->main_image),
-                "logo" => asset('assets/wolpin_media/general/homepage/' . $this->image),
-                "button_link" => $this->link,
-            ];
-        }
-
-        if($this->type == "home_video"){
-            return [
-                "id" => $this->id,
-                "video" => asset('assets/wolpin_media/general/homepage/' . $this->link),
-            ];
-        }
 
         if($this->type == "charges"){
             return [
@@ -39,6 +23,18 @@ class GeneralResource extends JsonResource
                 "shipping_charges" => $this->shipping_charges,
                 "threshold_charges" => $this->threshold_charges,
                 "price_unit" => $this->unit,
+            ];
+        }
+
+        if($this->type == "footer_information"){
+            return [
+                "id" => $this->id,
+                "contact_number" => $this->contact_no,
+                "address" => $this->address,
+                "email" => $this->email,
+                "facebook_link" => $this->facebook_link,
+                "twitter_link" => $this->twitter_link,
+                "instagram_link" => $this->instagram_link,
             ];
         }
         return parent::toArray($request);

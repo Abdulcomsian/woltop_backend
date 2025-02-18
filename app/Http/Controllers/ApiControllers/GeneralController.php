@@ -14,36 +14,23 @@ class GeneralController extends Controller
         $this->service = $service;
     }
 
-
-    public function getHomeBanner(){
-        try{
-            $data = $this->service->getHomeBanner();
-            if($data){
-                return (new GeneralResource($data))->additional(["status" => true]);
-            }else{
-                return response()->json(['status' => false, "msg" => "No Data found"], 400);
-            }
-        }catch(\Exception $e){
-            return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400);
-        }
-    }
-
-    public function getVideo(){
-        try{
-            $data = $this->service->getVideo();
-            if($data){
-                return (new GeneralResource($data))->additional(["status" => true]);
-            }else{
-                return response()->json(['status' => false, "msg" => "No Data found"], 400);
-            }
-        }catch(\Exception $e){
-            return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400);
-        }
-    }
-
     public function priceCharges(){
         try{
             $data = $this->service->priceCharges();
+            if($data){
+                return (new GeneralResource($data))->additional(["status" => true]);
+            }else{
+                return response()->json(['status' => false, "msg" => "No Data found"], 400);
+            }
+        }catch(\Exception $e){
+            return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400);
+        }
+    }
+
+
+    public function getInfo(){
+        try{
+            $data = $this->service->getInfo();
             if($data){
                 return (new GeneralResource($data))->additional(["status" => true]);
             }else{

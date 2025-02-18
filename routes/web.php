@@ -13,6 +13,7 @@ use App\Http\Controllers\WebControllers\{
     FaqController,
     GeneralController,
     OrderController,
+    PageController,
     ParentCategoryController,
     ProductController,
     ProfileController,
@@ -24,7 +25,6 @@ use App\Http\Controllers\Admin\{
     PermissionsController,
     RolesController,
 };
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -251,9 +251,19 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         ->as('general.')
         ->group(function () {
             Route::get('', 'index')->name('index');
-            Route::patch('update-banner', 'updateBanner')->name('update.banner');
-            Route::patch('update-video', 'updateVideo')->name('update.video');
             Route::patch('update-charges', 'updateCharges')->name('update.charges');
+            Route::patch('update-info', 'updateInfo')->name('update.info');
+        });
+
+    Route::controller(PageController::class)
+        ->prefix('page')
+        ->as('page.')
+        ->group(function () {
+            Route::get('home/index', 'homeIndex')->name('home.index');
+            Route::get('about/index', 'aboutIndex')->name('about.index');
+
+            Route::patch('update-home', 'updateHome')->name('update.home');
+            Route::patch('update-about', 'updateAbout')->name('update.about');
         });
 });
 

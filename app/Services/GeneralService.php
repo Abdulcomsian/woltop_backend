@@ -15,73 +15,12 @@ class GeneralService
         $this->model = $model;
     }
 
-    public function getHomeBanner(){
-        return $this->model::where('type', 'home_banner')->first();
-    }
-
-    public function getVideo(){
-        return $this->model::where('type', 'home_video')->first();
-    }
-
     public function priceCharges(){
         return $this->model::where('type', 'charges')->first();
     }
 
-    public function updateBanner($data){
-        $updateBanner = $this->model::findOrFail($data['id']);
-        $updateBanner->name = $data['banner_text'];
-        $updateBanner->link = $data['button_link'];
-        if(isset($data['banner_image'])){
-            // removing old file from server folder
-            if($updateBanner && $updateBanner->main_image != null){
-                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $updateBanner->main_image);
-                if(file_exists($oldPath)){
-                    unlink($oldPath);
-                }
-            }
-
-            $bannerFileName = rand() . '.' . $data['banner_image']->extension();
-            $path = public_path("assets/wolpin_media/general/homepage");
-            $data['banner_image']->move($path, $bannerFileName);
-            $updateBanner->main_image = $bannerFileName;
-        }
-
-        if(isset($data['banner_logo'])){
-            // removing old file from server folder
-            if($updateBanner && $updateBanner->image != null){
-                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $updateBanner->image);
-                if(file_exists($oldPath)){
-                    unlink($oldPath);
-                }
-            }
-
-            $logoFileName = rand() . '.' . $data['banner_logo']->extension();
-            $path = public_path("assets/wolpin_media/general/homepage");
-            $data['banner_logo']->move($path, $logoFileName);
-            $updateBanner->image = $logoFileName;
-        }
-
-        return $updateBanner->save();
-    }
-
-
-    public function updateVideo($data){
-        $update = $this->model::findOrFail($data['id']);
-        if(isset($data['video'])){
-            // removing old file from server folder
-            if($update && $update->link != null){
-                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $update->link);
-                if(file_exists($oldPath)){
-                    unlink($oldPath);
-                }
-            }
-
-            $fileName = rand() . '.' . $data['video']->getClientOriginalExtension();
-            $path = public_path("assets/wolpin_media/general/homepage");
-            $data['video']->move($path, $fileName);
-            $update->link = $fileName;
-        }
-        return $update->save();
+    public function getInfo(){
+        return $this->model::where('type', 'footer_information')->first();
     }
 
 
@@ -96,6 +35,19 @@ class GeneralService
             "threshold_charges" => $data['threshold_charges'],
             "type" => "charges",
             "unit" => "INR",
+        ]);
+        return $update->save();
+    }
+
+    public function updateInfo($data){
+        $update = $this->model::updateOrCreate([
+            "id" => $data['id']
+        ],
+        [
+            "contact_no" => $data['contact_number'],
+            "address" => $data['address'],
+            "email" => $data['email'],
+            "type" => "footer_information",
         ]);
         return $update->save();
     }

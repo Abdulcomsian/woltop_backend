@@ -948,6 +948,6 @@
             var category_route = "{{ route('product.get.categories') }}";
         </script>
         <script src="{{ asset('assets/js/product-edit.js') }}"></script>
-        <script src="{{ asset('assets/js/product-validations.js') }}"></script>
+        {{-- <script src="{{ asset('assets/js/product-validations.js') }}"></script> --}}
     @endpush
 </x-default-layout>

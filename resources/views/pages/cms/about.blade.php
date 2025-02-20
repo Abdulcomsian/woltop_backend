@@ -33,8 +33,10 @@
                     @csrf
                     @method("PATCH")
                     @php
-                    $title = json_decode($data->title);
-                    $description = json_decode($data->description);
+                    if($data != null){
+                        $title = json_decode($data->title);
+                        $description = json_decode($data->description);
+                    }
                     @endphp
                     <input type="hidden" name="id" value="{{$data->id ?? null}}">
                     <div class="row g-4">

@@ -533,4 +533,22 @@ if (!function_exists('formatString')) {
     }
 }
 
+if (!function_exists('generateOrderId')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function generateOrderId($model) {
+        do {
+            $id = 'ORD-' . strtoupper(Str::random(9));
+            $exists = $model::where('order_id', $id)->exists();
+        } while ($exists);
+        
+        return $id;
+    }
+}
+
 

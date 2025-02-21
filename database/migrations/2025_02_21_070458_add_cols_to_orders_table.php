@@ -19,6 +19,7 @@ return new class extends Migration
                 $table->unsignedBigInteger("toolkit_id")->nullable();
                 $table->foreign("toolkit_id")->on("products")->references("id");
             });
+            $table->string("order_id")->unique()->after('id');
         });
     }
 

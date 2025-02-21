@@ -16,6 +16,8 @@ return new class extends Migration
                 $table->boolean("need_installation_service")->default(false);
                 $table->integer("installation_charges")->nullable();
                 $table->string("price_unit")->default("INR");
+                $table->unsignedBigInteger("toolkit_id")->nullable();
+                $table->foreign("toolkit_id")->on("products")->references("id");
             });
         });
     }

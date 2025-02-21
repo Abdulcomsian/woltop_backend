@@ -15,6 +15,7 @@ use App\Http\Controllers\ApiControllers\{
     DeliveryPreferenceController,
     FaqController,
     GeneralController,
+    OrderController,
     PageController,
     TeamController,
     WishlistController,
@@ -86,7 +87,7 @@ Route::get('get-team-member', [TeamController::class, "index"]);
 // Payment
 Route::post('store-address', [AddressController::class, 'store']);
 Route::get('delivery-preferences', [DeliveryPreferenceController::class, 'index']);
-// Route::post('place-order', [AddressController::class, 'store']);
+Route::post('place-order', [OrderController::class, 'store']);
 
 // General 
 Route::get('price-charges', [GeneralController::class, 'priceCharges']);

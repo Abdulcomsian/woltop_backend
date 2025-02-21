@@ -18,11 +18,6 @@ class AddressService
         $this->userModel = $userModel;
     }
 
-    public function showCartItem(){
-        $cart = $this->model::with('products')->where('user_id', Auth::user()->id)->get();
-        return $cart;
-    }
-
     public function store($data)
     {
         $user = $this->userModel::where("email", $data['email'])->first();
@@ -55,9 +50,5 @@ class AddressService
             ]
         );
         return $save;
-    }
-
-    public function deleteCartItem($product_id){
-        return $this->model::where('product_id', $product_id)->delete();
     }
 }

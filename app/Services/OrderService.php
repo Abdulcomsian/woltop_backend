@@ -26,7 +26,7 @@ class OrderService
        $save->total_mrp = $data['total_mrp'];
        $save->cart_discount = $data['cart_discount'];
        $save->shipping_charges = $data['shipping_charges'];
-       $save->need_installation_service = $data['need_installation_service'];
+       $save->need_installation_service = (bool) $data['need_installation_service'];
        $save->installation_charges = $data['installation_charges'];
        $save->total_amount = $data['total_amount'];
        $save->order_id = generateOrderId($this->model);

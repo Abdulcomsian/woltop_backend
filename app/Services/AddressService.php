@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Hash;
 class AddressService
 {
     protected $model;
+    protected $userModel;
 
-    public function __construct(AddressDetail $model)
+    public function __construct(AddressDetail $model, User $userModel)
     {
         $this->model = $model;
+        $this->userModel = $userModel;
     }
 
     public function showCartItem(){
@@ -23,7 +25,7 @@ class AddressService
 
     public function store($data)
     {
-        $user = User::where("email", $data['email'])->first();
+        $user = $this->userModel::where("email", $data['email'])->first();
         if($user != null){ // Already in the database
             $user_id = $user->id;
         }else{

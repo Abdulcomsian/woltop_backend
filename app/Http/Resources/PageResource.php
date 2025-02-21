@@ -21,6 +21,7 @@ class PageResource extends JsonResource
                 "button_link" => $this->link,
                 "banner" => asset("assets/wolpin_media/general/homepage/" . $this->main_image),
                 "logo" => asset("assets/wolpin_media/general/homepage/" . $this->image),
+                "video" => asset("assets/wolpin_media/general/homepage/" . $this->video),
             ];
         }
 

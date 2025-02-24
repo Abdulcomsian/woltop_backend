@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WebControllers;
 
 use App\DataTables\OrderDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\AddressDetail;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -18,6 +19,23 @@ class OrderController extends Controller
     public function index(OrderDataTable $product)
     {
         return $product->render("pages.order.index");
+    }
+
+    public function getAddress(Request $request){
+        $request->validate([
+            "address_id" => "required",
+        ]);
+        try{
+            $data = AddressDetail::where('id', $request->address_id)->first();
+            if($data){
+                $html = view("pages.order.components.address", ['data' => $data])->render();
+                return response()->json(['success' => true, "data" => $html]);
+            }else{
+                return response()->json(['success' => false, "data" => "No Address Found"]);
+            }
+        }catch(\Exception $e){
+            return response()->json(['success' => false, "data" => "Something went wrong", "error" => $e->getMessage()]);
+        }
     }
 
     // public function create(){

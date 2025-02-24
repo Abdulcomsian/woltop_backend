@@ -110,6 +110,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
         ->as('order.')
         ->group(function () {
             Route::get('', 'index')->name('index');
+            Route::post('get-address', 'getAddress')->name('get.address');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
         });

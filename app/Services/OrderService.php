@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Order;
+use App\Models\ProductOrder;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -12,11 +13,13 @@ class OrderService
 {
     protected $model;
     protected $userModel;
+    protected $productOrderModel;
 
-    public function __construct(Order $model, User $userModel)
+    public function __construct(Order $model, User $userModel, ProductOrder $productOrderModel)
     {
         $this->model = $model;
         $this->userModel = $userModel;
+        $this->productOrderModel = $productOrderModel;
     }
 
     public function store($data)
@@ -30,7 +33,15 @@ class OrderService
        $save->installation_charges = $data['installation_charges'];
        $save->total_amount = $data['total_amount'];
        $save->order_id = generateOrderId($this->model);
-       $save->save();
+       if($save->save()){
+        foreach($data['products_orders'] as $item){
+            $itemSave = new $this->productOrderModel();
+            $itemSave->product_id = $item['product_id'];
+            $itemSave->quantity = $item['quantity'];
+            $itemSave->order_id = $save->id;
+            $itemSave->save();
+        }
+       }
        return $save;
     }
 }

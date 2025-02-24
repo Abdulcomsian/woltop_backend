@@ -543,7 +543,7 @@ if (!function_exists('generateOrderId')) {
      */
     function generateOrderId($model) {
         do {
-            $id = 'ORD-' . strtoupper(Str::random(9));
+            $id = '404-' . substr(time(), -7) . '-' . str_pad(mt_rand(0, 9999999), 7, '0', STR_PAD_LEFT);
             $exists = $model::where('order_id', $id)->exists();
         } while ($exists);
         

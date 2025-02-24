@@ -22,6 +22,9 @@ class OrderRequest extends FormRequest
             "installation_charges" => "required|integer",
             "total_amount" => "required|numeric",
             "toolkit_id" => "sometimes",
+            "products_orders" => "required|array",
+            "products_orders.*.product_id" => "required",
+            "products_orders.*.quantity" => "required",
         ];
     }
 }

@@ -11,4 +11,8 @@ class ProductOrder extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = "products_orders";
+
+    public function product(){
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

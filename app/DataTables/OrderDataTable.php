@@ -26,10 +26,15 @@ class OrderDataTable extends DataTable
             ->editColumn("created_at", function($query){
                 return date("Y-m-d", strtotime($query->created_at));
             })
-            ->addColumn('action', function($query){
-                return view('pages.order.columns.action', compact("query"));
+
+            ->editColumn("address_id", function($query){
+                $data = '<a href="#" onclick="viewAddress(event, '.$query->address_id.')">View</a>';
+                return $data;
             })
-            ->rawColumns(['action'])
+            // ->addColumn('action', function($query){
+            //     return view('pages.order.columns.action', compact("query"));
+            // })
+            ->rawColumns(['action', 'address_id'])
             ->setRowId('id');
     }
 
@@ -52,7 +57,7 @@ class OrderDataTable extends DataTable
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([3, "desc"]);
+                    ->orderBy([9, "desc"]);
     }
 
     /**
@@ -67,7 +72,8 @@ class OrderDataTable extends DataTable
               ->orderable(false)
               ->width(30)
               ->addClass('text-center'),
-            Column::make('address_id'),
+            Column::make('order_id')->title("Order Reference"),
+            Column::make('address_id')->title("Address"),
             Column::make('total_mrp'),
             Column::make('cart_discount'),
             Column::make('shipping_charges'),
@@ -75,11 +81,11 @@ class OrderDataTable extends DataTable
             Column::make('payment_status'),
             Column::make('order_status'),
             Column::make('created_at'),
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+            // Column::computed('action')
+            //       ->exportable(false)
+            //       ->printable(false)
+            //       ->width(60)
+            //       ->addClass('text-center'),
         ];
     }
 

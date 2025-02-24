@@ -53,6 +53,9 @@ class GeneralController extends Controller
             "contact_number" => "required",
             "email" => "required",
             "address" => "required",
+            "facebook" => "required",
+            "twitter" => "required",
+            "instagram" => "required",
         ]);
         
         try{

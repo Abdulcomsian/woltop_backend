@@ -47,6 +47,9 @@ class GeneralService
             "contact_no" => $data['contact_number'],
             "address" => $data['address'],
             "email" => $data['email'],
+            "facebook_link" => $data['facebook'],
+            "twitter_link" => $data['twitter'],
+            "instagram_link" => $data['instagram'],
             "type" => "footer_information",
         ]);
         return $update->save();

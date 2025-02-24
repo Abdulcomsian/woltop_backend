@@ -139,6 +139,36 @@
                                 <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
+
+                        <div class="col-md-12">
+                            <div class="mt-2">
+                                <label for="delivery" class="form-label fw-semibold required">Facebook:</label>
+                                <input type="text" class="form-control" name="facebook" value="{{ $footer_information->facebook_link ?? null }}" placeholder="Facebook Link" required>
+                            </div>
+                            @error("address")
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mt-2">
+                                <label for="delivery" class="form-label fw-semibold required">Twitter:</label>
+                                <input type="text" class="form-control" name="twitter" value="{{ $footer_information->twitter_link ?? null }}" placeholder="Twitter Link" required>
+                            </div>
+                            @error("address")
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mt-2">
+                                <label for="delivery" class="form-label fw-semibold required">Instagram:</label>
+                                <input type="text" class="form-control" name="instagram" value="{{ $footer_information->instagram_link ?? null }}" placeholder="Instagram Link" required>
+                            </div>
+                            @error("address")
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end mt-4">

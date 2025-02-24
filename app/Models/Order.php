@@ -16,4 +16,6 @@ class Order extends Model
     public function productOrder(){
         return $this->hasMany(ProductOrder::class);
     }
+
+    
 }

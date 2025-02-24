@@ -23,8 +23,9 @@ class OrderRequest extends FormRequest
             "total_amount" => "required|numeric",
             "toolkit_id" => "sometimes",
             "products_orders" => "required|array",
-            "products_orders.*.product_id" => "required",
+            "products_orders.*.product_id" => "nullable",
             "products_orders.*.quantity" => "required",
+            "products_orders.*.variable_id" => "nullable",
         ];
     }
 }

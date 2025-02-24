@@ -41,36 +41,33 @@ class OrderController extends Controller
             // $array = [
             //     "customer" => [
             //         "name" => $save->address->name,
-            //         "email" => $save->address->name,
-            //         "mobile" => $save->address->name,
-            //         "street" => $save->address->name,
-            //         "city" => $save->address->name,
-            //         "zip" => $save->address->name,
-            //         "state" => $save->address->name,
-            //         "country_code" => $save->address->name,
+            //         "email" => $save->address->user->email,
+            //         "mobile" => $save->address->phone_number,
+            //         "street" => $save->address->address,
+            //         "city" => $save->address->city,
+            //         "zip" => $save->address->pincode,
+            //         // "state" => $save->address->state,
+            //         "state" => "TS",
+            //         "country_code" => "IN",
             //     ],
             //     "order_reference" => $save->order_id,
-            //     "item" => [
-            //         $products ?? null
-            //     ]
-            //     ];
-
-            //     dd($array);
+            //     "item" => $products ?? null
+            // ];
+            //     return response()->json($array);
             $response = Http::post('https://test.wolpin.in/web/hook/1ac28f51-4518-4f0f-b59a-b2e09955508c', [
                 "customer" => [
                     "name" => $save->address->name,
-                    "email" => $save->address->email,
+                    "email" => $save->address->user->email,
                     "mobile" => $save->address->phone_number,
                     "street" => $save->address->address,
                     "city" => $save->address->city,
                     "zip" => $save->address->pincode,
-                    "state" => $save->address->state,
+                    // "state" => $save->address->state,
+                    "state" => "TS",
                     "country_code" => "IN",
                 ],
                 "order_reference" => $save->order_id,
-                "item" => [
-                    $products ?? null
-                ]
+                "item" => $products ?? null
             ]);
 
             // Check if the request was successful

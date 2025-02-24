@@ -15,4 +15,8 @@ class AddressDetail extends Model
     public function deliveryPreference(){
         return $this->belongsTo(DeliveryPreference::class, 'delivery_preference_id');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

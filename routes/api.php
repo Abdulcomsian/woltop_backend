@@ -11,6 +11,7 @@ use App\Http\Controllers\ApiControllers\{
     ReviewController,
     TagController,
     CartController,
+    CouponController,
     DeliveryController,
     DeliveryPreferenceController,
     FaqController,
@@ -94,6 +95,8 @@ Route::get('price-charges', [GeneralController::class, 'priceCharges']);
 Route::get('get-contact-info', [GeneralController::class, 'getInfo']);
 Route::get('get-home', [PageController::class, 'getHome']);
 Route::get('get-about', [PageController::class, 'getAbout']);
+
+Route::get('get-coupons', [CouponController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\CouponUser;
 use App\Models\Order;
 use App\Models\ProductOrder;
 use App\Models\User;
@@ -16,13 +17,15 @@ class OrderService
     protected $userModel;
     protected $productOrderModel;
     protected $variationOptionModel;
+    protected $couponUserModel;
 
-    public function __construct(Order $model, User $userModel, ProductOrder $productOrderModel, VariationOption $variationOptionModel)
+    public function __construct(Order $model, User $userModel, ProductOrder $productOrderModel, VariationOption $variationOptionModel, CouponUser $couponUserModel)
     {
         $this->model = $model;
         $this->userModel = $userModel;
         $this->productOrderModel = $productOrderModel;
         $this->variationOptionModel = $variationOptionModel;
+        $this->couponUserModel = $couponUserModel;
     }
 
     public function store($data)
@@ -49,6 +52,13 @@ class OrderService
             $itemSave->quantity = $item['quantity'];
             $itemSave->variable_id = $item['variable_id'] ?? null;
             $itemSave->save();
+
+            if($data['is_coupon_applied'] == true){
+                $couponSave = new $this->couponUserModel;
+                $couponSave->user_id = Auth::check() ?  Auth::user()->id : $data['user_id'];
+                $couponSave->coupon_id = $data['coupon_id'] ?? null;
+                $couponSave->save();
+            }
         }
        }
        return $save;

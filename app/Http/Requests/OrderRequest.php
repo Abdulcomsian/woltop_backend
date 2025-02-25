@@ -26,6 +26,9 @@ class OrderRequest extends FormRequest
             "products_orders.*.product_id" => "nullable",
             "products_orders.*.quantity" => "required",
             "products_orders.*.variable_id" => "nullable",
+            "is_coupon_applied" => "required",
+            "coupon_id" => "nullable",
+            "user_id" => "nullable",
         ];
     }
 }

@@ -18,7 +18,7 @@ class AddressController extends Controller
     public function store(AddressRequest $request){
         try{
             $data = $this->service->store($request->validated());
-            return response()->json(['status' => true, "msg" => "Address Saved Successfully", "address_id" => $data->id], 200); 
+            return response()->json(['status' => true, "msg" => "Address Saved Successfully", "address_id" => $data->id, "user_id" => $data->user->id], 200);
         }catch(\Exception $e){
             return response()->json(['status' => false, "msg" => "Something went wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 500);
         }

@@ -502,10 +502,13 @@ class ProductService
                         }
                     }
                 }
-
+                // dd($data['variation_options']);
                 if(isset($data['variation_options']) && count($data['variation_options']) > 0){
-                    $this->variationOptionModel::where('product_id', $product->id)->forceDelete();
+                    $delete_all_variations = true;
                     foreach($data['variation_options'] as $item){
+                        if(isset($item['id'])){
+                            $delete_all_variations = false;
+                        }
                         $names = explode('/', $item['name']);
                         $attribute_values = $this->attributeModel::with('attribute')->whereIn("name", $names)->get()
                         ->map(function($item){
@@ -515,15 +518,21 @@ class ProductService
                             ];
                         })
                         ->toArray();
-                        $variation = new $this->variationOptionModel;
-                        $variation->product_id = $product->id;
-                        $variation->title = $item['name'];
-                        $variation->price = $item['price'];
-                        $variation->sale_price = $item['sale_price'];
-                        $variation->options = !empty($attribute_values) ? json_encode($attribute_values) : null;
-                        $variation->discount = calculateDiscount($item['price'], $item['sale_price']);
-                        $variation->sku = generateUniqueSku($item['sku'], $this->variationOptionModel::class, 'sku');;
-                        $variation->save();
+                        $this->variationOptionModel::updateOrCreate([
+                            "id" => $item['id'] ?? 0,
+                        ],[
+                            "product_id" => $product->id,
+                            "title" => $item['name'],
+                            "price" => $item['price'],
+                            "sale_price" => $item['sale_price'],
+                            "options" => !empty($attribute_values) ? json_encode($attribute_values) : null,
+                            "discount" => calculateDiscount($item['price'], $item['sale_price']),
+                            "sku" => generateUniqueSku($item['sku'], $this->variationOptionModel::class, 'sku'),
+                        ]);
+                    }
+
+                    if($delete_all_variations == true){
+                        $this->variationOptionModel::where('product_id', $product->id)->forceDelete();
                     }
                 }
                 

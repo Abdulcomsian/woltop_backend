@@ -53,8 +53,8 @@ class OrderController extends Controller
             //     "order_reference" => $save->order_id,
             //     "item" => $products ?? null
             // ];
-            //     return response()->json($array);
-            $response = Http::post('https://test.wolpin.in/web/hook/1ac28f51-4518-4f0f-b59a-b2e09955508c', [
+            // return response()->json($array);
+            $response = Http::post('https://test.wolpin.in/web/hook/5669d873-68ca-45e6-9901-62dc3fabd0e3', [
                 "customer" => [
                     "name" => $save->address->name,
                     "email" => $save->address->user->email,

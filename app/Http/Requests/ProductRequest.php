@@ -46,6 +46,7 @@ class ProductRequest extends FormRequest
                 "variations.*.attribute_id" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
                 "variations.*.attribute_values" => [new RequiredIfStatusAndTypeVariable($status, $productType), "array"],
                 "variation_options" => [new RequiredIfStatusAndTypeVariable($status, $productType), "array"],
+                "variation_options.*.id" => "nullable",
                 "variation_options.*.name" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
                 "variation_options.*.price" => [new RequiredIfStatusAndTypeVariable($status, $productType)],
                 "variation_options.*.sale_price" => [new RequiredIfStatusAndTypeVariable($status, $productType)],

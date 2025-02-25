@@ -548,6 +548,7 @@
                                         <div id="valuesContainer">
                                             @isset($productVariations)
                                                 @foreach ($productVariations as $key => $variation)
+                                                    <input type="hidden" name="variation_options[{{ $key }}][id]" value="{{$variation->id}}">
                                                     <div class="card mb-3 value-section"
                                                         data-value-id="{{ formatString($variation->title) }}">
                                                         <div class="card-body">

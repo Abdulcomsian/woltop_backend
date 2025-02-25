@@ -320,7 +320,7 @@ class ProductService
         if($data['product_type'] == "simple"){
             // deleting variables against this product if any case Admin Switch from variable to simple
             $this->variableProductModel::where('product_id', $data['id'])->forceDelete();
-            $this->variationOptionModel::where('product_id', $data['id'])->forceDelete();
+            $this->variationOptionModel::where('product_id', $data['id'])->delete();
 
             $product->price = $data['simple_price'];
             $product->sale_price = $data['simple_sale_price'];
@@ -502,13 +502,22 @@ class ProductService
                         }
                     }
                 }
-                // dd($data['variation_options']);
+
+
                 if(isset($data['variation_options']) && count($data['variation_options']) > 0){
                     $delete_all_variations = true;
                     foreach($data['variation_options'] as $item){
                         if(isset($item['id'])){
                             $delete_all_variations = false;
                         }
+                    }
+                    if($delete_all_variations == true){
+                        $this->variationOptionModel::where('product_id', $product->id)->delete();
+                    }
+
+
+
+                    foreach($data['variation_options'] as $item){
                         $names = explode('/', $item['name']);
                         $attribute_values = $this->attributeModel::with('attribute')->whereIn("name", $names)->get()
                         ->map(function($item){
@@ -529,10 +538,6 @@ class ProductService
                             "discount" => calculateDiscount($item['price'], $item['sale_price']),
                             "sku" => generateUniqueSku($item['sku'], $this->variationOptionModel::class, 'sku'),
                         ]);
-                    }
-
-                    if($delete_all_variations == true){
-                        $this->variationOptionModel::where('product_id', $product->id)->forceDelete();
                     }
                 }
                 

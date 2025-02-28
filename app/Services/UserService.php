@@ -101,8 +101,10 @@ class UserService
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
         foreach($user->address as $address){
             if(isset($address->order) && !empty($address->order)){
-                if(isset($address->order->productOrder) && !empty($address->order->productOrder)){
-                    $productsIds["ids"] = $address->order->productOrder->pluck("product_id");
+                foreach($address->order as $order){
+                    if(isset($order->productOrder) && !empty($order->productOrder)){
+                        $productsIds["ids"] = $order->productOrder->pluck("product_id");
+                    }
                 }
             }
         }

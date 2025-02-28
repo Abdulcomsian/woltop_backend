@@ -17,6 +17,8 @@ class CouponResource extends JsonResource
         $array =  [
             "id" => $this->id,
             "code" => $this->name,
+            "short_description" => $this->short_description,
+            "long_description" => $this->long_description,
             "is_countable" => $this->is_countable,
             "counting" => $this->counting,
             "start_date" => $this->start_date,

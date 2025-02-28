@@ -117,12 +117,4 @@ class Product extends Model
         });
         return $final;
     }
-
-    public function getToolkit(){
-        $toolkit = Product::where("is_installable", "false")->where("status", "publish")->first();
-
-        if($toolkit){
-            return new ProductResource($toolkit);
-        }
-    }
 }

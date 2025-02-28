@@ -73,7 +73,6 @@ class ProductReviewResource extends JsonResource
                     "image" => asset("assets/wolpin_media/products/features/" . $feature->image),
                 ];
             }),
-            "toolkit" => $this->getToolkit(),
         ];
     }
 }

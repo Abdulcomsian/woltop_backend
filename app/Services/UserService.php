@@ -99,22 +99,21 @@ class UserService
 
         // creating a login token
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
-
-        $productsIds = collect();
-        foreach ($user->address as $address) {
-            if (!empty($address->order) && !empty($address->order->productOrder)) {
-                $productsIds = $productsIds->merge($address->order->productOrder->pluck("product_id"));
+        foreach($user->address as $address){
+            if(isset($address->order) && !empty($address->order)){
+                if(isset($address->order->productOrder) && !empty($address->order->productOrder)){
+                    $productsIds["ids"] = $address->order->productOrder->pluck("product_id");
+                }
             }
         }
 
-        $productsIds = $productsIds->unique()->values()->all();
 
         return [
             "status" => "success",
             "access_token" => $token,
             "type" => "Bearer",
             "message" => "User Login Successfully",
-            "products" => $productsIds,
+            "products" => isset($productsIds) && count($productsIds) > 0 ? $productsIds : null,
         ];
     }
 

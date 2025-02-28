@@ -95,11 +95,11 @@ class ProductService
         $product->featured_image = $featureFileName ?? null;
         $product->product_type = $data['product_type'];
         $product->status = $data['status'];
-        if(isset($data['is_installable']) && $data['is_installable'] == "on"){
-            $product->is_installable = "true";
-        }else{
-            $product->is_installable = "false";
-        }
+        // if(isset($data['is_installable']) && $data['is_installable'] == "on"){
+        //     $product->is_installable = "true";
+        // }else{
+        //     $product->is_installable = "false";
+        // }
         $product->meta_title = $data['meta_title'];
         $product->meta_description = $data['meta_description'];
         if($data['product_type'] == "simple"){
@@ -336,11 +336,11 @@ class ProductService
         }
         $product->product_type = $data['product_type'];
         $product->status = $data['status'];
-        if(isset($data['is_installable']) && $data['is_installable'] == "on"){
-            $product->is_installable = "true";
-        }else{
-            $product->is_installable = "false";
-        }
+        // if(isset($data['is_installable']) && $data['is_installable'] == "on"){
+        //     $product->is_installable = "true";
+        // }else{
+        //     $product->is_installable = "false";
+        // }
         $product->meta_title = $data['meta_title'] ?? null;
         $product->meta_description = $data['meta_description'] ?? null;
         if($data['product_type'] == "simple"){

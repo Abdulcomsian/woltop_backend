@@ -434,6 +434,7 @@
                                         $selectedAttributesValues = [];
                                         @endphp
                                         <input type="hidden" name="product_type" value="simple">
+                                        <input type="hidden" name="is_installable" value="toolkit">
                                         <!-- Simple Product Form -->
                                         <div id="simpleProductForm" class="col-md-8">
                                             <div class="col-md-4">

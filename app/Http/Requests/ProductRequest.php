@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
         }
 
         if($this->isMethod("PATCH")){
-            return [
+            $updateArray = [
                 "id" => "sometimes",
                 "product_name" => "required_if:status,publish",
                 "short_description" => "sometimes",
@@ -35,7 +35,6 @@ class ProductRequest extends FormRequest
                 "video" => "sometimes",
                 "gallery_images" => "sometimes|array",
                 "gallery_images.*" => "image|mimes:jpeg,png,jpg,gif,svg",
-                "categories" => ["required_if:status,publish", "array"],
                 "tags" => "sometimes|array",
                 "color" => "sometimes",
                 "product_type" => "required|in:simple,variable",
@@ -76,6 +75,13 @@ class ProductRequest extends FormRequest
                 "meta_title" => "sometimes",
                 "meta_description" => "sometimes",
             ];
+
+            if($this->input('is_installable') == "toolkit"){
+               $updateArray["categories"] = "sometimes";
+            }else{
+                $updateArray["categories"] = ["required_if:status,publish", "array"];
+            }
+            return $updateArray;
         }
         
         return [

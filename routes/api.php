@@ -98,6 +98,8 @@ Route::get('get-about', [PageController::class, 'getAbout']);
 
 Route::get('get-coupons', [CouponController::class, 'index']);
 
+Route::get('get-toolkit', [ProductController::class, 'getToolkit']);
+
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);
     

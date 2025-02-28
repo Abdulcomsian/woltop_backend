@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductReviewResource;
+use App\Http\Resources\ToolkitResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,19 @@ class ProductController extends Controller
                 ]);
             }else{
                 return response()->json(['status' => false, "data" => "No Products Found"], 400);
+            }
+        }catch(\Exception $e){
+            return response()->json(['status' => false, "data" => "Something went wrong!"], 400);
+        }
+    }
+
+    public function getToolkit(){
+        try{
+            $toolkit = Product::where('status', 'publish')->where('is_installable', "false")->first();
+            if($toolkit && !empty($toolkit)){
+                return (new ToolkitResource($toolkit))->additional(['status' => true]);
+            }else{
+                return response()->json(['status' => false, "data" => "No Toolkit Found"], 400);
             }
         }catch(\Exception $e){
             return response()->json(['status' => false, "data" => "Something went wrong!"], 400);

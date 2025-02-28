@@ -76,7 +76,7 @@ class ProductRequest extends FormRequest
                 "meta_description" => "sometimes",
             ];
 
-            if($this->input('is_installable') == "toolkit"){
+            if($this->input('is_installable_type') == "toolkit"){
                $updateArray["categories"] = "sometimes";
             }else{
                 $updateArray["categories"] = ["required_if:status,publish", "array"];

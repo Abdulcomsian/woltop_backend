@@ -57,4 +57,9 @@ class User extends Authenticatable
 
         return $this->profile_photo_path;
     }
+
+
+    public function address(){
+        return $this->hasMany(AddressDetail::class, 'user_id');
+    }
 }

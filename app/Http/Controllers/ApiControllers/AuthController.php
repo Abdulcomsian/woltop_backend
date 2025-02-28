@@ -47,7 +47,7 @@ class AuthController extends Controller
         try{
             $response = $this->userService->login($request);
             if($response['status'] == "success"){
-                return response()->json(['status' => true, "access_token" => $response['access_token'], "type" => $response['type'], "msg" => $response['message']], 200);
+                return response()->json(['status' => true, "access_token" => $response['access_token'], "type" => $response['type'], "msg" => $response['message'], "products" => $response['products']], 200);
             }else{
                 return response()->json(['status' => false, "msg" => $response['message']], 400);
             }

@@ -19,4 +19,8 @@ class AddressDetail extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function order(){
+        return $this->hasOne(Order::class, 'address_id');
+    }
 }

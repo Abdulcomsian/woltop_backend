@@ -82,7 +82,7 @@ class UserService
 
 
     public function login($data){
-        $user = $this->model::where('email', $data->email)->first();
+        $user = $this->model::with('address.order.productOrder')->where('email', $data->email)->first();
         if(!$user || !Auth::attempt(['email' => $data->email, 'password' => $data->password])){
             return [
                 "status" => "error",
@@ -100,11 +100,21 @@ class UserService
         // creating a login token
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
 
+        $productsIds = collect();
+        foreach ($user->address as $address) {
+            if (!empty($address->order) && !empty($address->order->productOrder)) {
+                $productsIds = $productsIds->merge($address->order->productOrder->pluck("product_id"));
+            }
+        }
+
+        $productsIds = $productsIds->unique()->values()->all();
+
         return [
             "status" => "success",
             "access_token" => $token,
             "type" => "Bearer",
             "message" => "User Login Successfully",
+            "products" => $productsIds,
         ];
     }
 

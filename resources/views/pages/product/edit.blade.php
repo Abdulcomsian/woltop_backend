@@ -208,14 +208,14 @@
                                                     </div>
                                                 </div>
 
-                                                {{-- <div class="mb-3">
+                                                <div class="mb-3">
                                                     <label class="form-label fw-semibold">Is this an installable product or not?</label><br>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="checkbox" name="is_installable" @if ($data->is_installable == 'true') checked @endif id="installable">
                                                         <label class="form-check-label"
                                                             for="installable">Is Installable</label>
                                                     </div>
-                                                </div> --}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -246,6 +246,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if($data->is_installable == "true")
                                     <div class="col-md-4">
                                         <label for="video" class="form-label fw-semibold">Video</label>
                                         <small class="text-muted d-block">
@@ -268,6 +269,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                     <hr class="dotted-line my-4">
                                 </div>
 

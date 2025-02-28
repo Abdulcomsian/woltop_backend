@@ -14,6 +14,14 @@ class ToolkitResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "image" => asset("assets/wolpin_media/products/featured_images/" . $this->featured_image),
+            "title" => $this->title,
+            "slug" => $this->slug,
+            "short_description" => $this->short_description,
+            "long_description" => $this->description,
+            "price" => $this->sale_price,
+        ];
     }
 }

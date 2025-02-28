@@ -189,14 +189,14 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="mb-3">
+                                                {{-- <div class="mb-3">
                                                     <label class="form-label fw-semibold">Is this an installable product or not?</label><br>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="checkbox" name="is_installable" checked id="installable">
                                                         <label class="form-check-label"
                                                             for="installable">Is Installable</label>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>

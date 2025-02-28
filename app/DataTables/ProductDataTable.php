@@ -56,6 +56,15 @@ class ProductDataTable extends DataTable
                 $badgeClass = $statusLabels[$status]['class'] ?? 'badge-light-secondary';
                 return '<span class="badge ' . $badgeClass . '">' . $statusLabel . '</span>';
             })
+            ->editColumn('is_installable', function ($query) {
+                $status = "NO";
+                if($query->is_installable == "false"){
+                    $status = "YES";
+                }
+
+                return $status;
+            })
+
             ->editColumn('created_at', function ($query) {
                 return $query->created_at->format('Y-m-d');
             })
@@ -86,7 +95,7 @@ class ProductDataTable extends DataTable
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([9, "desc"]);
+                    ->orderBy([10, "desc"]);
     }
 
     /**
@@ -104,6 +113,7 @@ class ProductDataTable extends DataTable
             Column::make('featured_image'),
             Column::make('sku'),
             Column::make('title'),
+            Column::make('is_installable')->title("Is Toolkit"),
             Column::make('product_type')->title("Product Type"),
             Column::make('category')->title('Categories'),
             Column::make('price')->title('Price'),

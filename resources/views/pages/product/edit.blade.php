@@ -89,18 +89,20 @@
                             Basic Information
                         </button>
                     </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="ps2-tab" data-bs-toggle="tab" data-bs-target="#ps2-content"
-                            type="button" role="tab" aria-controls="ps2-content" aria-selected="false">
-                            Advanced Information
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" id="ps3-tab" data-bs-toggle="tab" data-bs-target="#ps3-content"
-                            type="button" role="tab" aria-controls="ps3-content" aria-selected="false">
-                            SEO Details
-                        </button>
-                    </li>
+                    @if ($data->is_installable == 'true')
+                        <li class="nav-item">
+                            <button class="nav-link" id="ps2-tab" data-bs-toggle="tab" data-bs-target="#ps2-content"
+                                type="button" role="tab" aria-controls="ps2-content" aria-selected="false">
+                                Advanced Information
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="ps3-tab" data-bs-toggle="tab" data-bs-target="#ps3-content"
+                                type="button" role="tab" aria-controls="ps3-content" aria-selected="false">
+                                SEO Details
+                            </button>
+                        </li>
+                    @endif
                 </ul>
             </div>
 
@@ -124,21 +126,32 @@
                                     aria-selected="false">
                                     Featured Image
                                 </button>
-                                <button class="nav-link" id="gallery-tab" data-bs-toggle="pill"
-                                    data-bs-target="#gallery" type="button" role="tab" aria-controls="gallery"
-                                    aria-selected="false">
-                                    Gallery
-                                </button>
-                                <button class="nav-link" id="categories-tab" data-bs-toggle="pill"
-                                    data-bs-target="#categories" type="button" role="tab"
-                                    aria-controls="categories" aria-selected="false">
-                                    Categories
-                                </button>
-                                <button class="nav-link" id="product-type-tab" data-bs-toggle="pill"
-                                    data-bs-target="#product-type" type="button" role="tab"
-                                    aria-controls="product-type" aria-selected="false">
-                                    Product Type
-                                </button>
+                                @if ($data->is_installable == 'true')
+                                    <button class="nav-link" id="gallery-tab" data-bs-toggle="pill"
+                                        data-bs-target="#gallery" type="button" role="tab" aria-controls="gallery"
+                                        aria-selected="false">
+                                        Gallery
+                                    </button>
+                                    <button class="nav-link" id="categories-tab" data-bs-toggle="pill"
+                                        data-bs-target="#categories" type="button" role="tab"
+                                        aria-controls="categories" aria-selected="false">
+                                        Categories
+                                    </button>
+                                @endif
+
+                                @if ($data->is_installable == 'false')
+                                    <button class="nav-link" id="product-type-tab" data-bs-toggle="pill"
+                                        data-bs-target="#product-type" type="button" role="tab"
+                                        aria-controls="product-type" aria-selected="false">
+                                        Pricing
+                                    </button>
+                                @else
+                                    <button class="nav-link" id="product-type-tab" data-bs-toggle="pill"
+                                        data-bs-target="#product-type" type="button" role="tab"
+                                        aria-controls="product-type" aria-selected="false">
+                                        Product Type
+                                    </button>
+                                @endif
                             </div>
                         </div>
                         {{-- @dd($data) --}}
@@ -195,14 +208,14 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="mb-3">
+                                                {{-- <div class="mb-3">
                                                     <label class="form-label fw-semibold">Is this an installable product or not?</label><br>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" name="is_installable" @if($data->is_installable == "true") checked @endif id="installable">
+                                                        <input class="form-check-input" type="checkbox" name="is_installable" @if ($data->is_installable == 'true') checked @endif id="installable">
                                                         <label class="form-check-label"
                                                             for="installable">Is Installable</label>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -414,185 +427,246 @@
                                 </div>
 
                                 <!-- Product Type Tab -->
-                                <div class="tab-pane fade" id="product-type" role="tabpanel"
-                                    aria-labelledby="product-type-tab">
-                                    <div class="col-md-4">
-                                        <label for="productType" class="form-label fw-semibold">Product Type</label>
-                                        <small class="text-muted d-block mb-2">Select product type from here.</small>
-                                    </div>
-                                    <div class="col-md-8 mb-5">
-                                        <div class="card">
-                                            <div class="card-body py-4">
-                                                <div class="mb-3">
-                                                    <label for="productType" class="form-label">Product Type</label>
-                                                    <select id="productType" class="form-select" name="product_type">
-                                                        <option value="simple"
-                                                            @if ($data->product_type == 'simple') selected @endif>Simple
-                                                            Product</option>
-                                                        <option value="variable"
-                                                            @if ($data->product_type == 'variable') selected @endif>Variable
-                                                            Product</option>
-                                                    </select>
+                                @if ($data->is_installable == 'false')
+                                    <div class="tab-pane fade" id="product-type" role="tabpanel"
+                                        aria-labelledby="product-type-tab">
+                                        @php
+                                        $selectedAttributesValues = [];
+                                        @endphp
+                                        <input type="hidden" name="product_type" value="simple">
+                                        <!-- Simple Product Form -->
+                                        <div id="simpleProductForm" class="col-md-8">
+                                            <div class="col-md-4">
+                                                <label for="product-variation" class="form-label fw-semibold">Pricing</label>
+                                                <small class="text-muted d-block">
+                                                   Add your toolkit pricing
+                                                </small>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body py-4">
+                                                    <div class="mb-3">
+                                                        <label for="price"
+                                                            class="required form-label">Price</label>
+                                                        <input type="number" id="price" name="simple_price"
+                                                            class="form-control" placeholder="Enter Price"
+                                                            value="{{ $data->price ?? '' }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="salePrice" class="required form-label">Sale
+                                                            Price</label>
+                                                        <input type="number" id="salePrice" name="simple_sale_price"
+                                                            class="form-control" placeholder="Enter Sale Price"
+                                                            value="{{ $data->sale_price ?? '' }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="SKU" class="required form-label">SKU</label>
+                                                        <input type="text" id="sku" name="simple_sku"
+                                                            class="form-control" placeholder="Enter SKU"
+                                                            value="{{ $data->sku ?? '' }}">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Simple Product Form -->
-                                    <div id="simpleProductForm" class="col-md-8" style="display: none;">
+                                        <hr class="dotted-line my-4">
+                                    </div>
+                                @else
+                                    <div class="tab-pane fade" id="product-type" role="tabpanel"
+                                        aria-labelledby="product-type-tab">
                                         <div class="col-md-4">
-                                            <label for="product-variation" class="form-label fw-semibold">Simple
-                                                Product
-                                                Information</label>
-                                            <small class="text-muted d-block">
-                                                Add your simple product description and necessary information
-                                            </small>
+                                            <label for="productType" class="form-label fw-semibold">Product
+                                                Type</label>
+                                            <small class="text-muted d-block mb-2">Select product type from
+                                                here.</small>
                                         </div>
-                                        <div class="card">
-                                            <div class="card-body py-4">
-                                                <div class="mb-3">
-                                                    <label for="price" class="required form-label">Price</label>
-                                                    <input type="number" id="price" name="simple_price"
-                                                        class="form-control" placeholder="Enter Price"
-                                                        value="{{ $data->price ?? '' }}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="salePrice" class="required form-label">Sale
-                                                        Price</label>
-                                                    <input type="number" id="salePrice" name="simple_sale_price"
-                                                        class="form-control" placeholder="Enter Sale Price"
-                                                        value="{{ $data->sale_price ?? '' }}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="SKU" class="required form-label">SKU</label>
-                                                    <input type="text" id="sku" name="simple_sku"
-                                                        class="form-control" placeholder="Enter SKU"
-                                                        value="{{ $data->sku ?? '' }}">
+                                        <div class="col-md-8 mb-5">
+                                            <div class="card">
+                                                <div class="card-body py-4">
+                                                    <div class="mb-3">
+                                                        <label for="productType" class="form-label">Product
+                                                            Type</label>
+                                                        <select id="productType" class="form-select"
+                                                            name="product_type">
+                                                            <option value="simple"
+                                                                @if ($data->product_type == 'simple') selected @endif>
+                                                                Simple
+                                                                Product</option>
+                                                            <option value="variable"
+                                                                @if ($data->product_type == 'variable') selected @endif>
+                                                                Variable
+                                                                Product</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- Variable Product Form -->
-                                    <div id="variableProductForm" class="col-md-8">
-                                        <div class="col-md-4">
-                                            <label for="product-variation" class="form-label fw-semibold">Product
-                                                Variation Information</label>
-                                            <small class="text-muted d-block">
-                                                Add your product variation and necessary information from here
-                                            </small>
+                                        <!-- Simple Product Form -->
+                                        <div id="simpleProductForm" class="col-md-8" style="display: none;">
+                                            <div class="col-md-4">
+                                                <label for="product-variation" class="form-label fw-semibold">Simple
+                                                    Product
+                                                    Information</label>
+                                                <small class="text-muted d-block">
+                                                    Add your simple product description and necessary information
+                                                </small>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body py-4">
+                                                    <div class="mb-3">
+                                                        <label for="price"
+                                                            class="required form-label">Price</label>
+                                                        <input type="number" id="price" name="simple_price"
+                                                            class="form-control" placeholder="Enter Price"
+                                                            value="{{ $data->price ?? '' }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="salePrice" class="required form-label">Sale
+                                                            Price</label>
+                                                        <input type="number" id="salePrice" name="simple_sale_price"
+                                                            class="form-control" placeholder="Enter Sale Price"
+                                                            value="{{ $data->sale_price ?? '' }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="SKU" class="required form-label">SKU</label>
+                                                        <input type="text" id="sku" name="simple_sku"
+                                                            class="form-control" placeholder="Enter SKU"
+                                                            value="{{ $data->sku ?? '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div id="sectionsContainer">
-                                            <!-- Initial section matching dynamic structure -->
-                                            @isset($groupedVariables)
-                                                @php
-                                                    $selectedAttributesValues = [];
-                                                @endphp
-                                                @foreach ($groupedVariables as $key => $variable)
-                                                    <div class="card mb-3 section" data-section="{{ $key }}"
-                                                        data-selected-attribute-id="{{ $variable['attribute_id'] }}">
-                                                        <div class="card-body py-4">
-                                                            <div class="row w-100 relative">
-                                                                <div class="col-3">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Attribute Name</label>
-                                                                        <select
-                                                                            class="form-select attributeName attribute-change"
-                                                                            name="variations[{{ $key }}][attribute_id]"
-                                                                            data-section="">
-                                                                            <option value="">Select...</option>
-                                                                            @isset($attributes)
-                                                                                @foreach ($attributes as $attribute)
-                                                                                    @if (!in_array($attribute->id, $selectedAttributes) || $variable['attribute_id'] == $attribute->id)
-                                                                                        <option value="{{ $attribute->id }}"
-                                                                                            @if ($variable['attribute_id'] == $attribute->id) selected @endif>
-                                                                                            {{ $attribute->name }}
-                                                                                        </option>
-                                                                                    @endif
+
+                                        <!-- Variable Product Form -->
+                                        <div id="variableProductForm" class="col-md-8">
+                                            <div class="col-md-4">
+                                                <label for="product-variation" class="form-label fw-semibold">Product
+                                                    Variation Information</label>
+                                                <small class="text-muted d-block">
+                                                    Add your product variation and necessary information from here
+                                                </small>
+                                            </div>
+                                            <div id="sectionsContainer">
+                                                <!-- Initial section matching dynamic structure -->
+                                                @isset($groupedVariables)
+                                                    @php
+                                                        $selectedAttributesValues = [];
+                                                    @endphp
+                                                    @foreach ($groupedVariables as $key => $variable)
+                                                        <div class="card mb-3 section" data-section="{{ $key }}"
+                                                            data-selected-attribute-id="{{ $variable['attribute_id'] }}">
+                                                            <div class="card-body py-4">
+                                                                <div class="row w-100 relative">
+                                                                    <div class="col-3">
+                                                                        <div class="mb-3">
+                                                                            <label class="form-label">Attribute
+                                                                                Name</label>
+                                                                            <select
+                                                                                class="form-select attributeName attribute-change"
+                                                                                name="variations[{{ $key }}][attribute_id]"
+                                                                                data-section="">
+                                                                                <option value="">Select...</option>
+                                                                                @isset($attributes)
+                                                                                    @foreach ($attributes as $attribute)
+                                                                                        @if (!in_array($attribute->id, $selectedAttributes) || $variable['attribute_id'] == $attribute->id)
+                                                                                            <option
+                                                                                                value="{{ $attribute->id }}"
+                                                                                                @if ($variable['attribute_id'] == $attribute->id) selected @endif>
+                                                                                                {{ $attribute->name }}
+                                                                                            </option>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                @endisset
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-9">
+                                                                        <div class="mb-3">
+                                                                            <label class="form-label">Attribute
+                                                                                Values</label>
+                                                                            <select class="form-select attribute-values"
+                                                                                name="variations[{{ $key }}][attribute_values][]"
+                                                                                multiple>
+                                                                                @foreach ($variable['values'] as $valueId => $valueName)
+                                                                                    @php
+                                                                                        $selectedAttributesValues[
+                                                                                            $key
+                                                                                        ][] = $valueName;
+                                                                                    @endphp
+                                                                                    <option value="{{ $valueId }}"
+                                                                                        selected>{{ $valueName }}
+                                                                                    </option>
                                                                                 @endforeach
-                                                                            @endisset
-                                                                        </select>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-9">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Attribute Values</label>
-                                                                        <select class="form-select attribute-values"
-                                                                            name="variations[{{ $key }}][attribute_values][]"
-                                                                            multiple>
-                                                                            @foreach ($variable['values'] as $valueId => $valueName)
-                                                                            @php
-                                                                                $selectedAttributesValues[$key][] = $valueName;
-                                                                            @endphp
-                                                                                <option value="{{ $valueId }}"
-                                                                                    selected>{{ $valueName }}</option>
-                                                                            @endforeach
-                                                                        </select>
+                                                                <span
+                                                                    class="text-danger removeSection cursor-pointer position-absolute p-2"
+                                                                    style="top: 0; right: 10px;">
+                                                                    Remove
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endisset
+
+
+                                            </div>
+
+                                            <!-- Moved value-container OUTSIDE sectionsContainer -->
+                                            <div id="valuesContainer">
+                                                @isset($productVariations)
+                                                    @foreach ($productVariations as $key => $variation)
+                                                        <input type="hidden"
+                                                            name="variation_options[{{ $key }}][id]"
+                                                            value="{{ $variation->id }}">
+                                                        <div class="card mb-3 value-section"
+                                                            data-value-id="{{ formatString($variation->title) }}">
+                                                            <div class="card-body">
+                                                                <h5 class="mb-3">{{ $variation->title }}</h5>
+                                                                <input type="hidden"
+                                                                    name="variation_options[{{ $key }}][name]"
+                                                                    value="{{ $variation->title }}" />
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <label class="required form-label">Price</label>
+                                                                        <input type="number"
+                                                                            name="variation_options[{{ $key }}][price]"
+                                                                            class="form-control" placeholder="Enter Price"
+                                                                            value="{{ $variation->price }}">
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label class="required form-label">Sale
+                                                                            Price</label>
+                                                                        <input type="number"
+                                                                            name="variation_options[{{ $key }}][sale_price]"
+                                                                            class="form-control"
+                                                                            placeholder="Enter Sale Price"
+                                                                            value="{{ $variation->sale_price }}">
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label class="required form-label">SKU</label>
+                                                                        <input type="text"
+                                                                            name="variation_options[{{ $key }}][sku]"
+                                                                            class="form-control" placeholder="Enter SKU"
+                                                                            value="{{ $variation->sku }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <span
-                                                                class="text-danger removeSection cursor-pointer position-absolute p-2"
-                                                                style="top: 0; right: 10px;">
-                                                                Remove
-                                                            </span>
                                                         </div>
-                                                    </div>
-                                                @endforeach
-                                            @endisset
+                                                    @endforeach
+                                                @endisset
 
+                                            </div>
 
+                                            <button id="addSection" type="button" class="btn btn-primary mt-3">Add
+                                                Option</button>
                                         </div>
 
-                                        <!-- Moved value-container OUTSIDE sectionsContainer -->
-                                        <div id="valuesContainer">
-                                            @isset($productVariations)
-                                                @foreach ($productVariations as $key => $variation)
-                                                    <input type="hidden" name="variation_options[{{ $key }}][id]" value="{{$variation->id}}">
-                                                    <div class="card mb-3 value-section"
-                                                        data-value-id="{{ formatString($variation->title) }}">
-                                                        <div class="card-body">
-                                                            <h5 class="mb-3">{{ $variation->title }}</h5>
-                                                            <input type="hidden"
-                                                                name="variation_options[{{ $key }}][name]"
-                                                                value="{{ $variation->title }}" />
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <label class="required form-label">Price</label>
-                                                                    <input type="number"
-                                                                        name="variation_options[{{ $key }}][price]"
-                                                                        class="form-control" placeholder="Enter Price"
-                                                                        value="{{ $variation->price }}">
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="required form-label">Sale Price</label>
-                                                                    <input type="number"
-                                                                        name="variation_options[{{ $key }}][sale_price]"
-                                                                        class="form-control"
-                                                                        placeholder="Enter Sale Price"
-                                                                        value="{{ $variation->sale_price }}">
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <label class="required form-label">SKU</label>
-                                                                    <input type="text"
-                                                                        name="variation_options[{{ $key }}][sku]"
-                                                                        class="form-control" placeholder="Enter SKU"
-                                                                        value="{{ $variation->sku }}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endisset
-
-                                        </div>
-
-                                        <button id="addSection" type="button" class="btn btn-primary mt-3">Add
-                                            Option</button>
+                                        <hr class="dotted-line my-4">
                                     </div>
-
-                                    <hr class="dotted-line my-4">
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -768,10 +842,14 @@
                                             <!-- Initial card -->
                                             @isset($data->installationSteps)
                                                 @foreach ($data->installationSteps as $key => $step)
-                                                    <div class="card mb-3" data-id="{{$step->id}}">
+                                                    <div class="card mb-3" data-id="{{ $step->id }}">
                                                         <div class="card-body py-4">
-                                                            <input type="hidden" name="installation_steps[{{ $key }}][type]" value="existing">
-                                                            <input type="hidden" name="installation_steps[{{ $key }}][id]" value="{{$step->id}}">
+                                                            <input type="hidden"
+                                                                name="installation_steps[{{ $key }}][type]"
+                                                                value="existing">
+                                                            <input type="hidden"
+                                                                name="installation_steps[{{ $key }}][id]"
+                                                                value="{{ $step->id }}">
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">Name</label>
                                                                 <input type="text" class="form-control"
@@ -857,10 +935,14 @@
                                             <!-- Initial card -->
                                             @isset($data->productsFeatures)
                                                 @foreach ($data->productsFeatures as $key => $feature)
-                                                    <div class="card mb-3" data-id="{{$feature->id}}">
+                                                    <div class="card mb-3" data-id="{{ $feature->id }}">
                                                         <div class="card-body py-4">
-                                                            <input type="hidden" name="product_features[{{ $key }}][type]" value="existing">
-                                                            <input type="hidden" name="product_features[{{ $key }}][id]" value="{{$feature->id}}">
+                                                            <input type="hidden"
+                                                                name="product_features[{{ $key }}][type]"
+                                                                value="existing">
+                                                            <input type="hidden"
+                                                                name="product_features[{{ $key }}][id]"
+                                                                value="{{ $feature->id }}">
                                                             <div class="mb-3">
                                                                 <label for="name" class="form-label">Name</label>
                                                                 <input type="text" class="form-control"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -27,6 +28,25 @@ class CategoryController extends Controller
             if($categories && count($categories) > 0){
                 return CategoryResource::collection($categories)->additional(['status' => true]);
             }else{
+                return response()->json(['status' => false, "data" => "No category found"], 400);
+            }
+        }catch(\Exception $e){
+            return response()->json(['status' => false, "data" => "Something Went Wrong"], 400);
+        }
+    }
+
+    public function getCategoryById($id){
+        try{
+            $category = Category::find($id);
+            if($category && !empty($category)){
+                return [
+                    "data" => [
+                        "status" => true,
+                        "category" => new CategoryResource($category),
+                        "products" => ProductResource::collection($category->products),
+                    ],
+                ];
+            }else{ 
                 return response()->json(['status' => false, "data" => "No category found"], 400);
             }
         }catch(\Exception $e){

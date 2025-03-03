@@ -44,8 +44,8 @@ class ProductReviewResource extends JsonResource
             }),
             "other_related_products" => $this->getRelatedProducts(),
             "dos_dont" => $this->doDont()->select('id', "product_id", "name")->get(),
-            "design_application_details" => [$this->designApplicationGuide],
-            "storage_usage_details" => [$this->storageUsage],
+            "design_application_details" => $this->designApplicationGuide ? [$this->designApplicationGuide] : [],
+            "storage_usage_details" => $this->storageUsage ? [$this->storageUsage] : [],
             "variables" => $this->variables->map(function($item){
                 return [
                     "id" => $item->id,

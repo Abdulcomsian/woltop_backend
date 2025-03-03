@@ -51,6 +51,7 @@ Route::post('resend-code', [AuthController::class, 'resendCode']);
 // Categories
 Route::get('categories', [CategoryController::class, 'getAllCategories']);
 Route::get('room-categories', [CategoryController::class, 'getAllRoomCategories']);
+Route::get('get-category-by-id/{id}', [CategoryController::class, 'getCategoryById']);
 
 // Product
 Route::get('popular-products', [ProductController::class, 'popularProducts']);

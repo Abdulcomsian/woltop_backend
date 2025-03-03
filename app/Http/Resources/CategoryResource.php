@@ -17,7 +17,9 @@ class CategoryResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
+            "description" => $this->description,
             "image" => asset('assets/wolpin_media/categories/' . $this->image),
+            "video" => $this->video ? asset('assets/wolpin_media/categories/' . $this->video) : null,
         ];
     }
 }

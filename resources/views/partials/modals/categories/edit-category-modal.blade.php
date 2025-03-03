@@ -129,6 +129,45 @@
                             @enderror
                         </div>
                         <!--end::Input group-->
+                        <div id="video">
+                            
+                        </div>
+                         <!--begin::Input group-->
+                     <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fw-semibold fs-6 mb-2">Replace Category Video</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <input type="file" name="video" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category Video" accept="video/*"/>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+
+
+                    <div id="banner">
+
+                    </div>
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fw-semibold fs-6 mb-2">Replace Banner Image</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <input type="file" name="banner" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Category Video" accept="image/*"/>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+
+                     <!--begin::Input group-->
+                     <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fw-semibold fs-6 mb-2">Description</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <textarea id="edit_description" id="edit_description" name="description"></textarea>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
                     </div>
                     <!--end::Scroll-->
                     <!--begin::Actions-->

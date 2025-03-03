@@ -27,7 +27,28 @@ class CategoriesDataTable extends DataTable
                 return date("Y-m-d", strtotime($query->created_at));
             })
             ->editColumn("image", function($query){
-                $img = '<a href="'.asset('assets/wolpin_media/categories/' . $query->image).'" target="_blank">View File</a>';
+                if($query->image){
+                    $img = '<a href="'.asset('assets/wolpin_media/categories/' . $query->image).'" target="_blank">View File</a>';
+                }else{
+                    $img = null;
+                }
+                return $img;
+            })
+            ->editColumn("video", function($query){
+                if($query->video){
+                    $img = '<a href="'.asset('assets/wolpin_media/categories/' . $query->video).'" target="_blank">View File</a>';
+                } else{
+                    $img = null;
+                }
+                return $img;
+            })
+
+            ->editColumn("banner_image", function($query){
+                if($query->banner_image){
+                    $img = '<a href="'.asset('assets/wolpin_media/categories/' . $query->banner_image).'" target="_blank">View File</a>';
+                } else{
+                    $img = null;
+                }
                 return $img;
             })
             ->addColumn('parent_category', function ($query) {
@@ -36,7 +57,7 @@ class CategoriesDataTable extends DataTable
             ->addColumn('action', function($query){
                 return view('pages.categories.columns.action', compact("query"));
             })
-            ->rawColumns(['action', 'image'])
+            ->rawColumns(['action', 'image', 'video', 'banner_image'])
             ->setRowId('id');
     }
 
@@ -81,6 +102,8 @@ class CategoriesDataTable extends DataTable
             Column::make('parent_category') // Add this column
             ->title('Parent Category'), // Set column title
             Column::make('image'),
+            Column::make('video'),
+            Column::make('banner_image')->title("Banner Image"),
             Column::make('created_at'),
             Column::computed('action')
                   ->exportable(false)

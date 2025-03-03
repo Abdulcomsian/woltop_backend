@@ -41,6 +41,23 @@
     @push('scripts')
     {{ $dataTable->scripts() }}
     <script>
+        ClassicEditor
+                .create(document.querySelector("#description"))
+                .catch(error => {
+                    console.error(error);
+                });
+
+
+        ClassicEditor
+                .create(document.querySelector("#edit_description"))
+                .then( editor => {
+                    window.editor = editor;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+    
+         
         function deleteCategory(id){
             document.querySelector("#category_id_delete").value = id;
             var deleteModal = new bootstrap.Modal(document.getElementById('delete_category_modal'));
@@ -58,8 +75,37 @@
                     return response.json();
                 })
                 .then((data) => {
+                    if(data.data.description != null){
+                        editor.setData(data.data.description);
+                    }
                     document.querySelector("#category_name_edit").value = data.data.name;
                     document.querySelector("#category_id").value = data.data.id;
+                    if(data.data.video != null){
+                        let baseUrl = "{{ asset('assets/wolpin_media/categories/') }}";
+                        let videoLink = `${baseUrl}/${data.data.video}`;
+                        let video = `
+                        <video width="400" controls>
+                            <source src="${videoLink}" type="video/mp4">
+                            Your browser does not support HTML video.
+                        </video>
+                        `;
+                        document.querySelector("#video").innerHTML = video;
+                    }else{
+                        document.querySelector("#video").innerHTML = '';
+                    }
+
+
+                    if(data.data.banner_image != null){
+                        let baseUrl = "{{ asset('assets/wolpin_media/categories/') }}";
+                        let link = `${baseUrl}/${data.data.banner_image}`;
+                        let video = `
+                        <img src="${link}" alt="Banner Image" height="100">
+                        `;
+                        document.querySelector("#banner").innerHTML = video;
+                    }else{
+                        document.querySelector("#banner").innerHTML = '';
+                    }
+
                     if(data.data.image != ""){
                         let imageName = data.data.image;
                         let url = `{{asset("assets/wolpin_media/categories/" . ':imageurl')}}`.replace(":imageurl", imageName);

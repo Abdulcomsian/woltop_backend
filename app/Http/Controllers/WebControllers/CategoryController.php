@@ -31,13 +31,35 @@ class CategoryController extends Controller
                 $file->move($fileDestination, $fileName);
             }
 
+            if($request->file('video')){
+                $file = $request->file('video');
+                $fileDestination = public_path('assets/wolpin_media/categories');
+                $videoFileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move($fileDestination, $videoFileName);
+            }
+
+            if($request->file('banner')){
+                $file = $request->file('banner');
+                $fileDestination = public_path('assets/wolpin_media/categories');
+                $bannerFileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move($fileDestination, $bannerFileName);
+            }
+
             $category = new Category();
             $category->name = $request->category_name;
+            $category->description = $request->description;
             if($request->parent_cat_id != "none"){
                 $category->parent_category_id = $request->parent_cat_id;
             }
             if($request->file('category_image')){
                 $category->image = $fileName;
+            }
+            if($request->file('video')){
+                $category->video = $videoFileName;
+            }
+
+            if($request->file('banner')){
+                $category->banner_image = $bannerFileName;
             }
             if($category->save()){
                 toastr()->success('Category Saved Successfully!');
@@ -98,6 +120,20 @@ class CategoryController extends Controller
                 $file->move($fileDestination, $fileName);
             }
 
+            if($request->file('video')){
+                $file = $request->file('video');
+                $fileDestination = public_path('assets/wolpin_media/categories');
+                $videoFileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move($fileDestination, $videoFileName);
+            }
+
+            if($request->file('banner')){
+                $file = $request->file('banner');
+                $fileDestination = public_path('assets/wolpin_media/categories');
+                $bannerFileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->move($fileDestination, $bannerFileName);
+            }
+
             $category = Category::find($request->category_id);
             if($request->edit_parent_cat_id != "none"){
                 $category->parent_category_id = $request->edit_parent_cat_id;
@@ -105,8 +141,15 @@ class CategoryController extends Controller
                 $category->parent_category_id = null;
             }
             $category->name = $request->category_name;
+            $category->description = $request->description;
             if($request->file('category_image')){
                 $category->image = $fileName;
+            }
+            if($request->file('video')){
+                $category->video = $videoFileName;
+            }
+            if($request->file('banner')){
+                $category->banner_image = $bannerFileName;
             }
             if($category->update()){
                 toastr()->success('Category Updated Successfully!');

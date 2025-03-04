@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiControllers\{
     AddressController,
     AuthController,
     BlogController,
+    CareerController,
     CategoryController,
     ProductController,
     ReelController,
@@ -100,6 +101,9 @@ Route::get('get-about', [PageController::class, 'getAbout']);
 Route::get('get-coupons', [CouponController::class, 'index']);
 
 Route::get('get-toolkit', [ProductController::class, 'getToolkit']);
+
+// Career
+Route::get('career', [CareerController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);

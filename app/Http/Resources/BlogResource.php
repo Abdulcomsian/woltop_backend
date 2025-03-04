@@ -22,6 +22,7 @@ class BlogResource extends JsonResource
             "short_description" => $this->short_description,
             "description" => $this->description,
             "image" => asset('assets/wolpin_media/blogs/' . $this->image),
+            "date" => date('l, d M Y', strtotime($this->created_at)),
         ];
     }
 }

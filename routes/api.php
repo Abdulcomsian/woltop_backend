@@ -12,6 +12,7 @@ use App\Http\Controllers\ApiControllers\{
     ReviewController,
     TagController,
     CartController,
+    ContactController,
     CouponController,
     DeliveryController,
     DeliveryPreferenceController,
@@ -104,6 +105,9 @@ Route::get('get-toolkit', [ProductController::class, 'getToolkit']);
 
 // Career
 Route::get('career', [CareerController::class, 'index']);
+
+
+Route::post('contact', [ContactController::class, 'contact']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout', [AuthController::class, 'logoutUser']);

@@ -28,8 +28,9 @@ class AddressService
             $new_user->name = $data['name'];
             $new_user->email = $data['email'];
             $new_user->email_verified_at = Carbon::now();
-            $new_user->password = Hash::make(rand(11111, 99999));
+            $new_user->password = Hash::make("Pass@787#321");
             $new_user->save();
+            $new_user->assignRole("user");
             $user_id  = $new_user->id;
         }
 

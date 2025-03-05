@@ -1,4 +1,6 @@
 <?php
+
+use App\Models\VariationOption;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -548,6 +550,34 @@ if (!function_exists('generateOrderId')) {
         } while ($exists);
         
         return $id;
+    }
+}
+
+if (!function_exists('variablePrice')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function variablePrice($variableId) {
+       $data  = VariationOption::where('id', $variableId)->first();
+       return $data->price;
+    }
+}
+
+if (!function_exists('variableSalePrice')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function variableSalePrice($variableId) {
+       $data  = VariationOption::where('id', $variableId)->first();
+       return $data->sale_price;
     }
 }
 

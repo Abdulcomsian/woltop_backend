@@ -44,7 +44,28 @@ class OrderResource extends JsonResource
                 ],
             ],
             "user" => $this->user,
-            "products" => $this->products,
+            "products" => $this->products->map(function($data){
+                $products = [
+                    "id" => $data->id,
+                    "title" => $data->title,
+                    "short_description" => $data->short_description,
+                    "featured_image" => asset('assets/wolpin_media/products/featured_images/' . $data->featured_image),
+                    "type" => $data->product_type,
+                    "quantity" => $this->productOrder->where('product_id', $data->id)->value("quantity"),
+                ];
+
+                if($data->product_type == "simple"){
+                    $products['price'] = $data->price;
+                    $products['sale_price'] = $data->sale_price;
+                }
+
+                if($data->product_type == "variable"){
+                    $products['price'] = variablePrice($this->productOrder->where('product_id', $data->id)->value("variable_id"));
+                    $products['sale_price'] = variableSalePrice($this->productOrder->where('product_id', $data->id)->value("variable_id"));
+                }
+                
+                return $products;
+            }),
         ];
     }
 }

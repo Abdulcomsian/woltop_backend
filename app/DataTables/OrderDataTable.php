@@ -72,6 +72,7 @@ class OrderDataTable extends DataTable
               ->orderable(false)
               ->width(30)
               ->addClass('text-center'),
+            Column::make('user_id'),
             Column::make('order_id')->title("Order Reference"),
             Column::make('address_id')->title("Address"),
             Column::make('total_mrp'),

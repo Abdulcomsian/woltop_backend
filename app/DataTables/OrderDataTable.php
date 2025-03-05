@@ -31,6 +31,9 @@ class OrderDataTable extends DataTable
                 $data = '<a href="#" onclick="viewAddress(event, '.$query->address_id.')">View</a>';
                 return $data;
             })
+            ->editColumn("user_id", function($query){
+                return $query->user->name;
+            })
             // ->addColumn('action', function($query){
             //     return view('pages.order.columns.action', compact("query"));
             // })

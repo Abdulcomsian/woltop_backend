@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('orders', function (Blueprint $table) {
             // Drop foreign key if it exists
             if (Schema::hasColumn('orders', 'user_id')) {
-                $table->dropForeign(['user_id']); // Drop foreign key constraint
+                // $table->dropForeign(['user_id']); // Drop foreign key constraint
                 $table->dropColumn('user_id'); // Drop the column
             }
         });

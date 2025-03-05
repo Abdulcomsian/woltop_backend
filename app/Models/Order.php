@@ -13,9 +13,16 @@ class Order extends Model
         return $this->belongsTo(AddressDetail::class, 'address_id');
     }
 
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function productOrder(){
         return $this->hasMany(ProductOrder::class);
     }
 
-    
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'products_orders'); 
+    }
 }

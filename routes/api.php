@@ -124,4 +124,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('show-wishlist-items', [WishlistController::class, "showWishlistItems"]);
     Route::post('store-wishlist', [WishlistController::class, 'storeWishlist']);
     Route::get('delete-wishlist-item/{id}', [WishlistController::class, 'deleteWishlistItem']);
+
+    // Order
+    Route::get('get-user-orders', [OrderController::class, 'getUserOrders']);
 });

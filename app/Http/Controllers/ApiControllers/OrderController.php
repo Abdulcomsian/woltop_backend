@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Services\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -86,6 +87,19 @@ class OrderController extends Controller
                 ]);
             }
             // return response()->json(['status' => true, "msg" => "Order Placed Successfully", "order_id" => $data->order_id], 200); 
+        }catch(\Exception $e){
+            return response()->json(['status' => false, "msg" => "Something went wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 500);
+        }
+    }
+
+    public function getUserOrders(){
+        try{
+            $data = $this->service->getUserOrders();
+            if($data && count($data) > 0){
+                return OrderResource::collection($data)->additional(['status' => true]);
+            }else{
+                return response()->json(['status' => false, "msg" => "No Orders Found"], 500);
+            }
         }catch(\Exception $e){
             return response()->json(['status' => false, "msg" => "Something went wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 500);
         }

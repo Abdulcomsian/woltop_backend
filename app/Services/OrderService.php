@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AddressDetail;
 use App\Models\CouponUser;
 use App\Models\Order;
 use App\Models\ProductOrder;
@@ -18,20 +19,23 @@ class OrderService
     protected $productOrderModel;
     protected $variationOptionModel;
     protected $couponUserModel;
+    protected $addressModel;
 
-    public function __construct(Order $model, User $userModel, ProductOrder $productOrderModel, VariationOption $variationOptionModel, CouponUser $couponUserModel)
+    public function __construct(Order $model, User $userModel, ProductOrder $productOrderModel, VariationOption $variationOptionModel, CouponUser $couponUserModel, AddressDetail $addressModel)
     {
         $this->model = $model;
         $this->userModel = $userModel;
         $this->productOrderModel = $productOrderModel;
         $this->variationOptionModel = $variationOptionModel;
         $this->couponUserModel = $couponUserModel;
+        $this->addressModel = $addressModel;
     }
 
     public function store($data)
     {
        $save = new $this->model();
        $save->address_id = $data['address_id'];
+       $save->user_id = $data['user_id'];
        $save->total_mrp = $data['total_mrp'];
        $save->cart_discount = $data['cart_discount'];
        $save->shipping_charges = $data['shipping_charges'];
@@ -62,5 +66,9 @@ class OrderService
         }
        }
        return $save;
+    }
+
+    public function getUserOrders(){
+        return $this->model::where('user_id', Auth::user()->id)->get();
     }
 }

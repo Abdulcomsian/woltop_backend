@@ -207,7 +207,7 @@
                     <input type="hidden" name="id" value="{{ $favicons->id ?? null }}">
                     <div class="row g-4">
                         <div class="col-md-12">
-                            @if($favicons->twitter_link != null)
+                            @if(isset($favicons) && $favicons->twitter_link != null)
                             <div>
                                 <img src="{{asset("assets/wolpin_media/general/homepage/" . $favicons->twitter_link)}}" alt="Admin Favicon" height="50">
                             </div>
@@ -222,7 +222,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            @if($favicons->instagram_link != null)
+                            @if(isset($favicons) && $favicons->instagram_link != null)
                             <div>
                                 <img src="{{asset("assets/wolpin_media/general/homepage/" . $favicons->instagram_link)}}" alt="Admin Favicon" height="50">
                             </div>

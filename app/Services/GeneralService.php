@@ -23,6 +23,10 @@ class GeneralService
         return $this->model::where('type', 'footer_information')->first();
     }
 
+    public function getFavIcon(){
+        return $this->model::where('type', 'favicons')->first();
+    }
+
 
     public function updateCharges($data){
         $update = $this->model::updateOrCreate([
@@ -51,6 +55,43 @@ class GeneralService
             "twitter_link" => $data['twitter'],
             "instagram_link" => $data['instagram'],
             "type" => "footer_information",
+        ]);
+        return $update->save();
+    }
+
+    public function updateFavIcons($data){
+        $oldHome = $this->model::where('id', $data['id'])->first();
+        $path = public_path("assets/wolpin_media/general/homepage");
+        $admin_favicon = $oldHome->twitter_link ?? null;
+        $frontend_favicon = $oldHome->instagram_link ?? null;
+        if(isset($data['admin_favicon'])){
+            if ($oldHome && !empty($oldHome->twitter_link)) {
+                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $oldHome->twitter_link);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            $admin_favicon = time() . '_' . rand() . '.' . $data['admin_favicon']->getClientOriginalExtension();
+            $data['admin_favicon']->move($path, $admin_favicon);
+        }
+
+        if(isset($data['frontend_favicon'])){
+            if ($oldHome && !empty($oldHome->instagram_link)) {
+                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $oldHome->instagram_link);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            $frontend_favicon = time() . '_' . rand() . '.' . $data['frontend_favicon']->getClientOriginalExtension();
+            $data['frontend_favicon']->move($path, $frontend_favicon);
+        }
+        $update = $this->model::updateOrCreate([
+            "id" => $data['id']
+        ],
+        [
+            "twitter_link" => $admin_favicon,
+            "instagram_link" => $frontend_favicon,
+            "type" => "favicons",
         ]);
         return $update->save();
     }

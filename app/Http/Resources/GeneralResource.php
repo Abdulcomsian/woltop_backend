@@ -37,6 +37,13 @@ class GeneralResource extends JsonResource
                 "instagram_link" => $this->instagram_link,
             ];
         }
+
+        if($this->type == "favicons"){
+            return [
+                "id" => $this->id,
+                "icon" => asset("assets/wolpin_media/general/homepage/" . $this->instagram_link),
+            ];
+        }
         return parent::toArray($request);
     }
 }

@@ -3,7 +3,7 @@
         /* navigation style start.. */
         .nav-tabs .nav-link {
             color: black;
-            width: 320px;
+            width: 220px;
         }
 
         .nav-tabs .nav-link:hover {
@@ -94,6 +94,12 @@
                             <button class="nav-link" id="ps2-tab" data-bs-toggle="tab" data-bs-target="#ps2-content"
                                 type="button" role="tab" aria-controls="ps2-content" aria-selected="false">
                                 Advanced Information
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" id="ps4-tab" data-bs-toggle="tab" data-bs-target="#ps4-content"
+                                type="button" role="tab" aria-controls="ps4-content" aria-selected="false">
+                                Product Features
                             </button>
                         </li>
                         <li class="nav-item">
@@ -906,15 +912,63 @@
                         <div class="col-md-3">
                             <div class="nav flex-column nav-pills me-3" id="ps3-child-tabs" role="tablist"
                                 aria-orientation="vertical">
+                                <button class="nav-link active" id="product_seo-tab" data-bs-toggle="pill"
+                                    data-bs-target="#product_seo" type="button" role="tab"
+                                    aria-controls="product_seo" aria-selected="false">
+                                    Products SEO
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Child Tab Content -->
+                        <div class="col-md-9">
+                            <div class="tab-content" id="ps3-child-tabs-content">
+                                <!-- product_seo Tab -->
+                                <div class="tab-pane fade show active" id="product_seo" role="tabpanel"
+                                    aria-labelledby="product_seo-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="featured-image" class="form-label fw-semibold">Product Seo</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add Your Product Seo Details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card">
+                                            <div class="card-body py-4">
+                                                <div class="mb-3">
+                                                    <label for="metaTitle" class="form-label">Meta Title </label>
+                                                    <input type="text" id="metaTitle" class="form-control"
+                                                        name="meta_title" placeholder="Enter product Meta Title"
+                                                        value="{{ $data->meta_title }}">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="metaDesc" class="form-label">Meta Description</label>
+                                                    <input type="text" id="metaDesc" class="form-control"
+                                                        name="meta_description"
+                                                        placeholder="Enter product Meta Description"
+                                                        value="{{ $data->meta_description }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PS4 Content -->
+                <div class="tab-pane fade" id="ps4-content" role="tabpanel" aria-labelledby="ps4-tab">
+                    <div class="row">
+                        <!-- Vertical Child Tabs Navigation -->
+                        <div class="col-md-3">
+                            <div class="nav flex-column nav-pills me-3" id="ps3-child-tabs" role="tablist"
+                                aria-orientation="vertical">
                                 <button class="nav-link active" id="products_features-tab" data-bs-toggle="pill"
                                     data-bs-target="#products_features" type="button" role="tab"
                                     aria-controls="products_features" aria-selected="true">
                                     Products Features
-                                </button>
-                                <button class="nav-link" id="product_seo-tab" data-bs-toggle="pill"
-                                    data-bs-target="#product_seo" type="button" role="tab"
-                                    aria-controls="product_seo" aria-selected="false">
-                                    Products SEO
                                 </button>
                             </div>
                         </div>
@@ -960,7 +1014,7 @@
                                                                     class="form-control">
                                                                 @if ($feature->image != null)
                                                                     <img src="{{ asset('assets/wolpin_media/products/features/' . $feature->image) }}"
-                                                                        class="mt-4" height="200" alt="Image">
+                                                                        class="mt-4" height="90" alt="Image">
                                                                 @endif
                                                             </div>
                                                             <span
@@ -975,37 +1029,6 @@
                                         <button id="addFeatureFieldButton" class="btn btn-primary mt-3"
                                             type="button">Add
                                             More</button>
-                                    </div>
-                                    <hr class="dotted-line my-4">
-                                </div>
-
-                                <!-- product_seo Tab -->
-                                <div class="tab-pane fade" id="product_seo" role="tabpanel"
-                                    aria-labelledby="product_seo-tab" style="flex-wrap: nowrap;">
-                                    <div class="col-md-4">
-                                        <label for="featured-image" class="form-label fw-semibold">Product Seo</label>
-                                        <small class="text-muted d-block mb-2">
-                                            Add Your Product Seo Details from here.
-                                        </small>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card">
-                                            <div class="card-body py-4">
-                                                <div class="mb-3">
-                                                    <label for="metaTitle" class="form-label">Meta Title </label>
-                                                    <input type="text" id="metaTitle" class="form-control"
-                                                        name="meta_title" placeholder="Enter product Meta Title"
-                                                        value="{{ $data->meta_title }}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="metaDesc" class="form-label">Meta Description</label>
-                                                    <input type="text" id="metaDesc" class="form-control"
-                                                        name="meta_description"
-                                                        placeholder="Enter product Meta Description"
-                                                        value="{{ $data->meta_description }}">
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <hr class="dotted-line my-4">
                                 </div>

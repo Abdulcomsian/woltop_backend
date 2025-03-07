@@ -96,6 +96,7 @@ Route::post('place-order', [OrderController::class, 'store']);
 // General 
 Route::get('price-charges', [GeneralController::class, 'priceCharges']);
 Route::get('get-contact-info', [GeneralController::class, 'getInfo']);
+Route::get('get-favicon', [GeneralController::class, 'getFavicon']);
 Route::get('get-home', [PageController::class, 'getHome']);
 Route::get('get-about', [PageController::class, 'getAbout']);
 

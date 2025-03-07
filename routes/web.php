@@ -254,6 +254,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('', 'index')->name('index');
             Route::patch('update-charges', 'updateCharges')->name('update.charges');
             Route::patch('update-info', 'updateInfo')->name('update.info');
+            Route::patch('update-favicons', 'updateFavIcons')->name('update.fav.icons');
         });
 
     Route::controller(PageController::class)

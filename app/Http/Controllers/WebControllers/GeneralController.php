@@ -21,7 +21,8 @@ class GeneralController extends Controller
         try{
             $charges = General::where('type', 'charges')->first();
             $footer_information = General::where('type', 'footer_information')->first();
-            return view('pages.general.index', compact("charges", "footer_information"));
+            $favicons = General::where('type', 'favicons')->first();
+            return view('pages.general.index', compact("charges", "footer_information", "favicons"));
         }catch(\Exception $e){
             toastr()->error("Something went wrong");
             return redirect()->back();
@@ -60,6 +61,23 @@ class GeneralController extends Controller
         
         try{
             $this->service->updateInfo($request->all());
+            toastr()->success("Data updated successfully");
+            return redirect()->back();
+        }catch(\Exception $e){
+            toastr()->error("Something went wrong");
+            return redirect()->back();
+        }
+    }
+
+    public function updateFavIcons(Request $request){
+        $request->validate([
+            "id" => "nullable",
+            "admin_favicon" => "nullable",
+            "frontend_favicon" => "nullable",
+        ]);
+        
+        try{
+            $this->service->updateFavIcons($request->all());
             toastr()->success("Data updated successfully");
             return redirect()->back();
         }catch(\Exception $e){

@@ -180,6 +180,68 @@
         </div>
         <!--end::Card body-->
     </div>
+
+
+    {{-- Favicons  --}}
+    <div class="card mt-4">
+        <!--begin::Card header-->
+        <div class="card-header border-0 pt-6">
+            <!--begin::Card title-->
+            <div class="card-title">
+                 <!--begin::Toolbar-->
+                 <div data-kt-user-table-toolbar="base">
+                    <span>Upload Favicons images</span>
+                </div>
+                <!--end::Toolbar-->
+            </div>
+        </div>
+        <!--end::Card header-->
+
+        <!--begin::Card body-->
+        <div class="card-body py-4">
+            <!--begin::Table-->
+            <div>
+                <form action="{{route('general.update.fav.icons')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method("PATCH")
+                    <input type="hidden" name="id" value="{{ $favicons->id ?? null }}">
+                    <div class="row g-4">
+                        <div class="col-md-12">
+                            <div>
+                                <img src="{{asset("assets/wolpin_media/general/homepage/" . $favicons->twitter_link)}}" alt="Admin Favicon" height="50">
+                            </div>
+                            <div class="mt-2">
+                                <label for="" class="form-label fw-semibold">Favicon for Admin Panel:</label>
+                                <input type="file" class="form-control" name="admin_favicon" placeholder="Admin Favicon">
+                            </div>
+                            @error("admin_favicon")
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-12">
+                            <div>
+                                <img src="{{asset("assets/wolpin_media/general/homepage/" . $favicons->instagram_link)}}" alt="Admin Favicon" height="50">
+                            </div>
+                            <div class="mt-2">
+                                <label for="" class="form-label fw-semibold">Favicon for Frontend Application:</label>
+                                <input type="file" class="form-control" name="frontend_favicon" placeholder="Frontend Favicon">
+                            </div>
+                            @error("frontend_favicon")
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+            <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+    </div>
     @push('scripts')
 
     @endpush

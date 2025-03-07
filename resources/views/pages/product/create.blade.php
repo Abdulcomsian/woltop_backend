@@ -3,7 +3,7 @@
         /* navigation style start.. */
         .nav-tabs .nav-link {
             color: black;
-            width: 320px;
+            width: 220px;
         }
 
         .nav-tabs .nav-link:hover {
@@ -89,6 +89,12 @@
                         <button class="nav-link" id="ps2-tab" data-bs-toggle="tab" data-bs-target="#ps2-content"
                             type="button" role="tab" aria-controls="ps2-content" aria-selected="false">
                             Advanced Information
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="ps4-tab" data-bs-toggle="tab" data-bs-target="#ps4-content"
+                            type="button" role="tab" aria-controls="ps4-content" aria-selected="false">
+                            Product Features
                         </button>
                     </li>
                     <li class="nav-item">
@@ -672,12 +678,7 @@
                         <div class="col-md-3">
                             <div class="nav flex-column nav-pills me-3" id="ps3-child-tabs" role="tablist"
                                 aria-orientation="vertical">
-                                <button class="nav-link active" id="products_features-tab" data-bs-toggle="pill"
-                                    data-bs-target="#products_features" type="button" role="tab"
-                                    aria-controls="products_features" aria-selected="true">
-                                    Products Features
-                                </button>
-                                <button class="nav-link" id="product_seo-tab" data-bs-toggle="pill"
+                                <button class="nav-link active" id="product_seo-tab" data-bs-toggle="pill"
                                     data-bs-target="#product_seo" type="button" role="tab"
                                     aria-controls="product_seo" aria-selected="false">
                                     Products SEO
@@ -688,31 +689,8 @@
                         <!-- Child Tab Content -->
                         <div class="col-md-9">
                             <div class="tab-content" id="ps3-child-tabs-content">
-                                <!-- Products Features Tab -->
-                                <div class="tab-pane fade show active" id="products_features" role="tabpanel"
-                                    aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
-                                    <div class="col-md-4">
-                                        <label for="products_features" class="form-label fw-semibold">Products
-                                            Features</label>
-                                        <small class="text-muted d-block mb-2">
-                                            Add your products features details from here.
-                                        </small>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <!-- Dynamic fields container -->
-                                        <div id="featuresFieldsContainer">
-                                            <!-- Initial card -->
-                                        </div>
-                                        <!-- Add More button -->
-                                        <button id="addFeatureFieldButton" class="btn btn-primary mt-3"
-                                            type="button">Add
-                                            More</button>
-                                    </div>
-                                    <hr class="dotted-line my-4">
-                                </div>
-
                                 <!-- product_seo Tab -->
-                                <div class="tab-pane fade" id="product_seo" role="tabpanel"
+                                <div class="tab-pane fade show active" id="product_seo" role="tabpanel"
                                     aria-labelledby="product_seo-tab" style="flex-wrap: nowrap;">
                                     <div class="col-md-4">
                                         <label for="featured-image" class="form-label fw-semibold">Product Seo</label>
@@ -736,6 +714,51 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PS4 Content -->
+                <div class="tab-pane fade" id="ps4-content" role="tabpanel" aria-labelledby="ps4-tab">
+                    <div class="row">
+                        <!-- Vertical Child Tabs Navigation -->
+                        <div class="col-md-3">
+                            <div class="nav flex-column nav-pills me-3" id="ps4-child-tabs" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="nav-link active" id="products_features-tab" data-bs-toggle="pill"
+                                    data-bs-target="#products_features" type="button" role="tab"
+                                    aria-controls="products_features" aria-selected="true">
+                                    Products Features
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Child Tab Content -->
+                        <div class="col-md-9">
+                            <div class="tab-content" id="ps4-child-tabs-content">
+                                <!-- Products Features Tab -->
+                                <div class="tab-pane fade show active" id="products_features" role="tabpanel"
+                                    aria-labelledby="products_features-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="products_features" class="form-label fw-semibold">Products
+                                            Features</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add your products features details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <!-- Dynamic fields container -->
+                                        <div id="featuresFieldsContainer">
+                                            <!-- Initial card -->
+                                        </div>
+                                        <!-- Add More button -->
+                                        <button id="addFeatureFieldButton" class="btn btn-primary mt-3"
+                                            type="button">Add
+                                            More</button>
                                     </div>
                                     <hr class="dotted-line my-4">
                                 </div>

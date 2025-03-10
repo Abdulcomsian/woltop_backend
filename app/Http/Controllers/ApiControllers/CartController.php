@@ -29,11 +29,12 @@ class CartController extends Controller
 
     public function storeCart(Request $request){
         $request->validate([
-            "product_id" => "required",
+            "product_id" => "nullable|required_without_all:variable_id",
+            "variable_id" => "nullable|required_without_all:product_id",
         ]);
 
         try{
-            $response = $this->cartService->storeCart($request);
+            $response = $this->cartService->storeCart($request->all());
             if($response['status'] == "success"){
                 return response()->json(['status' => true, "msg" => $response['message']], 200);
             }else{

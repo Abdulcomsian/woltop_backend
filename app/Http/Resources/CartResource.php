@@ -14,16 +14,26 @@ class CartResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        $array = [
             "id" => $this->products->id,
             "title" => $this->products->title,
             "short_description" => $this->products->short_description,
             "description" => $this->products->description,
-            "price" => $this->products->price,
-            "sale_price" => $this->products->sale_price,
-            "discount" => $this->products->discount,
-            "sku" => $this->products->sku,
             "image" => asset('assets/wolpin_media/products/featured_images/' . $this->products->featured_image),
         ];
+        
+        if(isset($this->variation_id) && $this->variation_id != null){ // which means its a variable product
+            $array['price'] = $this->variation->price;
+            $array['sale_price'] = $this->variation->sale_price;
+            $array['discount'] = $this->variation->discount;
+            $array['sku'] = $this->variation->sku;
+        }else{ // means its a simple product
+            $array['price'] = $this->products->price;
+            $array['sale_price'] = $this->products->sale_price;
+            $array['discount'] = $this->products->discount;
+            $array['sku'] = $this->products->sku;
+        }
+
+        return $array;
     }
 }

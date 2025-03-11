@@ -103,6 +103,12 @@
                             SEO Details
                         </button>
                     </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="ps5-tab" data-bs-toggle="tab" data-bs-target="#ps5-content"
+                            type="button" role="tab" aria-controls="ps5-content" aria-selected="false">
+                            UpSell Product
+                        </button>
+                    </li>
                 </ul>
             </div>
 
@@ -766,8 +772,52 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <!-- PS4 Content -->
+                <div class="tab-pane fade" id="ps5-content" role="tabpanel" aria-labelledby="ps5-tab">
+                    <div class="row">
+                        <!-- Vertical Child Tabs Navigation -->
+                        <div class="col-md-3">
+                            <div class="nav flex-column nav-pills me-3" id="ps5-child-tabs" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="nav-link active" id="products_upsell-tab" data-bs-toggle="pill"
+                                    data-bs-target="#products_upsell" type="button" role="tab"
+                                    aria-controls="products_upsell" aria-selected="true">
+                                    Products UpSell
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Child Tab Content -->
+                        <div class="col-md-9">
+                            <div class="tab-content" id="ps5-child-tabs-content">
+                                <!-- Products Features Tab -->
+                                <div class="tab-pane fade show active" id="products_upsell" role="tabpanel"
+                                    aria-labelledby="products_upsell-tab" style="flex-wrap: nowrap;">
+                                    <div class="col-md-4">
+                                        <label for="products_upsell" class="form-label fw-semibold">Products
+                                            Upsell</label>
+                                        <small class="text-muted d-block mb-2">
+                                            Add your products upsell details from here.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <!-- Dynamic fields container -->
+                                        <div id="upsellFieldContainer">
+                                            <!-- Initial card -->
+                                        </div>
+                                        <!-- Add More button -->
+                                        <button id="addUpsellFieldButton" class="btn btn-primary mt-3"
+                                            type="button">Add
+                                            More</button>
+                                    </div>
+                                    <hr class="dotted-line my-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row mt-4">
                 <div class="d-flex justify-content-end">
                     <button type="button" class="btn btn-primary next-tab-btn me-2">Next</button>
@@ -781,6 +831,7 @@
     @push('scripts')
     <script>
         var attributes = {!! json_encode($attributes) !!};
+        var products = {!! json_encode($products) !!};
         var get_attribute_route = "{{ route('product.attributes.values') }}";
         var category_route = "{{ route('product.get.categories') }}";
     </script>

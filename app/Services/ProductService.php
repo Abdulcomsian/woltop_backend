@@ -14,6 +14,7 @@ use App\Models\ProductImage;
 use App\Models\ProductTag;
 use App\Models\ProductVariable;
 use App\Models\StorageUsage;
+use App\Models\UpSellModel;
 use App\Models\VariationOption;
 
 class ProductService
@@ -31,6 +32,7 @@ class ProductService
     protected $variationOptionModel;
     protected $applicationDetailModel;
     protected $storageDetailModel;
+    protected $upSellModel;
 
 
     public function __construct(
@@ -47,6 +49,7 @@ class ProductService
         VariationOption $variationOptionModel,
         ApplicationGuide $applicationDetailModel,
         StorageUsage $storageDetailModel,
+        UpSellModel $upSellModel,
     )
     {
         $this->model = $model;
@@ -62,6 +65,7 @@ class ProductService
         $this->variationOptionModel = $variationOptionModel;
         $this->applicationDetailModel = $applicationDetailModel;
         $this->storageDetailModel = $storageDetailModel;
+        $this->upSellModel = $upSellModel;
     }
 
     public function store($data)
@@ -181,6 +185,16 @@ class ProductService
                         $feature->image = $featureImage;
                     }
                     $feature->save();
+                }
+            }
+
+            // Storing Upsell products
+            if(isset($data['upsell_products']) && count($data['upsell_products']) > 0){
+                foreach($data['upsell_products'] as $item){
+                    $upsell = new $this->upSellModel;
+                    $upsell->product_id = $product->id;
+                    $upsell->other_related_product_id = $item;
+                    $upsell->save();
                 }
             }
 

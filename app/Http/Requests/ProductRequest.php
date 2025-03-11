@@ -127,6 +127,7 @@ class ProductRequest extends FormRequest
             "product_features.*.image" => "sometimes",
             "meta_title" => "sometimes",
             "meta_description" => "sometimes",
+            "upsell_products" => "sometimes|array",
         ];
     }
 }

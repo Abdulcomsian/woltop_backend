@@ -44,6 +44,23 @@ class CartService
             : ["status" => "error", "message" => "Failed to add product to cart"];
     }
 
+    public function storeCartArray($data)
+    {
+        foreach($data as $item){
+            $product_id = $item['product_id'];
+            if(isset($item['variable_id']) && $item['variable_id'] != null){
+                $product_id = $this->variationModel::where('id', $item['variable_id'])->value("product_id");
+            }
+
+            $cart = new $this->model();
+            $cart->user_id = Auth::user()->id;
+            $cart->product_id = $product_id;
+            $cart->variation_id = $item['variable_id'] ?? null;
+            $cart->save();
+        }
+        return $cart;
+    }
+
     public function deleteCartItem($product_id){
         return $this->model::where('product_id', $product_id)->delete();
     }

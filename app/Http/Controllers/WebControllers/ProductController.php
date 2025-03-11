@@ -9,6 +9,7 @@ use App\Models\Attribute as ModelsAttribute;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\ParentCategory;
+use App\Models\Product;
 use App\Models\Tag;
 use App\Models\VariationOption;
 use App\Services\ProductService;
@@ -35,7 +36,8 @@ class ProductController extends Controller
         $tags = Tag::get();
         $attributes = ModelsAttribute::get();
         $colors = Color::get();
-        return view('pages.product.create', compact("parent_categories", "categories", "tags", "attributes", "colors"));
+        $products = Product::with('variables')->where('status', 'publish')->get();
+        return view('pages.product.create', compact("parent_categories", "categories", "tags", "attributes", "colors", "products"));
     }
 
     public function store(ProductRequest $request)

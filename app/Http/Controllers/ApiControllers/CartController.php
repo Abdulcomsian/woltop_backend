@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\ApiControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CartResource;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
+use App\Models\UpSellModel;
 use App\Services\CartService;
 use Illuminate\Http\Request;
 
@@ -17,8 +20,15 @@ class CartController extends Controller
     public function showCartItems(){
         try{
             $data = $this->cartService->showCartItem();
+            $product_ids = $data->pluck("product_id")->toArray();
+            $otherRelatedProductIds = UpSellModel::whereIn('product_id', $product_ids)->whereNotIn('other_related_product_id', $product_ids)->pluck("other_related_product_id")->toArray();
+            $otherRelatedProducts = Product::whereIn('id', $otherRelatedProductIds)->get();
             if($data && count($data) > 0){
-                return CartResource::collection($data)->additional(['status' => true]);
+                return [
+                    "status" => true,
+                    "data" => CartResource::collection($data),
+                    "upsell_products" => ProductResource::collection($otherRelatedProducts),
+                ];
             }else{
                 return response()->json(['status' => false, "data" => "Cart is empty"], 400);
             }
@@ -40,6 +50,15 @@ class CartController extends Controller
             }else{
                 return response()->json(['status' => false, "msg" => $response['message']], 400);
             }
+        }catch(\Exception $e){
+            return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400); 
+        }
+    }
+
+    public function storeCartArray(Request $request){
+        try{
+            $response = $this->cartService->storeCartArray($request->all());
+            return response()->json(['status' => true, "msg" => "Cart items saved successfully"], 200);
         }catch(\Exception $e){
             return response()->json(['status' => false, "data" => "Something Went Wrong", "error" => $e->getMessage(), "on line" => $e->getLine()], 400); 
         }

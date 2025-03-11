@@ -119,6 +119,7 @@ Route::middleware('auth:sanctum')->group(function(){
     // Cart
     Route::get('show-cart-items', [CartController::class, "showCartItems"]);
     Route::post('store-cart', [CartController::class, 'storeCart']);
+    Route::post('store-cart-array', [CartController::class, 'storeCartArray']);
     Route::get('delete-cart-item/{id}', [CartController::class, 'deleteCartItem']);
 
     // Wishlist

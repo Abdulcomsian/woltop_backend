@@ -773,7 +773,7 @@
                     </div>
                 </div>
 
-                <!-- PS4 Content -->
+                <!-- PS5 Content -->
                 <div class="tab-pane fade" id="ps5-content" role="tabpanel" aria-labelledby="ps5-tab">
                     <div class="row">
                         <!-- Vertical Child Tabs Navigation -->

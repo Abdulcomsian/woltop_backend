@@ -98,6 +98,10 @@ class Product extends Model
         return $this->hasMany(ProductFeature::class, 'product_id');
     }
 
+    public function upsellProduct(){
+        return $this->hasMany(UpSellModel::class, 'product_id');
+    }
+
     // Custom Helper function for Related Products 
     public function getRelatedProducts()
     {

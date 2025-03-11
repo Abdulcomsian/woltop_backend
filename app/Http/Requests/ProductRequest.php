@@ -74,6 +74,7 @@ class ProductRequest extends FormRequest
                 "removed_features" => "sometimes|array",
                 "meta_title" => "sometimes",
                 "meta_description" => "sometimes",
+                "upsell_products" => "sometimes|array",
             ];
 
             if($this->input('is_installable_type') == "toolkit"){

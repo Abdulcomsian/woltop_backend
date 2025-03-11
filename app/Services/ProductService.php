@@ -454,6 +454,18 @@ class ProductService
                     }
                 }
             }
+
+            // Storing Upsell products
+            if(isset($data['upsell_products']) && count($data['upsell_products']) > 0){
+                $this->upSellModel::where('product_id', $product->id)->delete();
+                foreach($data['upsell_products'] as $item){
+                    $upsell = new $this->upSellModel;
+                    $upsell->product_id = $product->id;
+                    $upsell->other_related_product_id = $item;
+                    $upsell->save();
+                }
+            }
+
             // Storing Product Features
             if(isset($data['product_features']) && count($data['product_features']) > 0){
                 // deleting old feature and image from the server

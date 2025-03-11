@@ -134,6 +134,74 @@
         addButton.addEventListener('click', addField);
     });
 
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.getElementById('upsellFieldContainer');
+        const addButton = document.getElementById('addUpsellFieldButton');
+    
+        function updateDropdowns() {
+            let selectedValues = new Set();
+    
+            // Collect all selected values
+            document.querySelectorAll('.upsell-select').forEach(select => {
+                if (select.value) {
+                    selectedValues.add(select.value);
+                }
+            });
+    
+            // Update each select dropdown
+            document.querySelectorAll('.upsell-select').forEach(select => {
+                Array.from(select.options).forEach(option => {
+                    if (selectedValues.has(option.value) && option.value !== select.value && option.value !== "") {
+                        option.hidden = true;
+                    } else {
+                        option.hidden = false;
+                    }
+                });
+            });
+    
+            // Disable add button if all products are selected
+            let availableOptions = products.length - selectedValues.size;
+            addButton.disabled = availableOptions <= 0;
+        }
+    
+        function addField() {
+            let optionsHTML = `<option value="" selected disabled>Select Option</option>`;
+            for (let product of products) {
+                let sku = product.sku ? product.sku : "Variable Product";
+                optionsHTML += `<option value="${product.id}">${product.title} | ${sku}</option>`;
+            }
+    
+            const fieldHTML = `
+                <div class="input-group mb-3">
+                    <select name="upsell_products[]" class="form-select upsell-select">
+                        ${optionsHTML}
+                    </select>
+                    <button class="btn btn-danger remove-field" type="button">Remove</button>
+                </div>
+            `;
+    
+            container.insertAdjacentHTML('beforeend', fieldHTML);
+            updateDropdowns(); // Update dropdowns after adding a new one
+        }
+    
+        // Trigger updateDropdowns when a selection is made
+        container.addEventListener('change', function (e) {
+            if (e.target.classList.contains('upsell-select')) {
+                updateDropdowns();
+            }
+        });
+    
+        // Remove a field and update available options
+        container.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-field')) {
+                e.target.closest('.input-group').remove();
+                updateDropdowns(); // Update dropdowns after removal
+            }
+        });
+    
+        addButton.addEventListener('click', addField);
+    });
+
     //installation logic
     document.addEventListener('DOMContentLoaded', function() {
         const installationContainer = document.getElementById('installationFieldsContainer');

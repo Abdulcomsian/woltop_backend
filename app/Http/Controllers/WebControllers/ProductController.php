@@ -94,7 +94,8 @@ class ProductController extends Controller
             $groupedVariables = array_values($groupedVariables);
             $selectedAttributes = $data->productVariables->pluck('attributes.attribute.id')->toArray();
             $productVariations = VariationOption::where('product_id', $id)->get();
-            return view('pages.product.edit', compact("data", "parent_categories", "categories", "tags", "attributes", "colors", "groupedVariables", "selectedAttributes", "productVariations"));
+            $products = Product::with('variables', 'upsellProduct')->where('status', 'publish')->get();
+            return view('pages.product.edit', compact("data", "parent_categories", "categories", "tags", "attributes", "colors", "groupedVariables", "selectedAttributes", "productVariations", "products"));
         }catch(\Exception $e){
             toastr()->error($e->getMessage());
             return redirect()->back();

@@ -292,6 +292,84 @@ class ProductService
         return $this->model::findOrFail($id);
     }
 
+    public function updateProductImage($id, $filename, $model, $column){
+        return $model::where('id', $id)->update([
+            $column => $filename,
+        ]);
+    }
+
+    public function optimizeImage($imagePath, $outputPath, $size)
+    {
+        try{        
+            $nodeScript = base_path('node_scripts/sharp.js');
+            // Execute the Node.js script
+            $command = "node $nodeScript " . escapeshellarg($imagePath) . " " . escapeshellarg($outputPath) . " " . $size;
+            exec($command, $output, $status);
+
+            if ($status === 0) {
+                return response()->json(['message' => 'Image optimized successfully', 'filename' => basename($outputPath)]);
+            } else {
+                return response()->json(['error' => 'Image optimization failed'], 500);
+            }
+        }catch(\Exception $e){
+            dd($e->getMessage(), $e->getLine());
+        }
+    }
+
+
+    public function optimize($id)
+    {
+        $status = true;
+        $product = $this->model::findOrFail($id);
+        // for featured Image
+        $featuredImage = public_path("assets/wolpin_media/products/featured_images/" . $product->featured_image);
+        $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . 'optimized_' . rand() . '_' . basename($featuredImage));
+        $result = $this->optimizeImage($featuredImage, $featuredOuput, "1600 2700");
+        $data = $result->getData();
+        if(isset($data->error)){
+            $status = false;
+        }else{
+            $initialFilename = explode(".", $data->filename);
+            $filename = $initialFilename[0] . ".webp";
+            $this->updateProductImage($id, $filename, $this->model, "featured_image");
+        }
+        
+
+        // for gallery images
+        $galleryImages = $this->productImagesModel::where('product_id', $id)->get();
+        if(isset($galleryImages) && count($galleryImages) > 0){
+            foreach($galleryImages as $image){
+                $galleryImage = public_path("assets/wolpin_media/products/gallery_images/" . $image->image_path);
+                $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . 'optimized_' . rand() . '_' . basename($galleryImage));
+                $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1600 2700");
+                $data = $result->getData();
+                if(isset($data->error)){
+                    $status = false;
+                }else{
+                    $initialFilename = explode(".", $data->filename);
+                    $filename = $initialFilename[0] . ".webp";
+                    $this->updateProductImage($id, $filename, $this->productImagesModel, "image_path");
+                }
+            }
+        }
+
+        
+
+
+
+        if($status == true){
+            return [
+                "status" => true,
+                "message" => "Image optimization successfull"
+            ];
+        }else{
+            return [
+                "status" => false,
+                "message" => "Image optimization failed"
+            ];
+        }
+    }
+
     public function update($data)
     {
         $product = $this->model::findOrFail($data['id']);

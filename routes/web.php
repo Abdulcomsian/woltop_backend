@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\{
     PermissionsController,
     RolesController,
 };
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -140,6 +141,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::delete('delete', 'delete')->name('delete');
             Route::delete('delete/image', 'deleteImage')->name('delete.image');
             Route::get('edit/{id}', 'edit')->name('edit');
+            Route::get('optimize/{id}', 'optimize')->name('optimize');
             Route::patch('update', 'update')->name('update');
             Route::post('fetch-attributes-values', 'fetchAttributesValues')->name('attributes.values');
             Route::post('get-categories', 'getCategories')->name('get.categories');
@@ -289,5 +291,4 @@ Route::get('/error', function () {
 });
 
 Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect']);
-
 require __DIR__ . '/auth.php';

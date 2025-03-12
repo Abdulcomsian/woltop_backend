@@ -11,7 +11,7 @@ const height = parseInt(process.argv[5]) || null; // Resize height
 sharp(inputPath)
   .resize(width, height) // Resize if dimensions are provided
   .toFormat('webp') // Convert to WebP for better optimization
-  .toFile(outputPath)
+  .toFile(outputPath.replace(/\.\w+$/, '.webp')) // converting any extension of the output file into webp
   .then(() => {
     console.log('Image optimized successfully');
     process.exit(0);

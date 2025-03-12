@@ -15,4 +15,14 @@
         </span>
     </div>
     <!--end::Menu item-->
+
+    @if($query->is_optimized == false)
+    <!--begin::Menu item-->
+    <div class="menu-item">
+        <a href="{{route('product.optimize', ['id' => $query->id])}}" class="menu-link">
+            <i class="fa-solid fa-chart-line"></i>
+        </a>
+    </div>
+    <!--end::Menu item-->
+    @endif
 </div>

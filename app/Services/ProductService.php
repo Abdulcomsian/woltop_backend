@@ -293,7 +293,10 @@ class ProductService
         return $this->model::findOrFail($id);
     }
 
-    public function updateProductImage($id, $filename, $model, $column){
+    public function updateProductImage($id, $filename, $model, $column, $oldPath){
+        if(isset($oldPath) && file_exists($oldPath)){
+            unlink($oldPath);
+        }
         return $model::where('id', $id)->update([
             $column => $filename,
         ]);
@@ -330,7 +333,7 @@ class ProductService
         if(isset($data->error)){
             $status = false;
         }else{
-            $this->updateProductImage($id, $data->filename, $this->model, "featured_image");
+            $this->updateProductImage($id, $data->filename, $this->model, "featured_image", $featuredImage);
         }
         
 
@@ -345,14 +348,10 @@ class ProductService
                 if(isset($data->error)){
                     $status = false;
                 }else{
-                    $this->updateProductImage($image->id, $data->filename, $this->productImagesModel, "image_path");
+                    $this->updateProductImage($image->id, $data->filename, $this->productImagesModel, "image_path", $galleryImage);
                 }
             }
         }
-
-
-
-
 
         if($status == true){
             return [

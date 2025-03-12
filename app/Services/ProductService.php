@@ -324,7 +324,7 @@ class ProductService
         $product = $this->model::findOrFail($id);
         // for featured Image
         $featuredImage = public_path("assets/wolpin_media/products/featured_images/" . $product->featured_image);
-        $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . 'optimized_' . rand() . '.web');
+        $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . 'optimized_' . rand() . '.webp');
         $result = $this->optimizeImage($featuredImage, $featuredOuput, "1600 2700");
         $data = $result->getData();
         if(isset($data->error)){

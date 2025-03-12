@@ -337,13 +337,13 @@ class ProductService
 
         // for gallery images
         $galleryImages = $this->productImagesModel::where('product_id', $id)->get();
-        dd($galleryImages);
         if(isset($galleryImages) && count($galleryImages) > 0){
             foreach($galleryImages as $image){
                 $galleryImage = public_path("assets/wolpin_media/products/gallery_images/" . $image->image_path);
                 $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . 'optimized_' . rand() . '_' . basename($galleryImage));
                 $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1600 2700");
                 $data = $result->getData();
+                dd($data);
                 if(isset($data->error)){
                     $status = false;
                 }else{

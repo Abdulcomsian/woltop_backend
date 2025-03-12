@@ -348,7 +348,7 @@ class ProductService
                 }else{
                     $initialFilename = explode(".", $data->filename);
                     $filename = $initialFilename[0] . ".webp";
-                    $this->updateProductImage($id, $filename, $this->productImagesModel, "image_path");
+                    $this->updateProductImage($image->id, $filename, $this->productImagesModel, "image_path");
                 }
             }
         }

@@ -11,6 +11,7 @@ use App\Models\Color;
 use App\Models\ParentCategory;
 use App\Models\Product;
 use App\Models\Tag;
+use App\Models\UpSellModel;
 use App\Models\VariationOption;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
@@ -95,7 +96,8 @@ class ProductController extends Controller
             $selectedAttributes = $data->productVariables->pluck('attributes.attribute.id')->toArray();
             $productVariations = VariationOption::where('product_id', $id)->get();
             $products = Product::with('variables', 'upsellProduct')->where('status', 'publish')->get();
-            return view('pages.product.edit', compact("data", "parent_categories", "categories", "tags", "attributes", "colors", "groupedVariables", "selectedAttributes", "productVariations", "products"));
+            $upSellProduct = UpSellModel::where("product_id", $id)->get();
+            return view('pages.product.edit', compact("data", "parent_categories", "categories", "tags", "attributes", "colors", "groupedVariables", "selectedAttributes", "productVariations", "products", "upSellProduct"));
         }catch(\Exception $e){
             toastr()->error($e->getMessage());
             return redirect()->back();

@@ -1075,6 +1075,22 @@
                                         <!-- Dynamic fields container -->
                                         <div id="upsellFieldContainer">
                                             <!-- Initial card -->
+                                            @isset($upSellProduct)
+                                                @foreach($upSellProduct as $item)
+                                                    <div class="input-group mb-3">
+                                                        <select name="upsell_products[]" class="form-select upsell-select">
+                                                            <option value="" selected disabled>Select Option</option>
+                                                            @foreach($products as $product)
+                                                                @php
+                                                                $sku = $product->sku ? $product->sku : "Variable Product";
+                                                                @endphp
+                                                                <option value="{{$product->id}}" @if($product->id == $item->other_related_product_id) selected @endif>{{$product->title}} | {{$sku}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <button class="btn btn-danger remove-field" type="button">Remove</button>
+                                                    </div>
+                                                @endforeach
+                                            @endisset
                                         </div>
                                         <!-- Add More button -->
                                         <button id="addUpsellFieldButton" class="btn btn-primary mt-3"

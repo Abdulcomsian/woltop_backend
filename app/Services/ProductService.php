@@ -337,6 +337,7 @@ class ProductService
 
         // for gallery images
         $galleryImages = $this->productImagesModel::where('product_id', $id)->get();
+        dd($galleryImages);
         if(isset($galleryImages) && count($galleryImages) > 0){
             foreach($galleryImages as $image){
                 $galleryImage = public_path("assets/wolpin_media/products/gallery_images/" . $image->image_path);
@@ -353,7 +354,7 @@ class ProductService
             }
         }
 
-        
+
 
 
 

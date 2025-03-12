@@ -343,12 +343,12 @@ class ProductService
                 $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . 'optimized_' . rand() . '_' . basename($galleryImage));
                 $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1600 2700");
                 $data = $result->getData();
-                dd($data);
                 if(isset($data->error)){
                     $status = false;
                 }else{
                     $initialFilename = explode(".", $data->filename);
                     $filename = $initialFilename[0] . ".webp";
+                    dd($filename);
                     $this->updateProductImage($id, $filename, $this->productImagesModel, "image_path");
                 }
             }

@@ -16,6 +16,7 @@ use App\Models\ProductVariable;
 use App\Models\StorageUsage;
 use App\Models\UpSellModel;
 use App\Models\VariationOption;
+use Carbon\Carbon;
 
 class ProductService
 {
@@ -323,15 +324,13 @@ class ProductService
         $product = $this->model::findOrFail($id);
         // for featured Image
         $featuredImage = public_path("assets/wolpin_media/products/featured_images/" . $product->featured_image);
-        $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . 'optimized_' . rand() . '_' . basename($featuredImage));
+        $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . 'optimized_' . rand() . '.web');
         $result = $this->optimizeImage($featuredImage, $featuredOuput, "1600 2700");
         $data = $result->getData();
         if(isset($data->error)){
             $status = false;
         }else{
-            $initialFilename = explode(".", $data->filename);
-            $filename = $initialFilename[0] . ".webp";
-            $this->updateProductImage($id, $filename, $this->model, "featured_image");
+            $this->updateProductImage($id, $data->filename, $this->model, "featured_image");
         }
         
 
@@ -340,15 +339,13 @@ class ProductService
         if(isset($galleryImages) && count($galleryImages) > 0){
             foreach($galleryImages as $image){
                 $galleryImage = public_path("assets/wolpin_media/products/gallery_images/" . $image->image_path);
-                $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . 'optimized_' . rand() . '_' . basename($galleryImage));
+                $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . 'optimized_' . rand() . '.webp');
                 $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1600 2700");
                 $data = $result->getData();
                 if(isset($data->error)){
                     $status = false;
                 }else{
-                    $initialFilename = explode(".", $data->filename);
-                    $filename = $initialFilename[0] . ".webp";
-                    $this->updateProductImage($image->id, $filename, $this->productImagesModel, "image_path");
+                    $this->updateProductImage($image->id, $data->filename, $this->productImagesModel, "image_path");
                 }
             }
         }

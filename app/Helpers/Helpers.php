@@ -600,7 +600,7 @@ if (!function_exists('generateUniqueFileName')) {
         
         // Check if filename already exists
         while ($model::where($column, $finalFileName)->exists()) {
-            $finalFileName = $baseName . "_" . $count . $extension;
+            $finalFileName = $baseName . "-" . $count . $extension;
             $count++;
         }
     
@@ -618,7 +618,7 @@ if (!function_exists('getFileName')) {
      */
     function getFileName($filename) {
         $fileName = $filename->getClientOriginalName();
-        return str_replace([" ", "-"], "_", $fileName);
+        return str_replace([" ", "_"], "-", $fileName);
     }
 }
 

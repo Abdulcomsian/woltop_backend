@@ -581,4 +581,60 @@ if (!function_exists('variableSalePrice')) {
     }
 }
 
+if (!function_exists('generateUniqueFileName')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function generateUniqueFileName($model, $column, $filename) {
+        $count = 1;
+        $finalFileName = $filename;
+        
+        // Extract file name and extension
+        $explodedFileName = explode(".", $filename);
+        $baseName = $explodedFileName[0];
+        $extension = isset($explodedFileName[1]) ? "." . $explodedFileName[1] : "";
+        
+        // Check if filename already exists
+        while ($model::where($column, $finalFileName)->exists()) {
+            $finalFileName = $baseName . "_" . $count . $extension;
+            $count++;
+        }
+    
+        return $finalFileName;
+    }    
+}
+
+if (!function_exists('getFileName')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function getFileName($filename) {
+        $fileName = $filename->getClientOriginalName();
+        return str_replace([" ", "-"], "_", $fileName);
+    }
+}
+
+if (!function_exists('addWebP')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function addWebP($filename) {
+        $exploded = explode(".", $filename);
+        return $exploded[0] . "." . "webp";
+    }
+}
+
+
 

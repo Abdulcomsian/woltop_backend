@@ -73,14 +73,16 @@ class ProductService
     {
         // Storing Featured Image
         if(isset($data['featured_image'])){
-            $featureFileName = rand() . '.' . $data['featured_image']->extension();
+            $finalFileName = getFileName($data['featured_image']);
+            $featureFileName = generateUniqueFileName($this->model, "featured_image", $finalFileName);
             $path = public_path("assets/wolpin_media/products/featured_images");
             $data['featured_image']->move($path, $featureFileName);
         }
 
         // Storing Video
         if(isset($data['video'])){
-            $videoFileName = rand() . '.' . $data['video']->getClientOriginalExtension();
+            $videoFinalFileName = getFileName($data['video']);
+            $videoFileName = generateUniqueFileName($this->model, "video", $videoFinalFileName);
             $path = public_path("assets/wolpin_media/products/video");
             $data['video']->move($path, $videoFileName);
         }
@@ -114,12 +116,13 @@ class ProductService
             // Storing Gallery Images
             if(isset($data['gallery_images']) && count($data['gallery_images']) > 0){
                 foreach($data['gallery_images'] as $image){
-                    $fileName = rand() . '.' . $image->extension();
+                    $galleryFinalFileName = getFileName($image);
+                    $galleryFileName = generateUniqueFileName($this->productImagesModel, "image_path", $galleryFinalFileName);
                     $path = public_path("assets/wolpin_media/products/gallery_images");
-                    $image->move($path, $fileName);
+                    $image->move($path, $galleryFileName);
                     $img = new $this->productImagesModel;
                     $img->product_id = $product->id;
-                    $img->image_path = $fileName;
+                    $img->image_path = $galleryFileName;
                     $img->save();
                 }
             }
@@ -164,10 +167,11 @@ class ProductService
                     $step->description = $item['installation_description'];
                     // Storing file
                     if(isset($item['installation_image']) && !empty($item['installation_image'])){
-                        $imageName = rand() . '.' . $item['installation_image']->extension();
+                        $installationFinalFileName = getFileName($item['installation_image']);
+                        $installationFileName = generateUniqueFileName($this->installationStepsModel, "image", $installationFinalFileName);
                         $path = public_path("assets/wolpin_media/installation_steps");
-                        $item['installation_image']->move($path, $imageName);
-                        $step->image = $imageName;
+                        $item['installation_image']->move($path, $installationFileName);
+                        $step->image = $installationFileName;
                     }
                     $step->save();
                 }
@@ -180,10 +184,11 @@ class ProductService
                     $feature->name = $item['name'];
                     // Storing file
                     if(isset($item['image']) && !empty($item['image'])){
-                        $featureImage = rand() . '.' . $item['image']->extension();
+                        $featureFinalFileName = getFileName($item['image']);
+                        $featureFileName = generateUniqueFileName($this->productFeatureModel, "image", $featureFinalFileName);
                         $path = public_path("assets/wolpin_media/products/features");
-                        $item['image']->move($path, $featureImage);
-                        $feature->image = $featureImage;
+                        $item['image']->move($path, $featureFileName);
+                        $feature->image = $featureFileName;
                     }
                     $feature->save();
                 }
@@ -327,8 +332,14 @@ class ProductService
         $product = $this->model::findOrFail($id);
         // for featured Image
         $featuredImage = public_path("assets/wolpin_media/products/featured_images/" . $product->featured_image);
-        $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . 'optimized_' . rand() . '.webp');
-        $result = $this->optimizeImage($featuredImage, $featuredOuput, "1600 2700");
+
+        // Generating the unique filename by checking from the database
+        $featureFileName = generateUniqueFileName($this->model, "featured_image", $product->featured_image);
+        // Getting the filename converted from any other extension to .webp
+        $outPutFeatureImage = addWebP($featureFileName);
+
+        $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . $outPutFeatureImage);
+        $result = $this->optimizeImage($featuredImage, $featuredOuput, "1080 1666");
         $data = $result->getData();
         if(isset($data->error)){
             $status = false;
@@ -342,8 +353,12 @@ class ProductService
         if(isset($galleryImages) && count($galleryImages) > 0){
             foreach($galleryImages as $image){
                 $galleryImage = public_path("assets/wolpin_media/products/gallery_images/" . $image->image_path);
-                $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . 'optimized_' . rand() . '.webp');
-                $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1600 2700");
+                // Generating the unique filename by checking from the database
+                $galleryFileName = generateUniqueFileName($this->productImagesModel, "image_path", $image->image_path);
+                // Getting the filename converted from any other extension to .webp
+                $outPutGalleryImage = addWebP($galleryFileName);
+                $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . $outPutGalleryImage);
+                $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1080 1666");
                 $data = $result->getData();
                 if(isset($data->error)){
                     $status = false;
@@ -379,7 +394,8 @@ class ProductService
                 }
             }
 
-            $featureFileName = rand() . '.' . $data['featured_image']->extension();
+            $finalFileName = getFileName($data['featured_image']);
+            $featureFileName = generateUniqueFileName($this->model, "featured_image", $finalFileName);
             $path = public_path("assets/wolpin_media/products/featured_images");
             $data['featured_image']->move($path, $featureFileName);
         }
@@ -392,7 +408,8 @@ class ProductService
                     unlink($oldPath);
                 }
             }
-            $videoFileName = rand() . '.' . $data['video']->getClientOriginalExtension();
+            $videoFinalFileName = getFileName($data['video']);
+            $videoFileName = generateUniqueFileName($this->model, "video", $videoFinalFileName);
             $path = public_path("assets/wolpin_media/products/video");
             $data['video']->move($path, $videoFileName);
         }
@@ -438,12 +455,13 @@ class ProductService
             // Storing Gallery Images
             if(isset($data['gallery_images']) && count($data['gallery_images']) > 0){
                 foreach($data['gallery_images'] as $image){
-                    $fileName = rand() . '.' . $image->extension();
+                    $galleryFinalFileName = getFileName($image);
+                    $galleryFileName = generateUniqueFileName($this->productImagesModel, "image_path", $galleryFinalFileName);
                     $path = public_path("assets/wolpin_media/products/gallery_images");
-                    $image->move($path, $fileName);
+                    $image->move($path, $galleryFileName);
                     $img = new $this->productImagesModel;
                     $img->product_id = $product->id;
-                    $img->image_path = $fileName;
+                    $img->image_path = $galleryFileName;
                     $img->save();
                 }
             }
@@ -506,10 +524,11 @@ class ProductService
                         $step->description = $item['installation_description'];
                         // Storing file
                         if(isset($item['installation_image']) && !empty($item['installation_image'])){
-                            $imageName = rand() . '.' . $item['installation_image']->extension();
+                            $installationFinalFileName = getFileName($item['installation_image']);
+                            $installationFileName = generateUniqueFileName($this->installationStepsModel, "image", $installationFinalFileName);
                             $path = public_path("assets/wolpin_media/installation_steps");
-                            $item['installation_image']->move($path, $imageName);
-                            $step->image = $imageName;
+                            $item['installation_image']->move($path, $installationFileName);
+                            $step->image = $installationFileName;
                         }
                         $step->save();
                     }else{
@@ -519,10 +538,11 @@ class ProductService
                         $step->description = $item['installation_description'];
                         // Storing file
                         if(isset($item['installation_image']) && !empty($item['installation_image'])){
-                            $imageName = rand() . '.' . $item['installation_image']->extension();
+                            $installationFinalFileName = getFileName($item['installation_image']);
+                            $installationFileName = generateUniqueFileName($this->installationStepsModel, "image", $installationFinalFileName);
                             $path = public_path("assets/wolpin_media/installation_steps");
-                            $item['installation_image']->move($path, $imageName);
-                            $step->image = $imageName;
+                            $item['installation_image']->move($path, $installationFileName);
+                            $step->image = $installationFileName;
                         }
                         $step->save();
                     }
@@ -564,10 +584,11 @@ class ProductService
                         $feature->name = $item['name'];
                         // Storing file
                         if(isset($item['image']) && !empty($item['image'])){
-                            $featureImage = rand() . '.' . $item['image']->extension();
+                            $featureFinalFileName = getFileName($item['image']);
+                            $featureFileName = generateUniqueFileName($this->productFeatureModel, "image", $featureFinalFileName);
                             $path = public_path("assets/wolpin_media/products/features");
-                            $item['image']->move($path, $featureImage);
-                            $feature->image = $featureImage;
+                            $item['image']->move($path, $featureFileName);
+                            $feature->image = $featureFileName;
                         }
                         $feature->save();
                     }else{
@@ -576,10 +597,11 @@ class ProductService
                         $feature->name = $item['name'];
                         // Storing file
                         if(isset($item['image']) && !empty($item['image'])){
-                            $featureImage = rand() . '.' . $item['image']->extension();
+                            $featureFinalFileName = getFileName($item['image']);
+                            $featureFileName = generateUniqueFileName($this->productFeatureModel, "image", $featureFinalFileName);
                             $path = public_path("assets/wolpin_media/products/features");
-                            $item['image']->move($path, $featureImage);
-                            $feature->image = $featureImage;
+                            $item['image']->move($path, $featureFileName);
+                            $feature->image = $featureFileName;
                         }
                         $feature->save();
                     }

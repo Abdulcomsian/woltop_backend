@@ -109,16 +109,6 @@ class Product extends Model
         $products = Product::whereHas('categories', function($query) use ($categoryIds) {
             $query->whereIn('categories.id', $categoryIds);
         })->limit(4)->get();
-
-        $final = $products->map(function($data){
-            return [
-                "id" => $data->id,
-                "title" => $data->title,
-                "price" => $data->price,
-                "sale_price" => $data->sale_price,
-                "image" => asset('assets/wolpin_media/products/featured_images/' . $data->featured_image),
-            ];
-        });
-        return $final;
+        return ProductResource::collection($products);
     }
 }

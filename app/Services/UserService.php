@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Order;
 use App\Models\User;
 use Notification;
 use App\Notifications\{
@@ -99,16 +100,13 @@ class UserService
 
         // creating a login token
         $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
-        foreach($user->address as $address){
-            if(isset($address->order) && !empty($address->order)){
-                foreach($address->order as $order){
-                    if(isset($order->productOrder) && !empty($order->productOrder)){
-                        $productsIds["ids"] = $order->productOrder->pluck("product_id");
-                    }
-                }
+        $orders = Order::with("products")->where('user_id', Auth::user()->id)->get();
+        $productsIds = [];
+        foreach($orders as $order){
+            foreach($order->products as $product){
+                $productsIds[] = $product->id;
             }
         }
-
 
         return [
             "status" => "success",

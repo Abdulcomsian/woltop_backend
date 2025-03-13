@@ -98,14 +98,14 @@ class ProductController extends Controller
 
     public function getProductById($id){
         try{
-            $product = Product::with('reviews')->where('id', $id)->where('status', 'publish')->first();
+            $product = Product::with('reviews', 'designApplicationGuide', 'storageUsage', 'variables', 'installationSteps', 'productsFeatures')->where('id', $id)->where('status', 'publish')->first();
             if($product){
                 return (new ProductReviewResource($product))->additional(["status" => true]);
             }else{
                 return response()->json(['status' => false, "data" => "No Product Found"], 400);
             }
         }catch(\Exception $e){
-            return response()->json(['status' => false, "data" => "Something went wrong!"], 400);
+            return response()->json(['status' => false, "data" => "Something went wrong!", "error" => $e->getMessage(), "on line" => $e->getLine()], 400);
         }
     }
 }

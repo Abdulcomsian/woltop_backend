@@ -479,6 +479,13 @@
                                                             class="form-control" placeholder="Enter SKU"
                                                             value="{{ $data->sku ?? '' }}">
                                                     </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="units" class="required form-label">Units</label>
+                                                        <input type="text" id="units" name="simple_units"
+                                                            class="form-control" placeholder="Enter Units"
+                                                            value="{{ $data->units ?? '' }}">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -547,6 +554,12 @@
                                                         <input type="text" id="sku" name="simple_sku"
                                                             class="form-control" placeholder="Enter SKU"
                                                             value="{{ $data->sku ?? '' }}">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="units" class="required form-label">Units</label>
+                                                        <input type="text" id="units" name="simple_units"
+                                                            class="form-control" placeholder="Enter Units"
+                                                            value="{{ $data->units ?? '' }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -644,14 +657,14 @@
                                                                     name="variation_options[{{ $key }}][name]"
                                                                     value="{{ $variation->title }}" />
                                                                 <div class="row">
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-3">
                                                                         <label class="required form-label">Price</label>
                                                                         <input type="number"
                                                                             name="variation_options[{{ $key }}][price]"
                                                                             class="form-control" placeholder="Enter Price"
                                                                             value="{{ $variation->price }}">
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-3">
                                                                         <label class="required form-label">Sale
                                                                             Price</label>
                                                                         <input type="number"
@@ -660,12 +673,19 @@
                                                                             placeholder="Enter Sale Price"
                                                                             value="{{ $variation->sale_price }}">
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-3">
                                                                         <label class="required form-label">SKU</label>
                                                                         <input type="text"
                                                                             name="variation_options[{{ $key }}][sku]"
                                                                             class="form-control" placeholder="Enter SKU"
                                                                             value="{{ $variation->sku }}">
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label class="required form-label">Units</label>
+                                                                        <input type="number"
+                                                                            name="variation_options[{{ $key }}][units]"
+                                                                            class="form-control" placeholder="Enter Units"
+                                                                            value="{{ $variation->units }}">
                                                                     </div>
                                                                 </div>
                                                             </div>

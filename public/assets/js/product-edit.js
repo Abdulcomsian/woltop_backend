@@ -446,26 +446,33 @@
                     <h5 class="mb-3">${valueName}</h5>
                     <input type="hidden" name="variation_options[${optionCount}][name]" value="${valueName}" />
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="required form-label">Price</label>
                             <input type="number" 
                                 name="variation_options[${optionCount}][price]" 
                                 class="form-control variable-price" 
                                 placeholder="Enter Price">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="required form-label">Sale Price</label>
                             <input type="number" 
                                 name="variation_options[${optionCount}][sale_price]" 
                                 class="form-control variable-sale-price" 
                                 placeholder="Enter Sale Price">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="required form-label">SKU</label>
                             <input type="text" 
                                 name="variation_options[${optionCount}][sku]" 
                                 class="form-control variable-sku" 
                                 placeholder="Enter SKU">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="required form-label">Units</label>
+                            <input type="number" 
+                                name="variation_options[${optionCount}][units]" 
+                                class="form-control variable-units" 
+                                placeholder="Enter Units">
                         </div>
                     </div>
                 </div>

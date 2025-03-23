@@ -46,6 +46,9 @@ class ProductDataTable extends DataTable
                     return $query->price;
                 }
             })
+            ->editColumn('units', function($query){
+                return $query->units;
+            })
             ->editColumn('status', function ($query) {
                 $statusLabels = [
                     'draft' => ['label' => 'Draft', 'class' => 'badge-light-warning'],
@@ -71,7 +74,7 @@ class ProductDataTable extends DataTable
             ->addColumn('action', function($query) {
                 return view('pages.product.columns.action', compact("query"));
             })
-            ->rawColumns(['status', 'featured_image'])
+            ->rawColumns(['status', 'featured_image', 'units'])
             ->setRowId('id');
     }
 
@@ -95,7 +98,7 @@ class ProductDataTable extends DataTable
                     ->minifiedAjax()
                     ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
                     ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-                    ->orderBy([10, "desc"]);
+                    ->orderBy([11, "desc"]);
     }
 
     /**
@@ -118,6 +121,7 @@ class ProductDataTable extends DataTable
             Column::make('category')->title('Categories'),
             Column::make('price')->title('Price'),
             Column::make('sale_price')->title('Sale Price'),
+            Column::make('units')->title('No. Of Units'),
             Column::make('status')->title('Status'),
             Column::make('created_at'),
             Column::computed('action')

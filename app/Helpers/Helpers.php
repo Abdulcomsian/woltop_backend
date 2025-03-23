@@ -637,4 +637,24 @@ if (!function_exists('addWebP')) {
 }
 
 
+if (!function_exists('updateProductUnit')) {
+    /**
+     * Get icon
+     *
+     * @param $path
+     *
+     * @return string
+     */
+    function updateProductUnit($product_id, $model, $quantity) {
+        $data = $model::where('id', $product_id)->first();
+        $units = $data->units;
+        if($data->units >= $quantity){
+            $data->units = $units - $quantity;
+            return $data->update();
+        }else{
+            throw new \Exception('Insufficient stock available of this product.');
+        }
+    }
+}
+
 

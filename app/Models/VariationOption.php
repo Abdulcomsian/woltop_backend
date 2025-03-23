@@ -19,6 +19,7 @@ class VariationOption extends Model
         "sale_price",
         "discount",
         "sku",
+        "units",
         "options",
     ];
 }

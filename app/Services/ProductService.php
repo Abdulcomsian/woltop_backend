@@ -98,6 +98,7 @@ class ProductService
             $product->price = $data['simple_price'];
             $product->sale_price = $data['simple_sale_price'];
             $product->sku = generateUniqueSku($data['simple_sku'], $this->model::class, 'sku');
+            $product->units = $data['simple_units'];
         }
         $product->featured_image = $featureFileName ?? null;
         $product->product_type = $data['product_type'];
@@ -236,6 +237,7 @@ class ProductService
                         $variation->title = $item['name'];
                         $variation->price = $item['price'];
                         $variation->sale_price = $item['sale_price'];
+                        $variation->units = $item['units'];
                         $variation->options = !empty($attribute_values) ? json_encode($attribute_values) : null;
                         $variation->discount = calculateDiscount($item['price'], $item['sale_price']);
                         $variation->sku = generateUniqueSku($item['sku'], $this->variationOptionModel::class, 'sku');;
@@ -430,10 +432,12 @@ class ProductService
             $product->price = $data['simple_price'];
             $product->sale_price = $data['simple_sale_price'];
             $product->sku = generateUniqueSku($data['simple_sku'], $this->model::class, 'sku');
+            $product->units = $data['simple_units'];
         }elseif($data['product_type'] == "variable"){
             $product->price = null;
             $product->sale_price = null;
             $product->sku = null;
+            $product->units = null;
         }
 
         if(isset($data['featured_image'])){
@@ -656,6 +660,7 @@ class ProductService
                             "title" => $item['name'],
                             "price" => $item['price'],
                             "sale_price" => $item['sale_price'],
+                            "units" => $item['units'],
                             "options" => !empty($attribute_values) ? json_encode($attribute_values) : null,
                             "discount" => calculateDiscount($item['price'], $item['sale_price']),
                             "sku" => generateUniqueSku($item['sku'], $this->variationOptionModel::class, 'sku'),

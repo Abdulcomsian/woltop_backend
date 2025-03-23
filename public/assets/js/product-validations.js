@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 let simplePrice = document.querySelector("input[name='simple_price']");
                 let simpleSalePrice = document.querySelector("input[name='simple_sale_price']");
                 let simpleSku = document.querySelector("input[name='simple_sku']");
+                let simpleUnits = document.querySelector("input[name='simple_units']");
                 let attributeId = document.querySelectorAll(".attributeName");
                 let attributeValue = document.querySelectorAll(".attribute-values");
                 let variablePrice = document.querySelectorAll(".variable-price");
@@ -32,12 +33,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 errorTab = ps1_tab;
 
                 if(product_type.value.trim() === "simple"){
-                    if(simplePrice.value.trim() === "" || simpleSalePrice.value.trim() === "" || simpleSku.value.trim() === ""){
+                    if(simplePrice.value.trim() === "" || simpleSalePrice.value.trim() === "" || simpleSku.value.trim() === "" || simpleUnits.value.trim() === ""){
                         formSubmit = false;
                         subErrorTab = productTypeTab;
                         showError(simplePrice, "Price is required");
                         showError(simpleSalePrice, "Sale Price is required");
                         showError(simpleSku, "Sku is required");
+                        showError(simpleUnits, "Units is required");
                     }
                 }else if(product_type.value.trim() === "variable"){
                     ({ formSubmit, subErrorTab } = variableForEach(attributeId, "Attribute is Required", productTypeTab, formSubmit, subErrorTab));

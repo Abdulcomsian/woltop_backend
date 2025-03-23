@@ -483,6 +483,11 @@
                                                     <input type="number" id="sku" name="simple_sku"
                                                         class="form-control" placeholder="Enter SKU">
                                                 </div>
+                                                <div class="mb-3">
+                                                    <label for="units" class="required form-label">How many number of units are there for this product?</label>
+                                                    <input type="number" id="units" name="simple_units"
+                                                        class="form-control" placeholder="Enter Units">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

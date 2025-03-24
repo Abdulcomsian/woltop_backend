@@ -3,7 +3,7 @@
     <!--begin::Row-->
     <div class="row g-xl-10 mb-5 mb-xl-10">
         <!--begin::Col-->
-        <div class="col-md-3">
+        <div class="col-md-4">
             <!--begin::Card widget 20-->
             <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end h-md-100 mb-5 mb-xl-10"
                 style="background-color: #F1416C;background-image:url('assets/media/patterns/vector-1.png')">
@@ -24,7 +24,7 @@
             </div>
             <!--end::Card widget 20-->
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <!--begin::Card widget 7-->
             <div class="card card-flush mb-5 mb-xl-10 h-md-100">
                 <!--begin::Header-->
@@ -44,7 +44,7 @@
             </div>
             <!--end::Card widget 7-->
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <!--begin::Card widget 17-->
             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                 <!--begin::Header-->
@@ -68,7 +68,7 @@
             </div>
             <!--end::Card widget 17-->
         </div>
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <!--begin::Card widget 17-->
             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                 <!--begin::Header-->
@@ -92,7 +92,7 @@
             </div>
             <!--end::Card widget 17-->
         </div>
-        <!--end::Col-->
+        <!--end::Col--> --}}
     </div>
     <!--end::Row-->
 
@@ -156,7 +156,7 @@
                 <div class="card-body py-0">
                     <!-- Add a wrapper div with overflow-x: auto -->
                     <div style="overflow-x: auto;">
-                        <table id="recentOrdersTable" class="table table-row-bordered gy-5">
+                        <table class="table table-row-bordered gy-5">
                             <thead>
                                 <tr class="fw-bold fs-6 text-muted">
                                     <th>Order ID</th>
@@ -167,27 +167,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @isset($recentOrders)
+                                @foreach($recentOrders as $item)
                                 <tr>
-                                    <td>#ORD-2024-001</td>
-                                    <td>Rahul Sharma</td>
-                                    <td>Floral Vintage Wallpaper</td>
-                                    <td>$4,500</td>
-                                    <td>Delivered</td>
+                                    <td>{{$item->order_id ?? ''}}</td>
+                                    <td>{{$item->user->name ?? ''}}</td>
+                                    <td>{{$item->products->pluck("title")->implode(", ") ?? ''}}</td>
+                                    <td>₹{{$item->total_amount ?? ''}}</td>
+                                    <td>{{$item->order_status ?? ''}}</td>
                                 </tr>
-                                <tr>
-                                    <td>#ORD-2024-002</td>
-                                    <td>Priya Patel</td>
-                                    <td>Geometric Pattern Pack</td>
-                                    <td>$6,200</td>
-                                    <td>Processing</td>
-                                </tr>
-                                <tr>
-                                    <td>#ORD-2024-003</td>
-                                    <td>Amit Kumar</td>
-                                    <td>Kids Room Space Theme</td>
-                                    <td>$3,800</td>
-                                    <td>Shipped</td>
-                                </tr>
+                                @endforeach
+                                @endisset
                             </tbody>
                         </table>
                     </div>
@@ -204,9 +194,6 @@
 
 <!-- Include Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- Include DataTables -->
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
 <script>
     // Revenue Trend Chart
@@ -214,10 +201,10 @@
     var revenueTrendChart = new Chart(revenueTrendCtx, {
         type: 'line',
         data: {
-            labels: ['Jun', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: @json($monthlyEarnings->pluck("month")),
             datasets: [{
                 label: 'Revenue',
-                data: [900000, 800000, 700000, 600000, 500000, 400000],
+                data: @json($monthlyEarnings->pluck("total_earnings")),
                 borderColor: '#F1416C',
                 fill: false
             }]
@@ -236,10 +223,10 @@
     var popularCategoriesChart = new Chart(popularCategoriesCtx, {
         type: 'bar',
         data: {
-            labels: ['Front', 'Geometric', 'Abstract', 'Traditional', 'Kids'],
+            labels: @json($categories),
             datasets: [{
                 label: 'Popularity',
-                data: [250, 200, 150, 100, 50],
+                data: @json($productCategories),
                 backgroundColor: '#50CD89'
             }]
         },
@@ -250,10 +237,5 @@
                 }
             }
         }
-    });
-
-    // Initialize DataTable
-    $(document).ready(function() {
-        $('#recentOrdersTable').DataTable();
     });
 </script>

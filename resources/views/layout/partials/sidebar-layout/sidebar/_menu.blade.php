@@ -202,56 +202,71 @@
             </div>
             <!--end:Menu item-->
 
-             <!--begin:Menu item-->
-             <div data-kt-menu-trigger="click"
-             class="menu-item menu-accordion {{ request()->routeIs('page.*') ? 'here show' : '' }}">
-             <!--begin:Menu link-->
-             <span class="menu-link">
-                 <span class="menu-icon">
-                    <i class="fa fa-tasks" aria-hidden="true"></i>
-                 </span>
-                 <span class="menu-title">Manage CMS</span>
-                 <span class="menu-arrow"></span> <!-- Arrow for the submenu -->
-             </span>
-             <!--end:Menu link-->
-
-             <!--begin:Menu sub-->
-             <div class="menu-sub menu-sub-accordion">
-                 <!--begin:Submenu item-->
-                 <div class="menu-item">
-                     <a class="menu-link {{ request()->routeIs('page.home.index') ? 'active' : '' }}"
-                         href="{{ route('page.home.index') }}">
-                         <span class="menu-bullet">
-                             <span class="bullet bullet-dot"></span>
-                         </span>
-                         <span class="menu-title">Homepage</span>
-                     </a>
-                 </div>
-                 <!--end:Submenu item-->
-
-                 <!--begin:Submenu item-->
-                 <div class="menu-item">
-                     <a class="menu-link {{ request()->routeIs('page.about.index') ? 'active' : '' }}"
-                         href="{{ route('page.about.index') }}">
-                         <span class="menu-bullet">
-                             <span class="bullet bullet-dot"></span>
-                         </span>
-                         <span class="menu-title">About</span>
-                     </a>
-                 </div>
-                 <!--end:Submenu item-->
-             </div>
-             <!--end:Menu sub-->
-         </div>
-         <!--end:Menu item-->
+            <!--begin:Menu item-->
+            <div data-kt-menu-trigger="click"
+                class="menu-item menu-accordion {{ request()->routeIs('review.index') ? 'here show' : '' }}">
+                <div class="menu-item">
+                    <!--begin:Menu link-->
+                    <a class="menu-link {{ request()->routeIs('review.index') ? 'active' : '' }}"
+                        href="{{ route('review.index') }}">
+                        <span class="menu-icon"><i class="fas fa-question"></i></span>
+                        <span class="menu-title">Manage Reviews</span>
+                    </a>
+                    <!--end:Menu link-->
+                </div>
+            </div>
+            <!--end:Menu item-->
 
             <!--begin:Menu item-->
             <div data-kt-menu-trigger="click"
-                class="menu-item menu-accordion" {{ request()->routeIs('coupon.index') ? 'here show' : '' }}>
+                class="menu-item menu-accordion {{ request()->routeIs('page.*') ? 'here show' : '' }}">
+                <!--begin:Menu link-->
+                <span class="menu-link">
+                    <span class="menu-icon">
+                        <i class="fa fa-tasks" aria-hidden="true"></i>
+                    </span>
+                    <span class="menu-title">Manage CMS</span>
+                    <span class="menu-arrow"></span> <!-- Arrow for the submenu -->
+                </span>
+                <!--end:Menu link-->
+
+                <!--begin:Menu sub-->
+                <div class="menu-sub menu-sub-accordion">
+                    <!--begin:Submenu item-->
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('page.home.index') ? 'active' : '' }}"
+                            href="{{ route('page.home.index') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">Homepage</span>
+                        </a>
+                    </div>
+                    <!--end:Submenu item-->
+
+                    <!--begin:Submenu item-->
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('page.about.index') ? 'active' : '' }}"
+                            href="{{ route('page.about.index') }}">
+                            <span class="menu-bullet">
+                                <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">About</span>
+                        </a>
+                    </div>
+                    <!--end:Submenu item-->
+                </div>
+                <!--end:Menu sub-->
+            </div>
+            <!--end:Menu item-->
+
+            <!--begin:Menu item-->
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion"
+                {{ request()->routeIs('coupon.index') ? 'here show' : '' }}>
                 <div class="menu-item">
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('coupon.index') ? 'active' : '' }}"
-                        href="{{route('coupon.index')}}">
+                        href="{{ route('coupon.index') }}">
                         <span class="menu-icon"><i class="fa fa-gift" aria-hidden="true"></i></span>
                         <span class="menu-title">Manage Coupons</span>
                     </a>

@@ -19,6 +19,7 @@ use App\Http\Controllers\WebControllers\{
     ProductController,
     ProfileController,
     ReelsController,
+    ReviewController,
     TeamController,
     UserController,
 };
@@ -225,6 +226,18 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
         });
+
+     // Reviews
+     Route::controller(ReviewController::class)
+     ->prefix('review')
+     ->as('review.')
+     ->group(function () {
+         Route::get('', 'index')->name('index');
+         Route::get('create', 'create')->name('create');
+         Route::post('store', 'store')->name('store');
+         Route::delete('delete', 'delete')->name('delete');
+         Route::post('change-status', 'changeStatus')->name("change.status");
+     });
 
     // Users
     Route::controller(UserController::class)

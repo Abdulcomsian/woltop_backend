@@ -3,7 +3,7 @@
     <!--begin::Row-->
     <div class="row g-xl-10 mb-5 mb-xl-10">
         <!--begin::Col-->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <!--begin::Card widget 20-->
             <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end h-md-100 mb-5 mb-xl-10"
                 style="background-color: #F1416C;background-image:url('assets/media/patterns/vector-1.png')">
@@ -12,11 +12,12 @@
                     <!--begin::Title-->
                     <div class="card-title d-flex flex-column">
                         <!--begin::Amount-->
-                        <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">{{ $products }}</span>
+                        <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2">₹{{ $totalRevenue }}</span>
                         <!--end::Amount-->
                         <!--begin::Subtitle-->
-                        <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Total Products</span>
+                        <span class="text-white opacity-75 pt-1 fw-semibold fs-6">Total Revenue</span>
                         <!--end::Subtitle-->
+                        <small class="text-white opacity-75 fw-semibold">vs last month</small>
                     </div>
                     <!--end::Title-->
                 </div>
@@ -24,7 +25,7 @@
             </div>
             <!--end::Card widget 20-->
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <!--begin::Card widget 7-->
             <div class="card card-flush mb-5 mb-xl-10 h-md-100">
                 <!--begin::Header-->
@@ -32,11 +33,12 @@
                     <!--begin::Title-->
                     <div class="card-title d-flex flex-column">
                         <!--begin::Amount-->
-                        <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $users }}</span>
+                        <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $totalOrders }}</span>
                         <!--end::Amount-->
                         <!--begin::Subtitle-->
-                        <span class="text-gray-400 pt-1 fw-semibold fs-6">Users</span>
+                        <span class="text-gray-400 pt-1 fw-semibold fs-6">Total Orders</span>
                         <!--end::Subtitle-->
+                        <small class="text-gray-400 fw-semibold">vs last month</small>
                     </div>
                     <!--end::Title-->
                 </div>
@@ -44,7 +46,7 @@
             </div>
             <!--end::Card widget 7-->
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <!--begin::Card widget 17-->
             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                 <!--begin::Header-->
@@ -54,13 +56,14 @@
                         <!--begin::Info-->
                         <div class="d-flex align-items-center">
                             <!--begin::Amount-->
-                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $orders }}</span>
+                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{$activeUsers}}</span>
                             <!--end::Amount-->
                         </div>
                         <!--end::Info-->
                         <!--begin::Subtitle-->
-                        <span class="text-gray-400 pt-1 fw-semibold fs-6">Orders</span>
+                        <span class="text-gray-400 pt-1 fw-semibold fs-6">Active Users</span>
                         <!--end::Subtitle-->
+                        <small class="text-gray-400 fw-semibold">vs last month</small>
                     </div>
                     <!--end::Title-->
                 </div>
@@ -68,7 +71,7 @@
             </div>
             <!--end::Card widget 17-->
         </div>
-        {{-- <div class="col-md-3">
+        <div class="col-md-3">
             <!--begin::Card widget 17-->
             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                 <!--begin::Header-->
@@ -78,13 +81,14 @@
                         <!--begin::Info-->
                         <div class="d-flex align-items-center">
                             <!--begin::Amount-->
-                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ $orders }}</span>
+                            <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{$conversionRate}}%</span>
                             <!--end::Amount-->
                         </div>
                         <!--end::Info-->
                         <!--begin::Subtitle-->
                         <span class="text-gray-400 pt-1 fw-semibold fs-6">Conversion Rate</span>
                         <!--end::Subtitle-->
+                        <small class="text-gray-400 fw-semibold">vs last month</small>
                     </div>
                     <!--end::Title-->
                 </div>
@@ -92,7 +96,7 @@
             </div>
             <!--end::Card widget 17-->
         </div>
-        <!--end::Col--> --}}
+        <!--end::Col-->
     </div>
     <!--end::Row-->
 

@@ -209,7 +209,7 @@
                     <!--begin:Menu link-->
                     <a class="menu-link {{ request()->routeIs('review.index') ? 'active' : '' }}"
                         href="{{ route('review.index') }}">
-                        <span class="menu-icon"><i class="fas fa-question"></i></span>
+                        <span class="menu-icon"><i class="fa-solid fa-comments"></i></span>
                         <span class="menu-title">Manage Reviews</span>
                     </a>
                     <!--end:Menu link-->

@@ -3,7 +3,7 @@
     <!--begin::Row-->
     <div class="row g-xl-10 mb-5 mb-xl-10">
         <!--begin::Col-->
-        <div class="col-md-3">
+        <div class="col-md-4">
             <!--begin::Card widget 20-->
             <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end h-md-100 mb-5 mb-xl-10"
                 style="background-color: #F1416C;background-image:url('assets/media/patterns/vector-1.png')">
@@ -19,13 +19,22 @@
                         <!--end::Subtitle-->
                         <small class="text-white opacity-75 fw-semibold">vs last month</small>
                     </div>
+                    <div>
+                        @if($revenuePercentage > 0)
+                        <i class="fa-solid fa-arrow-up text-white opacity-75"></i>
+                        <small class="text-white opacity-75 fw-semibold">{{$revenuePercentage}}%</small>
+                        @else 
+                        <i class="fa-solid fa-arrow-down text-white opacity-75"></i>
+                        <small class="text-white opacity-75 fw-semibold">{{$revenuePercentage}}%</small>
+                        @endif
+                    </div>
                     <!--end::Title-->
                 </div>
                 <!--end::Header-->
             </div>
             <!--end::Card widget 20-->
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <!--begin::Card widget 7-->
             <div class="card card-flush mb-5 mb-xl-10 h-md-100">
                 <!--begin::Header-->
@@ -40,13 +49,22 @@
                         <!--end::Subtitle-->
                         <small class="text-gray-400 fw-semibold">vs last month</small>
                     </div>
+                    <div>
+                        @if($orderPercentage > 0)
+                        <i class="fa-solid fa-arrow-up text-gray"></i>
+                        <small class="text-gray-400 fw-semibold">{{$orderPercentage}}%</small>
+                        @else 
+                        <i class="fa-solid fa-arrow-down" style="color: red"></i>
+                        <small class="fw-semibold" style="color: red;">{{$orderPercentage}}%</small>
+                        @endif
+                    </div>
                     <!--end::Title-->
                 </div>
                 <!--end::Header-->
             </div>
             <!--end::Card widget 7-->
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <!--begin::Card widget 17-->
             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                 <!--begin::Header-->
@@ -61,9 +79,9 @@
                         </div>
                         <!--end::Info-->
                         <!--begin::Subtitle-->
-                        <span class="text-gray-400 pt-1 fw-semibold fs-6">Active Users</span>
+                        <span class="text-gray-400 pt-1 fw-semibold fs-6">Total Users</span>
                         <!--end::Subtitle-->
-                        <small class="text-gray-400 fw-semibold">vs last month</small>
+                        {{-- <small class="text-gray-400 fw-semibold">vs last month</small> --}}
                     </div>
                     <!--end::Title-->
                 </div>
@@ -71,7 +89,7 @@
             </div>
             <!--end::Card widget 17-->
         </div>
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <!--begin::Card widget 17-->
             <div class="card card-flush h-md-100 mb-5 mb-xl-10">
                 <!--begin::Header-->
@@ -96,7 +114,7 @@
             </div>
             <!--end::Card widget 17-->
         </div>
-        <!--end::Col-->
+        <!--end::Col--> --}}
     </div>
     <!--end::Row-->
 
@@ -127,7 +145,7 @@
                 <!--begin::Header-->
                 <div class="card-header pt-5">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold text-dark">Popular Categories</span>
+                        <span class="card-label fw-bold text-dark">Category Performance</span>
                     </h3>
                 </div>
                 <!--end::Header-->
@@ -227,10 +245,10 @@
     var popularCategoriesChart = new Chart(popularCategoriesCtx, {
         type: 'bar',
         data: {
-            labels: @json($categories),
+            labels: @json($categoryEarnings->pluck("category")),
             datasets: [{
-                label: 'Popularity',
-                data: @json($productCategories),
+                label: 'Revenue',
+                data: @json($categoryEarnings->pluck("earning")),
                 backgroundColor: '#50CD89'
             }]
         },

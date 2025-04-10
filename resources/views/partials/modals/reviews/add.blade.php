@@ -20,6 +20,7 @@
                 <!--begin::Form-->
                 <form action="{{route('review.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="type" value="admin">
                     <!--begin::Scroll-->
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->

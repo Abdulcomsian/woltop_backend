@@ -18,6 +18,7 @@ class ReviewRequest extends FormRequest
             "product_id" => ["required"],
             "description" => ["required"],
             "rating" => ["required"],
+            "type" => "sometimes",
         ];
     }
 }

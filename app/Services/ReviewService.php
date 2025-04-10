@@ -21,7 +21,11 @@ class ReviewService
         $review->product_id = $data->product_id;
         $review->description = $data->description;
         $review->rating = $data->rating;
-        $review->status = ReviewStatus::PENDING;
+        if(isset($data->type) && $data->type == "admin"){
+            $review->status = ReviewStatus::APPROVED;
+        }else{
+            $review->status = ReviewStatus::PENDING;
+        }
         if($review->save()){
             return [
                 "status" => "success",

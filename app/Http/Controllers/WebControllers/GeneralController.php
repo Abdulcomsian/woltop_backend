@@ -74,6 +74,7 @@ class GeneralController extends Controller
             "id" => "nullable",
             "admin_favicon" => "nullable",
             "frontend_favicon" => "nullable",
+            "main_logo" => "nullable",
         ]);
         
         try{

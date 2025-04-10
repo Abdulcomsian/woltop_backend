@@ -190,7 +190,7 @@
             <div class="card-title">
                  <!--begin::Toolbar-->
                  <div data-kt-user-table-toolbar="base">
-                    <span>Upload Favicons images</span>
+                    <span>Upload Logos</span>
                 </div>
                 <!--end::Toolbar-->
             </div>
@@ -206,6 +206,21 @@
                     @method("PATCH")
                     <input type="hidden" name="id" value="{{ $favicons->id ?? null }}">
                     <div class="row g-4">
+                        <div class="col-md-12">
+                            @if(isset($favicons) && $favicons->facebook_link != null)
+                            <div>
+                                <img src="{{asset("assets/wolpin_media/general/homepage/" . $favicons->facebook_link)}}" alt="Logo" height="50">
+                            </div>
+                            @endif
+                            <div class="mt-2">
+                                <label for="" class="form-label fw-semibold">Upload Main Website Logo:</label>
+                                <input type="file" class="form-control" name="main_logo" placeholder="Admin Favicon">
+                            </div>
+                            @error("main_logo")
+                                <span class="text-danger">{{$message}}</span>
+                            @enderror
+                        </div>
+
                         <div class="col-md-12">
                             @if(isset($favicons) && $favicons->twitter_link != null)
                             <div>

@@ -64,6 +64,19 @@ class GeneralService
         $path = public_path("assets/wolpin_media/general/homepage");
         $admin_favicon = $oldHome->twitter_link ?? null;
         $frontend_favicon = $oldHome->instagram_link ?? null;
+        $main_logo = $oldHome->facebook_link ?? null;
+        if(isset($data['main_logo'])){
+            if ($oldHome && !empty($oldHome->facebook_link)) {
+                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $oldHome->facebook_link);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            $main_logo = time() . '_' . rand() . '.' . $data['main_logo']->getClientOriginalExtension();
+            $data['main_logo']->move($path, $main_logo);
+        }
+
+
         if(isset($data['admin_favicon'])){
             if ($oldHome && !empty($oldHome->twitter_link)) {
                 $oldPath = public_path("assets/wolpin_media/general/homepage/" . $oldHome->twitter_link);
@@ -89,6 +102,7 @@ class GeneralService
             "id" => $data['id']
         ],
         [
+            "facebook_link" => $main_logo,
             "twitter_link" => $admin_favicon,
             "instagram_link" => $frontend_favicon,
             "type" => "favicons",

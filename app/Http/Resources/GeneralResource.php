@@ -42,6 +42,7 @@ class GeneralResource extends JsonResource
             return [
                 "id" => $this->id,
                 "icon" => asset("assets/wolpin_media/general/homepage/" . $this->instagram_link),
+                "main_logo" => asset("assets/wolpin_media/general/homepage/" . $this->facebook_link),
             ];
         }
         return parent::toArray($request);

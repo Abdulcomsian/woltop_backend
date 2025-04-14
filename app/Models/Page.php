@@ -17,6 +17,8 @@ class Page extends Model
         "image",
         "link",
         "video",
+        "consulation_img_1",
+        "consulation_img_2",
         "type",
     ];
 }

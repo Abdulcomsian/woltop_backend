@@ -98,6 +98,35 @@
                         </div>
                     </div>
 
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-6">
+                            @if(isset($data) && $data->consulation_img_1 != null)
+                            <div class="image-back">
+                                <img src="{{ asset('assets/wolpin_media/general/homepage/' . $data->consulation_img_1) }}" 
+                                     alt="image" 
+                                     class="images">
+                            </div>
+                            @endif
+                            <div class="mt-2">
+                                <label for="delivery" class="form-label fw-semibold">First Consultation Image</label>
+                                <input type="file" class="form-control" name="consultation_img_1" value="#" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @if(isset($data) && $data->consulation_img_2 != null)
+                            <div class="image-back">
+                                <img src="{{ asset('assets/wolpin_media/general/homepage/' . $data->consulation_img_2) }}" 
+                                alt="image" 
+                                class="images">
+                            </div>
+                            @endif
+                            <div class="mt-2">
+                                <label for="delivery" class="form-label fw-semibold">Second Consulation Image</label>
+                                <input type="file" class="form-control" name="consultation_img_2" value="#" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>

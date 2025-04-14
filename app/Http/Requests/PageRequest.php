@@ -20,6 +20,8 @@ class PageRequest extends FormRequest
             "banner_image" => "sometimes",
             "banner_logo" => "sometimes",
             "video" => "sometimes",
+            "consultation_img_1" => "sometimes",
+            "consultation_img_2" => "sometimes",
         ];
     }
 }

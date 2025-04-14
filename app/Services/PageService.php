@@ -31,6 +31,8 @@ class PageService
         $bannerFileName = $oldHome->main_image ?? null;
         $logoFileName = $oldHome->image ?? null;
         $fileName = $oldHome->video ?? null;
+        $consultationFileName1 = $oldHome->consulation_img_1 ?? null;
+        $consultationFileName2 = $oldHome->consulation_img_2 ?? null;
         $path = public_path("assets/wolpin_media/general/homepage");
         if (isset($data['banner_image'])) {
             if ($oldHome && !empty($oldHome->main_image)) {
@@ -66,6 +68,28 @@ class PageService
             $data['video']->move($path, $fileName);
         }
 
+        if (isset($data['consultation_img_1'])) {
+            if ($oldHome && !empty($oldHome->consulation_img_1)) {
+                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $oldHome->consulation_img_1);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            $consultationFileName1 = time() . '_' . rand() . '.' . $data['consultation_img_1']->getClientOriginalExtension();
+            $data['consultation_img_1']->move($path, $consultationFileName1);
+        }
+
+        if (isset($data['consultation_img_2'])) {
+            if ($oldHome && !empty($oldHome->consulation_img_2)) {
+                $oldPath = public_path("assets/wolpin_media/general/homepage/" . $oldHome->consulation_img_2);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            $consultationFileName2 = time() . '_' . rand() . '.' . $data['consultation_img_2']->getClientOriginalExtension();
+            $data['consultation_img_2']->move($path, $consultationFileName2);
+        }
+
         $update = $this->model::updateOrCreate(
             ["id" => $data['id']],
             [
@@ -74,6 +98,8 @@ class PageService
                 "main_image" => $bannerFileName,
                 "image" => $logoFileName,
                 "video" => $fileName,
+                "consulation_img_1" => $consultationFileName1,
+                "consulation_img_2" => $consultationFileName2,
                 "type" => "home",
             ]
         );

@@ -341,7 +341,7 @@ class ProductService
         $outPutFeatureImage = addWebP($featureFileName);
 
         $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . $outPutFeatureImage);
-        $result = $this->optimizeImage($featuredImage, $featuredOuput, "1080 1666");
+        $result = $this->optimizeImage($featuredImage, $featuredOuput, "1920 2962");
         $data = $result->getData();
         if(isset($data->error)){
             $status = false;
@@ -360,7 +360,7 @@ class ProductService
                 // Getting the filename converted from any other extension to .webp
                 $outPutGalleryImage = addWebP($galleryFileName);
                 $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . $outPutGalleryImage);
-                $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1080 1666");
+                $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1920 2962");
                 $data = $result->getData();
                 if(isset($data->error)){
                     $status = false;

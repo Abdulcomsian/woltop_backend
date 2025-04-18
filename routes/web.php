@@ -143,6 +143,7 @@ Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
             Route::delete('delete/image', 'deleteImage')->name('delete.image');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::patch('update', 'update')->name('update');
+            Route::get('optimize/{id}', 'optimize')->name('optimize');
             Route::post('fetch-attributes-values', 'fetchAttributesValues')->name('attributes.values');
             Route::post('get-categories', 'getCategories')->name('get.categories');
         });

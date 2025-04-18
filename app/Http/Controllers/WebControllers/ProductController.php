@@ -104,6 +104,22 @@ class ProductController extends Controller
         }
     }
 
+    public function optimize($id){
+        try{
+            $data = $this->productService->optimize($id);
+            if($data['status'] == false){
+                toastr()->error($data['message']);
+                return redirect()->back();
+            }else{
+                toastr()->success($data['message']);
+                return redirect()->back();
+            }
+        }catch(\Exception $e){
+            toastr()->error($e->getMessage());
+            return redirect()->back();
+        }
+    }
+    
     public function update(ProductRequest $productRequest)
     {
         try {

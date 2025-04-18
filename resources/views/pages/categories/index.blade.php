@@ -120,6 +120,9 @@
                         parentCategorySelect.value = 'none';
                         $(parentCategorySelect).val('none').trigger('change');
                     }
+
+                    document.querySelector("#intro_heading").value = data.data.intro_heading;
+                    document.querySelector("#intro_description").value = data.data.intro_description;
                     var editModal = new bootstrap.Modal(document.getElementById('edit_category_modal'));
                     editModal.show();
                 })

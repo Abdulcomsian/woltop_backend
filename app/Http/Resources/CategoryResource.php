@@ -21,6 +21,8 @@ class CategoryResource extends JsonResource
             "image" => asset('assets/wolpin_media/categories/' . $this->image),
             "banner" => $this->banner_image ? asset('assets/wolpin_media/categories/' . $this->banner_image) : null,
             "video" => $this->video ? asset('assets/wolpin_media/categories/' . $this->video) : null,
+            "intro_heading" => $this->intro_heading,
+            "intro_description" => $this->intro_description,
         ];
     }
 }

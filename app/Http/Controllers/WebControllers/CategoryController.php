@@ -61,6 +61,9 @@ class CategoryController extends Controller
             if($request->file('banner')){
                 $category->banner_image = $bannerFileName;
             }
+
+            $category->intro_heading = $request->intro_heading ?? null;
+            $category->intro_description = $request->intro_description ?? null;
             if($category->save()){
                 toastr()->success('Category Saved Successfully!');
                 return redirect()->back();
@@ -151,6 +154,9 @@ class CategoryController extends Controller
             if($request->file('banner')){
                 $category->banner_image = $bannerFileName;
             }
+
+            $category->intro_heading = $request->intro_heading ?? null;
+            $category->intro_description = $request->intro_description ?? null;
             if($category->update()){
                 toastr()->success('Category Updated Successfully!');
                 return redirect()->back();

@@ -135,6 +135,28 @@
                         <!--end::Input-->
                     </div>
                     <!--end::Input group-->
+
+                     <!--begin::Input group-->
+                     <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fw-semibold fs-6 mb-2">Intro Heading</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <input type="text" name="intro_heading" class="form-control form-control-solid" placeholder="Enter Intro Heading">
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
+
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="fw-semibold fs-6 mb-2">Intro Description</label>
+                        <!--end::Label-->
+                        <!--begin::Input-->
+                        <textarea name="intro_description" class="form-control form-control-solid" placeholder="Enter Intro Description"></textarea>
+                        <!--end::Input-->
+                    </div>
+                    <!--end::Input group-->
             </div>
             <!--end::Scroll-->
             <!--begin::Actions-->

@@ -632,7 +632,7 @@ if (!function_exists('addWebP')) {
      */
     function addWebP($filename) {
         $exploded = explode(".", $filename);
-        return $exploded[0] . "." . "webp";
+        return $exploded[0] . "." . "avif";
     }
 }
 

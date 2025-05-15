@@ -37,16 +37,16 @@ class ProductService
 
 
     public function __construct(
-        Product $model, 
-        AttributeValue $attributeModel, 
-        Category $categoriesModel, 
-        ProductImage $productImagesModel, 
-        CategoryProduct $productCategoryModel, 
-        ProductTag $productTagModel, 
-        DosDont $dosProductModel, 
-        InstallationStep $installationStepsModel, 
-        ProductFeature $productFeatureModel, 
-        ProductVariable $variableProductModel, 
+        Product $model,
+        AttributeValue $attributeModel,
+        Category $categoriesModel,
+        ProductImage $productImagesModel,
+        CategoryProduct $productCategoryModel,
+        ProductTag $productTagModel,
+        DosDont $dosProductModel,
+        InstallationStep $installationStepsModel,
+        ProductFeature $productFeatureModel,
+        ProductVariable $variableProductModel,
         VariationOption $variationOptionModel,
         ApplicationGuide $applicationDetailModel,
         StorageUsage $storageDetailModel,
@@ -158,7 +158,7 @@ class ProductService
                 }
             }
 
-            
+
             // Storing Installation Steps
             if(isset($data['installation_steps']) && count($data['installation_steps']) > 0){
                 foreach($data['installation_steps'] as $item){
@@ -244,7 +244,7 @@ class ProductService
                         $variation->save();
                     }
                 }
-                
+
             }
 
             $applicationData = [
@@ -254,14 +254,14 @@ class ProductService
                 'pattern_match' => $data['pattern_match'] ?? null,
                 'application_guide' => $data['application_guide'] ?? null,
             ];
-            
+
             if (!empty(array_filter($applicationData))) {
                 $application = new $this->applicationDetailModel;
                 $application->product_id = $product->id;
                 $application->fill($applicationData);
-                $application->save(); 
+                $application->save();
             }
-            
+
             $storageData = [
                 "storage" => $data['storage'] ?? null,
                 "net_weight" => $data['net_weight'] ?? null,
@@ -274,7 +274,7 @@ class ProductService
                 $st->fill($storageData);
                 $st->save();
             }
-            
+
         }
         return $product;
     }
@@ -311,7 +311,7 @@ class ProductService
 
     public function optimizeImage($imagePath, $outputPath, $size)
     {
-        try{        
+        try{
             $nodeScript = base_path('node_scripts/sharp.js');
             // Execute the Node.js script
             $command = "node $nodeScript " . escapeshellarg($imagePath) . " " . escapeshellarg($outputPath) . " " . $size;
@@ -341,14 +341,14 @@ class ProductService
         $outPutFeatureImage = addWebP($featureFileName);
 
         $featuredOuput = public_path('assets/wolpin_media/products/featured_images/' . $outPutFeatureImage);
-        $result = $this->optimizeImage($featuredImage, $featuredOuput, "1920 2962");
+        $result = $this->optimizeImage($featuredImage, $featuredOuput, "1260 1944");
         $data = $result->getData();
         if(isset($data->error)){
             $status = false;
         }else{
             $this->updateProductImage($id, $data->filename, $this->model, "featured_image", $featuredImage);
         }
-        
+
 
         // for gallery images
         $galleryImages = $this->productImagesModel::where('product_id', $id)->get();
@@ -360,7 +360,7 @@ class ProductService
                 // Getting the filename converted from any other extension to .webp
                 $outPutGalleryImage = addWebP($galleryFileName);
                 $galleryOutputImage = public_path('assets/wolpin_media/products/gallery_images/' . $outPutGalleryImage);
-                $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1920 2962");
+                $result = $this->optimizeImage($galleryImage, $galleryOutputImage, "1260 1944");
                 $data = $result->getData();
                 if(isset($data->error)){
                     $status = false;
@@ -503,7 +503,7 @@ class ProductService
                 }
             }
 
-            
+
             // Storing Installation Steps
             if(isset($data['installation_steps']) && count($data['installation_steps']) > 0){
                 // Delete old installation steps and images
@@ -667,7 +667,7 @@ class ProductService
                         ]);
                     }
                 }
-                
+
             }
 
             $applicationData = [
@@ -677,15 +677,15 @@ class ProductService
                 'pattern_match' => $data['pattern_match'] ?? null,
                 'application_guide' => $data['application_guide'] ?? null,
             ];
-            
+
             if (!empty(array_filter($applicationData))) {
                 $this->applicationDetailModel::where('product_id', $product->id)->forceDelete();
                 $application = new $this->applicationDetailModel;
                 $application->product_id = $product->id;
                 $application->fill($applicationData);
-                $application->save(); 
+                $application->save();
             }
-            
+
             $storageData = [
                 "storage" => $data['storage'] ?? null,
                 "net_weight" => $data['net_weight'] ?? null,
@@ -699,7 +699,7 @@ class ProductService
                 $st->fill($storageData);
                 $st->save();
             }
-            
+
         }
         return $product;
     }

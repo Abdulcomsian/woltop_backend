@@ -1,4 +1,5 @@
 <x-default-layout>
+    {{-- setting the page title  --}}
     @section('page-title', 'Manage Attributes Values')
     <div class="card">
         <!--begin::Card header-->
@@ -60,7 +61,7 @@
                 .then((res) => {
                     document.querySelector("#attribute_name").value = res.data.name;
                     document.querySelector("#id").value = res.data.id;
-                    let attribute_id = res.data.attribute_id; 
+                    let attribute_id = res.data.attribute_id;
                     let attributeDropdown = document.querySelector("#attribute_edit");
                     if (attributeDropdown) {
                         Array.from(attributeDropdown.options).forEach(option => {
